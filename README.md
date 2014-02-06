@@ -1,4 +1,4 @@
 elixir-mongo
 ============
 
-MongoDB driver for Erlang
+MongoDB driver for Elixir
