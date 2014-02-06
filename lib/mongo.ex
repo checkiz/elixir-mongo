@@ -34,11 +34,11 @@ defmodule Mongo do
   Runs db.find() for a given query and returns a stream of document in the form of Keyword
 
   To retreive documents and decode them, you can do:
+
   ```elixir
   mongo
     |> connect("test")
     |> Mongo.find("anycoll", ['$maxScan': 2, '$skip': 0])
-    |> Stream.map(fn {bsonbuffer, part} -> Bson.decode(part, bsonbuffer) end)
   ```
   """
   def find(db, collection, criteria // [], projection // [], opts // Opts[]) do
