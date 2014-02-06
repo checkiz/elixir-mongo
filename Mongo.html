@@ -28,7 +28,7 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+        <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L1" target="_blank" class="view_source">Source</a>
       
 
@@ -161,7 +161,7 @@
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L208" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -173,7 +173,7 @@
   <div class="docstring"><p>Assigns id to a document or a list of document when <code>:_id</code> is missing</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L365" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -185,7 +185,7 @@
   <div class="docstring"><p>connects to a database on a given mongodb server</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L31" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -202,7 +202,7 @@
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L131" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -219,7 +219,7 @@
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L148" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -231,7 +231,7 @@
   <div class="docstring"><p>Drops a collection</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L197" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -242,16 +242,15 @@
   
   <div class="docstring"><p>Runs db.find() for a given query and returns a stream of document in the form of Keyword</p>
 
-<p>To retreive documents and decode them, you can do:
-<code>elixir
-mongo
+<p>To retreive documents and decode them, you can do:</p>
+
+<pre><code class="elixir">mongo
   |&gt; connect(&quot;test&quot;)
   |&gt; Mongo.find(&quot;anycoll&quot;, [&#39;$maxScan&#39;: 2, &#39;$skip&#39;: 0])
-  |&gt; Stream.map(fn {bsonbuffer, part} -&gt; Bson.decode(part, bsonbuffer) end)
-</code></p>
+</code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L44" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -263,7 +262,7 @@ mongo
   <div class="docstring"><p>Returns the error status of the preceding operation.</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L114" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -280,7 +279,7 @@ mongo
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L186" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -297,7 +296,7 @@ mongo
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L79" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -309,7 +308,7 @@ mongo
   <div class="docstring"><p>connects to a mongodb server by defaults to {&quot;127.0.0.1&quot;, 27017}</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L26" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -328,7 +327,7 @@ mongo
 </code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L166" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -345,7 +344,7 @@ mongo
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L107" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -362,7 +361,7 @@ mongo
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/686975fe058333a33a57cd6c75defcfe3fae3568
+    <a href="https://github.com/checkiz/elixir-mongo/blob/4ea04969ba49074a38aedcce1f948d34d7c0ac0f
 /lib/mongo.ex#L94" target="_blank" class="view_source">Source</a>
   
 </div>

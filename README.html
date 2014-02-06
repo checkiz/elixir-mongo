@@ -27,15 +27,15 @@
 <p>Provides wrappers for CRUD and Aggregate operations:</p>
 
 <ul>
-<li>find</li>
-<li>insert</li>
-<li>update</li>
-<li>remove</li>
-<li>count</li>
-<li>distinct</li>
-<li>mr (mapReduce)</li>
-<li>group</li>
-<li>aggregate</li>
+<li><code>Mongo.find(&quot;anycoll&quot;, [&#39;$maxScan&#39;: 2, &#39;$skip&#39;: 0])</code></li>
+<li><code>[[a: 23], [a: 24, b: 1]] |&gt; Mongo.insert(mongo, &quot;anycoll&quot;)</code></li>
+<li><code>Mongo.update(&quot;anycoll&quot;, [a: 456], [a: 123, b: 789])</code></li>
+<li><code>Mongo.remove(&quot;anycoll&quot;, [b: 789])</code></li>
+<li><code>Mongo.count(&quot;anycoll&quot;, [value: [&#39;$gt&#39;: 0]])</code></li>
+<li><code>Mongo.distinct(&quot;anycoll&quot;, &quot;value&quot;, [value: [&quot;$gt&quot;: 3]])</code></li>
+<li><code>Mongo.mr(&quot;anycoll&quot;, &quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;function(k, vs){return Array.sum(vs)}&quot;)</code></li>
+<li><code>Mongo.group(&quot;anycoll&quot;, a: true)</code></li>
+<li><code>Mongo.aggregate(&quot;anycoll&quot;, skip: 1, limit: 5, project: [&#39;_id&#39;: false, value: true])</code></li>
 </ul>
 
 <p>It is very light on admin commands</p>
