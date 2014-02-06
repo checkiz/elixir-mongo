@@ -31,7 +31,7 @@ defmodule Mongo do
   def connect(socket, db), do: DB.new(socket: socket, db: db)
 
   @doc """
-  Runs db.find() for a given query and returns a stream of Bson document
+  Runs db.find() for a given query and returns a stream of document in the form of Keyword
 
   To retreive documents and decode them, you can do:
   ```elixir
@@ -42,6 +42,12 @@ defmodule Mongo do
   ```
   """
   def find(db, collection, criteria // [], projection // [], opts // Opts[]) do
+    find_bsondocs(db, collection, criteria, projection, opts)
+      |> Stream.map(fn {bsonbuffer, part} -> Bson.decode(part, bsonbuffer) end) 
+  end
+
+  # executes the find command returning a list of bson docs
+  defp find_bsondocs(db, collection, criteria, projection, opts) do
     {skip, criteria} = Keyword.pop_first criteria, :'$skip', 0
     {batchsize, criteria} = Keyword.pop_first criteria, :'$limit', 0
     {batchsize, criteria} = Keyword.pop_first criteria, :'$maxScan', batchsize

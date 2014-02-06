@@ -44,7 +44,7 @@ defmodule Mongo.Test do
   test "find", ctx do
     assert ctx[:mongo]
       |> Mongo.find("anycoll", ['$maxScan': 2, '$skip': 0])
-      |> Stream.map(fn {bsonbuffer, part} -> Bson.decode(part, bsonbuffer) end) |> Enum.count >= 6
+      |> Enum.count >= 6
   end
 
   test "insert", ctx do
