@@ -23,3 +23,5 @@ It is very light on admin commands
 elixir-mongo on GitHub [source repo](https://github.com/checkiz/elixir-mongo) - 
 [documentation](https://checkiz.github.io/elixir-mongo)
 
+MongoDB needs a Bson encoder/decoder, this project uses elixir-bson see [elixir-bson source repo](https://github.com/checkiz/elixir-bson) and its 
+[documentation](https://checkiz.github.io/elixir-bson)
