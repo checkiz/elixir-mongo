@@ -4,9 +4,9 @@ defmodule Mongo.Test do
   use ExUnit.Case, async: true
 
   # In order to run the test a mongodb server must be listening locally on the default port
-  setup_all do
-    mongo = Mongo.mongo |> Mongo.connect("test")
-    Mongo.remove(mongo, "anycoll", {})
+  setup do
+    mongo = Mongo.connect("test")
+    Mongo.drop(mongo, "anycoll")
     [
       [a: 0, value: 0],
       [a: 1, value: 1],
@@ -20,56 +20,66 @@ defmodule Mongo.Test do
   end
 
   test "count", ctx do
-    assert ctx[:mongo]
-      |> Mongo.count("anycoll", [value: ['$gt': 0]]) == 5
+    if true do
+      assert ctx[:mongo]
+        |> Mongo.count("anycoll", [value: ['$gt': 0]]) == 5
+    end
   end
 
   test "distinct", ctx do
-    assert ctx[:mongo]
-      |> Mongo.distinct("anycoll", "value", [value: ["$lt": 3]])
-      |> is_list
+    if true do
+      assert ctx[:mongo]
+        |> Mongo.distinct("anycoll", "value", [value: ["$lt": 3]])
+        |> is_list
+    end
   end
 
   test "mapreduce", ctx do
+    if true do
     mongo = ctx[:mongo]
     assert Mongo.mr(mongo, "anycoll", "function(d){emit(this._id, this.value*2)}", "function(k, vs){return Array.sum(vs)}") |> is_list
     assert :ok == Mongo.mr(mongo, "anycoll", "function(d){emit('z', 3*this.value)}", "function(k, vs){return Array.sum(vs)}", "anycoll2")
+    end
   end
 
   test "group", ctx do
+    if true do
     assert ctx[:mongo]
       |> Mongo.group("anycoll", a: true) |> is_list
+    end
   end
 
   test "find", ctx do
+    if true do
     assert ctx[:mongo]
       |> Mongo.find("anycoll", ['$maxScan': 2, '$skip': 0])
       |> Enum.count >= 6
+    end
   end
 
   test "insert", ctx do
     mongo = ctx[:mongo]
-    if false do
+    if true do
       assert [a: 23] |> Mongo.insert(mongo, "anycoll") == [a: 23]
       assert [[a: 23], [a: 24, b: 1]] |> Mongo.insert(mongo, "anycoll") |> is_list
     end
-    if false do
+    if true do
       assert ['_id': 2, a: 456] |> Mongo.insert(mongo, "anycoll") |> Keyword.keyword?
       assert Mongo.getlasterror(mongo) == :ok
     end
   end
 
   test "update", ctx do
-    mongo = ctx[:mongo]
-    if false do
+    if true do
+      mongo = ctx[:mongo]
       Mongo.update(mongo, "anycoll", [a: 456], [a: 123, b: 789])
       assert Mongo.getlasterror(mongo) == :ok
     end
   end
 
   test "delete", ctx do
-    mongo = ctx[:mongo]
-    if false do
+    if true do
+      mongo = ctx[:mongo]
       Mongo.remove(mongo, "anycoll", [b: 789])
       assert Mongo.getlasterror(mongo) == :ok
     end
@@ -82,11 +92,29 @@ defmodule Mongo.Test do
     end
   end
 
+  test "drop", ctx do
+    if true do
+      mongo = ctx[:mongo]
+      assert Mongo.find(mongo, "anycoll") |> Enum.count > 0
+      assert Mongo.drop(mongo, "anycoll") == :ok
+      assert Mongo.find(mongo, "anycoll") |> Enum.count == 0
+    end
+  end
+
   test "objid", ctx do
     mongo = ctx[:mongo]
     if true do
       assert [[a: -23], [a: -24, b: 1]] |> Mongo.assign_id |> Mongo.insert(mongo, "anycoll") |> is_list
     end
+  end
+
+
+  test "def connection" do
+    assert {:ok, {_, _}} = :application.get_env(:mongo, :host)
+  end
+
+  test "mongohq" do
+    Mongo.mongo({"troup.mongohq.com", 10012}) |> IO.inspect
   end
 
 end
