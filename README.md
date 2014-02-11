@@ -3,22 +3,24 @@ elixir-mongo
 
 A [MongoDB](http://www.mongodb.org) driver in Elixir.
 
-Provides wrappers for CRUD and Aggregate operations:
+### Wrappers for CRUD and Aggregate operations:
 
-- `Mongo.find("anycoll", ['$maxScan': 2, '$skip': 0])`
-- `[[a: 23], [a: 24, b: 1]] |> Mongo.insert(mongo, "anycoll")`
-- `Mongo.update("anycoll", [a: 456], [a: 123, b: 789])`
-- `Mongo.remove("anycoll", [b: 789])`
-- `Mongo.count("anycoll", [value: ['$gt': 0]])`
-- `Mongo.distinct("anycoll", "value", [value: ["$gt": 3]])`
-- `Mongo.mr("anycoll", "function(d){emit(this._id, this.value*2)}", "function(k, vs){return Array.sum(vs)}")`
-- `Mongo.group("anycoll", a: true)`
-- `Mongo.aggregate("anycoll", skip: 1, limit: 5, project: ['_id': false, value: true])`
+- `Mongo.find(db, "anycoll", ['$maxScan': 2, '$skip': 0]) |> Enum.to_list`
+- `[[a: 23], [a: 24, b: 1]] |> Mongo.insert(db, "anycoll")`
+- `Mongo.update(db, "anycoll", [a: 456], [a: 123, b: 789])`
+- `Mongo.remove(db, "anycoll", [b: 789])`
+- `Mongo.count(db, "anycoll", [value: ['$gt': 0]])`
+- `Mongo.distinct(db, "anycoll", "value", [value: ["$gt": 3]])`
+- `Mongo.mr(db, "anycoll", "function(d){emit(this._id, this.value*2)}", "function(k, vs){return Array.sum(vs)}")`
+- `Mongo.group(db, "anycoll", a: true)`
+- `Mongo.aggregate(db, "anycoll", skip: 1, limit: 5, project: ['_id': false, value: true])`
 
-It is very light on admin commands
+### Other commands
 
-- getlasterror
-- drop
+- `db = Mongo.connect("anycoll")`
+- `Mongo.auth(db, "testuser", "123")`
+- `Mongo.getlasterror(db)`
+- `Mongo.drop(db, "anycoll")`
 
 elixir-mongo on GitHub [source repo](https://github.com/checkiz/elixir-mongo) - 
 [documentation](https://checkiz.github.io/elixir-mongo)

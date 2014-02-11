@@ -3,7 +3,7 @@ Code.require_file "test_helper.exs", __DIR__
 defmodule Mongo.Test do
   use ExUnit.Case, async: true
 
-  # In order to run the test a mongodb server must be listening locally on the default port
+  # In order to run the tests a mongodb server must be listening locally on the default port
   setup do
     mongo = Mongo.connect("test")
     Mongo.drop(mongo, "anycoll")
@@ -114,7 +114,13 @@ defmodule Mongo.Test do
   end
 
   test "mongohq" do
-    Mongo.mongo({"troup.mongohq.com", 10012}) |> IO.inspect
+    # prior to runing this test, add user `testuser` with pwd `123` to db `test`
+    if false do
+      # assert Mongo.connect("test") |> Mongo.auth("testuser", "123")  == :ok
+      # assert Mongo.connect("test") |> Mongo.auth("testuser", "124")  != :ok
+      # assert Mongo.connect("test") |> Mongo.auth("uabc", "123")      != :ok
+      # assert Mongo.connect("testZ") |> Mongo.auth("testuser", "123") != :ok
+    end
   end
 
 end

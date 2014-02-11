@@ -220,7 +220,41 @@ defmodule Mongo do
   end
 
   @doc """
-  Drops a collection
+  Allows a user to authenticate to a database
+
+  Expects a DB record, a user and a password returns `:ok` or a string containing the error message
+  """
+  def auth(db, username, password) do
+    # sysDb = DB.new(socket: socket, db: "")
+    nonce = getnonce(db)
+    hash_password = hash username <> ":mongo:" <> password
+    digest = hash nonce <> username <> hash_password
+    resp = 
+      cmd(db, authenticate: 1, nonce: nonce, user: username, key: digest)
+    case resp |> Keyword.fetch! :ok do
+      ok when ok>0 -> :ok
+      _ -> resp |> Keyword.fetch! :errmsg
+    end
+  end
+
+  # creates a md5 hash in hex with loawercase
+  defp hash(data) do
+    bc <<b::4>> inbits :crypto.hash(:md5, data) do
+        <<integer_to_binary(b,16)::binary>>
+    end |> String.downcase
+  end
+
+  # get `nonce` token from server
+  defp getnonce(db) do
+    resp = cmd(db, getnonce: 1)
+    case resp |> Keyword.fetch! :ok do
+      ok when ok>0 -> resp |> Keyword.fetch! :nonce
+      _ -> resp |> Keyword.fetch! :errmsg
+    end
+  end
+
+  @doc """
+  Drops a collection 
 
   returns `:ok` or a string containing the error message
   """
