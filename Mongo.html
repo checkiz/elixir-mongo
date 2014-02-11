@@ -52,6 +52,13 @@
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#auth/3">auth(db, username, password)</a></td>
+  
+    <td class="summary_synopsis"><p>Allows a user to authenticate to a database</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#connect/1">connect(db)</a></td>
   
     <td class="summary_synopsis"><p>connects to a database on the default server same as <a href="#connect/2"><code>connect/2</code></a> after calling <a href="#mongo/0"><code>mongo/0</code></a> to get a socket</p>
@@ -82,7 +89,7 @@
 <tr>
   <td class="summary_signature"><a href="#drop/2">drop(db, collection)</a></td>
   
-    <td class="summary_synopsis"><p>Drops a collection</p>
+    <td class="summary_synopsis"><p>Drops a collection </p>
 </td>
   
 </tr>
@@ -173,7 +180,7 @@
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
-/lib/mongo.ex#L244" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L278" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -185,7 +192,21 @@
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
-/lib/mongo.ex#L401" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L435" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="auth/3">
+    <strong>auth(db, username, password)</strong>
+  </p>
+  
+  <div class="docstring"><p>Allows a user to authenticate to a database</p>
+
+<p>Expects a DB record, a user and a password returns <code>:ok</code> or a string containing the error message</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+/lib/mongo.ex#L227" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -251,13 +272,13 @@
     <strong>drop(db, collection)</strong>
   </p>
   
-  <div class="docstring"><p>Drops a collection</p>
+  <div class="docstring"><p>Drops a collection </p>
 
 <p>returns <code>:ok</code> or a string containing the error message</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
-/lib/mongo.ex#L227" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L261" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
