@@ -22,24 +22,52 @@ defmodule Mongo do
 
   @doc """
   connects to a mongodb server by defaults to {"127.0.0.1", 27017}
+
+  This can be overwritten by the environment variable `:host`, ie:
+
+  ```erlang
+  [
+    {mongo, 
+      [
+        {host, {"127.0.0.1", 27017}}
+      ]}
+  ].
+  ```
   """
-  def mongo(host // "127.0.0.1", port // 27017), do: Socket.TCP.connect!(host, port)
+  def mongo() do
+    mongo(
+      case :application.get_env(:mongo, :host) do
+        {:ok, {host, port}} -> {host, port}
+        _                   -> {"127.0.0.1", 27017}
+      end)
+  end
+  def mongo({host, port}), do: Socket.TCP.connect!(host, port)
 
   @doc """
   connects to a database on a given mongodb server
   """
-  def connect(socket, db), do: DB.new(socket: socket, db: db)
+  def connect(socket, db) when is_record(socket, Socket.TCP), do: DB.new(socket: socket, db: db)
+  def connect({host, port}, db), do: DB.new(socket: mongo({host, port}), db: db)
+
+  @doc """
+  connects to a database on the default server same as `connect/2` after calling `mongo/0` to get a socket
+  """
+  def connect(db), do: DB.new(socket: mongo, db: db)
 
   @doc """
   Runs db.find() for a given query and returns a stream of document in the form of Keyword
 
-  To retreive documents and decode them, you can do:
+  This would provide a stream of document:
 
   ```elixir
   mongo
     |> connect("test")
     |> Mongo.find("anycoll", ['$maxScan': 2, '$skip': 0])
   ```
+
+  See `Stream` in the elixir library for more info on streams. For a limited number of
+  document, simply add `|> Enum.tolist` to get all documents at once.
+
   """
   def find(db, collection, criteria // [], projection // [], opts // Opts[]) do
     find_bsondocs(db, collection, criteria, projection, opts)
@@ -192,9 +220,51 @@ defmodule Mongo do
   end
 
   @doc """
-  Drops a collection
+  Allows a user to authenticate to a database
+
+  Expects a DB record, a user and a password returns `:ok` or a string containing the error message
   """
-  def drop(db, collection), do: cmd_command(db, drop: collection) |> exec!(db.socket)
+  def auth(db, username, password) do
+    # sysDb = DB.new(socket: socket, db: "")
+    nonce = getnonce(db)
+    hash_password = hash username <> ":mongo:" <> password
+    digest = hash nonce <> username <> hash_password
+    resp = 
+      cmd(db, authenticate: 1, nonce: nonce, user: username, key: digest)
+    case resp |> Keyword.fetch! :ok do
+      ok when ok>0 -> :ok
+      _ -> resp |> Keyword.fetch! :errmsg
+    end
+  end
+
+  # creates a md5 hash in hex with loawercase
+  defp hash(data) do
+    bc <<b::4>> inbits :crypto.hash(:md5, data) do
+        <<integer_to_binary(b,16)::binary>>
+    end |> String.downcase
+  end
+
+  # get `nonce` token from server
+  defp getnonce(db) do
+    resp = cmd(db, getnonce: 1)
+    case resp |> Keyword.fetch! :ok do
+      ok when ok>0 -> resp |> Keyword.fetch! :nonce
+      _ -> resp |> Keyword.fetch! :errmsg
+    end
+  end
+
+  @doc """
+  Drops a collection 
+
+  returns `:ok` or a string containing the error message
+  """
+  def drop(db, collection) do
+    resp = cmd(db, drop: collection)
+    case resp |> Keyword.fetch! :ok do
+      ok when ok>0 -> :ok
+      _ -> resp |> Keyword.fetch! :errmsg
+    end
+  end
 
   @doc """
   Calculates aggregate values for the data in a collection (see db.collection.aggregate)

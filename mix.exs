@@ -13,7 +13,10 @@ defmodule Mongo.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [applications: [:socket]]
+    [
+      applications: [:socket],
+      env: [host: {"127.0.0.1", 27017}]
+    ]
   end
   
   # Returns the list of dependencies for prod
@@ -36,4 +39,5 @@ defmodule Mongo.Mixfile do
       main: "README",
       source_ref: System.cmd("git rev-parse --verify --quiet HEAD") ]
   end
+
 end
