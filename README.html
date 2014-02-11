@@ -24,32 +24,34 @@
 
 <p>A <a href="http://www.mongodb.org">MongoDB</a> driver in Elixir.</p>
 
-<p>Provides wrappers for CRUD and Aggregate operations:</p>
+<h3>Wrappers for CRUD and Aggregate operations:</h3>
 
 <ul>
-<li><code>Mongo.find(&quot;anycoll&quot;, [&#39;$maxScan&#39;: 2, &#39;$skip&#39;: 0])</code></li>
-<li><code>[[a: 23], [a: 24, b: 1]] |&gt; Mongo.insert(mongo, &quot;anycoll&quot;)</code></li>
-<li><code>Mongo.update(&quot;anycoll&quot;, [a: 456], [a: 123, b: 789])</code></li>
-<li><code>Mongo.remove(&quot;anycoll&quot;, [b: 789])</code></li>
-<li><code>Mongo.count(&quot;anycoll&quot;, [value: [&#39;$gt&#39;: 0]])</code></li>
-<li><code>Mongo.distinct(&quot;anycoll&quot;, &quot;value&quot;, [value: [&quot;$gt&quot;: 3]])</code></li>
-<li><code>Mongo.mr(&quot;anycoll&quot;, &quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;function(k, vs){return Array.sum(vs)}&quot;)</code></li>
-<li><code>Mongo.group(&quot;anycoll&quot;, a: true)</code></li>
-<li><code>Mongo.aggregate(&quot;anycoll&quot;, skip: 1, limit: 5, project: [&#39;_id&#39;: false, value: true])</code></li>
+<li><code>Mongo.find(db, &quot;anycoll&quot;, [&#39;$maxScan&#39;: 2, &#39;$skip&#39;: 0]) |&gt; Enum.to_list</code></li>
+<li><code>[[a: 23], [a: 24, b: 1]] |&gt; Mongo.insert(db, &quot;anycoll&quot;)</code></li>
+<li><code>Mongo.update(db, &quot;anycoll&quot;, [a: 456], [a: 123, b: 789])</code></li>
+<li><code>Mongo.remove(db, &quot;anycoll&quot;, [b: 789])</code></li>
+<li><code>Mongo.count(db, &quot;anycoll&quot;, [value: [&#39;$gt&#39;: 0]])</code></li>
+<li><code>Mongo.distinct(db, &quot;anycoll&quot;, &quot;value&quot;, [value: [&quot;$gt&quot;: 3]])</code></li>
+<li><code>Mongo.mr(db, &quot;anycoll&quot;, &quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;function(k, vs){return Array.sum(vs)}&quot;)</code></li>
+<li><code>Mongo.group(db, &quot;anycoll&quot;, a: true)</code></li>
+<li><code>Mongo.aggregate(db, &quot;anycoll&quot;, skip: 1, limit: 5, project: [&#39;_id&#39;: false, value: true])</code></li>
 </ul>
 
-<p>It is very light on admin commands</p>
+<h3>Other commands</h3>
 
 <ul>
-<li>getlasterror</li>
-<li>drop</li>
+<li><code>db = Mongo.connect(&quot;anycoll&quot;)</code></li>
+<li><code>Mongo.auth(db, &quot;testuser&quot;, &quot;123&quot;)</code></li>
+<li><code>Mongo.getlasterror(db)</code></li>
+<li><code>Mongo.drop(db, &quot;anycoll&quot;)</code></li>
 </ul>
 
 <p>elixir-mongo on GitHub <a href="https://github.com/checkiz/elixir-mongo">source repo</a> - 
 <a href="https://checkiz.github.io/elixir-mongo">documentation</a></p>
 
 <p>MongoDB needs a Bson encoder/decoder, this project uses elixir-bson see <a href="https://github.com/checkiz/elixir-bson">elixir-bson source repo</a> and its 
-<a href="https://checkiz.github.io/elixir-bson">documentation</a></p>
+<a href="http://checkiz.github.io/elixir-bson">documentation</a></p>
 
     </div>
   </body>

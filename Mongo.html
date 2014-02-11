@@ -28,7 +28,7 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+        <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L1" target="_blank" class="view_source">Source</a>
       
 
@@ -48,6 +48,13 @@
   <td class="summary_signature"><a href="#assign_id/1">assign_id(doc)</a></td>
   
     <td class="summary_synopsis"><p>Assigns id to a document or a list of document when <code>:_id</code> is missing</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#auth/3">auth(db, username, password)</a></td>
+  
+    <td class="summary_synopsis"><p>Allows a user to authenticate to a database</p>
 </td>
   
 </tr>
@@ -82,7 +89,7 @@
 <tr>
   <td class="summary_signature"><a href="#drop/2">drop(db, collection)</a></td>
   
-    <td class="summary_synopsis"><p>Drops a collection</p>
+    <td class="summary_synopsis"><p>Drops a collection </p>
 </td>
   
 </tr>
@@ -172,8 +179,8 @@
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
-/lib/mongo.ex#L244" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
+/lib/mongo.ex#L278" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -184,8 +191,22 @@
   <div class="docstring"><p>Assigns id to a document or a list of document when <code>:_id</code> is missing</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
-/lib/mongo.ex#L401" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
+/lib/mongo.ex#L435" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="auth/3">
+    <strong>auth(db, username, password)</strong>
+  </p>
+  
+  <div class="docstring"><p>Allows a user to authenticate to a database</p>
+
+<p>Expects a DB record, a user and a password returns <code>:ok</code> or a string containing the error message</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
+/lib/mongo.ex#L227" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -196,7 +217,7 @@
   <div class="docstring"><p>connects to a database on the default server same as <a href="#connect/2"><code>connect/2</code></a> after calling <a href="#mongo/0"><code>mongo/0</code></a> to get a socket</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L55" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -208,7 +229,7 @@
   <div class="docstring"><p>connects to a database on a given mongodb server</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -225,7 +246,7 @@
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L159" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -242,7 +263,7 @@
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L176" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -251,13 +272,13 @@
     <strong>drop(db, collection)</strong>
   </p>
   
-  <div class="docstring"><p>Drops a collection</p>
+  <div class="docstring"><p>Drops a collection </p>
 
 <p>returns <code>:ok</code> or a string containing the error message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
-/lib/mongo.ex#L227" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
+/lib/mongo.ex#L261" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -278,7 +299,7 @@
 document, simply add <code>|&gt; Enum.tolist</code> to get all documents at once.</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L72" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -290,7 +311,7 @@ document, simply add <code>|&gt; Enum.tolist</code> to get all documents at once
   <div class="docstring"><p>Returns the error status of the preceding operation.</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L142" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -307,7 +328,7 @@ document, simply add <code>|&gt; Enum.tolist</code> to get all documents at once
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L214" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -324,7 +345,7 @@ document, simply add <code>|&gt; Enum.tolist</code> to get all documents at once
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L107" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -346,7 +367,7 @@ document, simply add <code>|&gt; Enum.tolist</code> to get all documents at once
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L37" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -357,7 +378,7 @@ document, simply add <code>|&gt; Enum.tolist</code> to get all documents at once
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L44" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -376,7 +397,7 @@ mongo
 </code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L194" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -393,7 +414,7 @@ mongo
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L135" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -410,7 +431,7 @@ mongo
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/e1ec6d39c71155304899f2c1b08629204991f789
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
 /lib/mongo.ex#L122" target="_blank" class="view_source">Source</a>
   
 </div>
