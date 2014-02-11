@@ -51,7 +51,7 @@ defmodule Mongo do
     {skip, criteria} = Keyword.pop_first criteria, :'$skip', 0
     {batchsize, criteria} = Keyword.pop_first criteria, :'$limit', 0
     {batchsize, criteria} = Keyword.pop_first criteria, :'$maxScan', batchsize
-    criteria = if criteria == [], do: {}
+    criteria = if criteria == [], do: {}, else: criteria
     case query_command(db, collection, criteria, projection, opts, skip, batchsize)
       |> exec(db.socket) do
       Reply[nbdocs: nbdocs, bsonbuffer: bsonbuffer, cursorid: 0] ->
