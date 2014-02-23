@@ -1,4 +1,4 @@
-# v0.2
+# v0.2-dev
 
 * Enhancements
   * Mongo.Cursor: module to interact with MongoDB cursors
