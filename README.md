@@ -33,7 +33,7 @@ A [MongoDB](http://www.mongodb.org) driver in Elixir.
 - `db.collection("anycoll").drop`
 
 elixir-mongo on GitHub [source repo](https://github.com/checkiz/elixir-mongo) - 
-[documentation](https://checkiz.github.io/elixir-mongo)
+[documentation](http://checkiz.github.io/elixir-mongo)
 
 MongoDB needs a Bson encoder/decoder, this project uses elixir-bson see [elixir-bson source repo](https://github.com/checkiz/elixir-bson) and its 
 [documentation](http://checkiz.github.io/elixir-bson)
