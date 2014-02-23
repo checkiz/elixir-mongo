@@ -3,24 +3,34 @@ elixir-mongo
 
 A [MongoDB](http://www.mongodb.org) driver in Elixir.
 
-### Wrappers for CRUD and Aggregate operations:
+### Connecting:
 
-- `Mongo.find(db, "anycoll", ['$maxScan': 2, '$skip': 0]) |> Enum.to_list`
-- `[[a: 23], [a: 24, b: 1]] |> Mongo.insert(db, "anycoll")`
-- `Mongo.update(db, "anycoll", [a: 456], [a: 123, b: 789])`
-- `Mongo.remove(db, "anycoll", [b: 789])`
-- `Mongo.count(db, "anycoll", [value: ['$gt': 0]])`
-- `Mongo.distinct(db, "anycoll", "value", [value: ["$gt": 3]])`
-- `Mongo.mr(db, "anycoll", "function(d){emit(this._id, this.value*2)}", "function(k, vs){return Array.sum(vs)}")`
-- `Mongo.group(db, "anycoll", a: true)`
-- `Mongo.aggregate(db, "anycoll", skip: 1, limit: 5, project: ['_id': false, value: true])`
+- `mongo = Mongo.connect`
+- `db = mongo.db("test")`
+- `anycoll = db.collection("anycoll")`
+
+### Wrappers for CRUD operations:
+
+- `anycoll.find.toArray`
+- `anycoll.find.stream |> Enum.to_list`
+- `anycoll.find.skip(1).toArray`
+- `[[a: 23], [a: 24, b: 1]] |> anycoll.insert`
+- `anycoll.update([a: 456], [a: 123, b: 789])`
+- `anycoll.delete([b: 789])`
+
+### Wrappers for Aggregate operations:
+
+- `anycoll.count([value: ['$gt': 0]])`
+- `anycoll.distinct("value", [value: ["$gt": 1]])`
+- `anycoll.mr("function(d){emit(this._id, this.value*2)}", "function(k, vs){return Array.sum(vs)}")`
+- `anycoll.group(a: true)`
+- `anycoll.aggregate(skip: 1, limit: 5, project: ['_id': false, value: true])`
 
 ### Other commands
 
-- `db = Mongo.connect("anycoll")`
-- `Mongo.auth(db, "testuser", "123")`
-- `Mongo.getlasterror(db)`
-- `Mongo.drop(db, "anycoll")`
+- `db.auth("testuser", "123")`
+- `db.getLastError`
+- `db.collection("anycoll").drop`
 
 elixir-mongo on GitHub [source repo](https://github.com/checkiz/elixir-mongo) - 
 [documentation](https://checkiz.github.io/elixir-mongo)

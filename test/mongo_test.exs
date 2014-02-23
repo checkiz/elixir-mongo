@@ -3,10 +3,12 @@ Code.require_file "test_helper.exs", __DIR__
 defmodule Mongo.Test do
   use ExUnit.Case, async: true
 
-  # In order to run the tests a mongodb server must be listening locally on the default port
+  test "ping", do: assert :ok == Mongo.connect.ping
+  # # In order to run the tests a mongodb server must be listening locally on the default port
   setup do
-    mongo = Mongo.connect("test")
-    Mongo.drop(mongo, "anycoll")
+    db = Mongo.connect.db("test")
+    anycoll = db.collection("anycoll")
+    anycoll.drop
     [
       [a: 0, value: 0],
       [a: 1, value: 1],
@@ -15,102 +17,113 @@ defmodule Mongo.Test do
       [a: 4, value: 1],
       [a: 5, value: 3]
     ]
-      |> Mongo.insert(mongo, "anycoll")
-    { :ok, mongo: mongo }
+      |> anycoll.insert
+    { :ok, db: db, anycoll: anycoll }
   end
 
   test "count", ctx do
     if true do
-      assert ctx[:mongo]
-        |> Mongo.count("anycoll", [value: ['$gt': 0]]) == 5
+      assert ctx[:anycoll].count!([value: ['$gt': 0]]) == 5
     end
   end
 
   test "distinct", ctx do
     if true do
-      assert ctx[:mongo]
-        |> Mongo.distinct("anycoll", "value", [value: ["$lt": 3]])
+      assert ctx[:anycoll].distinct!("value", [value: ["$lt": 3]])
         |> is_list
     end
   end
 
   test "mapreduce", ctx do
     if true do
-    mongo = ctx[:mongo]
-    assert Mongo.mr(mongo, "anycoll", "function(d){emit(this._id, this.value*2)}", "function(k, vs){return Array.sum(vs)}") |> is_list
-    assert :ok == Mongo.mr(mongo, "anycoll", "function(d){emit('z', 3*this.value)}", "function(k, vs){return Array.sum(vs)}", "anycoll2")
+      anycoll = ctx[:anycoll]
+      assert anycoll.mr!("function(d){emit(this._id, this.value*2)}", "function(k, vs){return Array.sum(vs)}") |> is_list
+      assert :ok == anycoll.mr!("function(d){emit('z', 3*this.value)}", "function(k, vs){return Array.sum(vs)}", "anycoll2")
     end
   end
 
   test "group", ctx do
     if true do
-    assert ctx[:mongo]
-      |> Mongo.group("anycoll", a: true) |> is_list
+      assert ctx[:anycoll].group!(a: true) |> is_list
     end
   end
 
   test "find", ctx do
     if true do
-    assert ctx[:mongo]
-      |> Mongo.find("anycoll", ['$maxScan': 2, '$skip': 0])
-      |> Enum.count >= 6
+      # assert ctx[:anycoll].find().stream
+      #   |> Enum.count == 6
+      # assert ctx[:anycoll].find().skip(1).stream
+      #   |> Enum.count == 5
+      assert ctx[:anycoll].find().stream
+      # assert ctx[:anycoll].find().batchSize(2).stream
+        |> Enum.count == 6
     end
   end
 
   test "insert", ctx do
-    mongo = ctx[:mongo]
+    anycoll = ctx[:anycoll]
     if true do
-      assert [a: 23] |> Mongo.insert(mongo, "anycoll") == [a: 23]
-      assert [[a: 23], [a: 24, b: 1]] |> Mongo.insert(mongo, "anycoll") |> is_list
+      assert [a: 23] |> anycoll.insert == [a: 23]
+      assert [[a: 23], [a: 24, b: 1]] |> anycoll.insert |> is_list
     end
     if true do
-      assert ['_id': 2, a: 456] |> Mongo.insert(mongo, "anycoll") |> Keyword.keyword?
-      assert Mongo.getlasterror(mongo) == :ok
+      assert ['_id': 2, a: 456] |> anycoll.insert |> Keyword.keyword?
+      assert ctx[:db].getLastError == :ok
     end
   end
 
   test "update", ctx do
     if true do
-      mongo = ctx[:mongo]
-      Mongo.update(mongo, "anycoll", [a: 456], [a: 123, b: 789])
-      assert Mongo.getlasterror(mongo) == :ok
+      ctx[:anycoll].update([a: 456], [a: 123, b: 789])
+      assert ctx[:db].getLastError == :ok
     end
   end
 
   test "delete", ctx do
     if true do
-      mongo = ctx[:mongo]
-      Mongo.remove(mongo, "anycoll", [b: 789])
-      assert Mongo.getlasterror(mongo) == :ok
+      ctx[:anycoll].delete([b: 789])
+      assert ctx[:db].getLastError == :ok
     end
   end
 
   test "aggregate", ctx do
-    mongo = ctx[:mongo]
     if true do
-      assert [[value: 1]|_] = Mongo.aggregate(mongo, "anycoll", skip: 1, limit: 5, project: ['_id': false, value: true])
+      assert [[value: 1]|_] = ctx[:anycoll].aggregate(skip: 1, limit: 5, project: ['_id': false, value: true])
     end
   end
 
   test "drop", ctx do
     if true do
-      mongo = ctx[:mongo]
-      assert Mongo.find(mongo, "anycoll") |> Enum.count > 0
-      assert Mongo.drop(mongo, "anycoll") == :ok
-      assert Mongo.find(mongo, "anycoll") |> Enum.count == 0
+      anycoll = ctx[:anycoll]
+      assert anycoll.count! > 0
+      assert anycoll.drop! == :ok
+      assert anycoll.count! == 0
     end
   end
 
   test "objid", ctx do
-    mongo = ctx[:mongo]
     if true do
-      assert [[a: -23], [a: -24, b: 1]] |> Mongo.assign_id |> Mongo.insert(mongo, "anycoll") |> is_list
+      anycoll = ctx[:anycoll]
+      assert [[a: -23], [a: -24, b: 1]] |> Mongo.assign_id |> anycoll.insert |> is_list
     end
   end
 
 
   test "def connection" do
     assert {:ok, {_, _}} = :application.get_env(:mongo, :host)
+  end
+
+  test "bang", ctx do
+    if true do
+      assert_raise Mongo.Error, fn -> ctx[:anycoll].find([value: ['$in': 0]]).toArray end
+      assert_raise Mongo.Error, fn -> ctx[:anycoll].count!([value: ['$in': 0]]) end
+    end
+  end
+
+  test "error", ctx do
+    if true do
+      assert {:error, _} = ctx[:anycoll].count([value: ['$in': 0]])
+    end
   end
 
   test "mongohq" do
@@ -123,4 +136,34 @@ defmodule Mongo.Test do
     end
   end
 
+  test "insert error", ctx do
+    anycoll = ctx[:anycoll]
+    if true do
+      [_id: 1, a: 31] |> anycoll.insert
+      [_id: 1, a: 32] |> anycoll.insert
+      assert {:error, _} = ctx[:db].getLastError
+    end
+  end
+
+  test "batchSize" do
+    assert Mongo.connect.db("test").collection("anycoll").find.batchSize(2).toArray |> Enum.count == 6
+  end  
+
+  test "batchArray" do
+    assert Mongo.connect.db("test").collection("anycoll").find.batchSize(2).batchArray |> Enum.count == 3
+  end  
+
+  test "async ping" do
+    me = self()
+    Process.spawn_link(
+      fn() ->
+        mongo = Mongo.connect(:active)
+        Mongo.Request.adminCmd(mongo, ping: true).send
+        receive do
+          {:tcp, _, m} ->
+            Process.send me, mongo.response!(m).success
+        end
+      end)
+    assert_receive :ok
+  end
 end
