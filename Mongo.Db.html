@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mongo.Db</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mongo.Db
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Holds operations on MongoDB databases</p>
+
+        </div>
+      
+
+      
+        <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L1" target="_blank" class="view_source">Source</a>
+      
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#auth/3">auth(username, password, db)</a></td>
+  
+    <td class="summary_synopsis"><p>Authenticates a user to a database</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cmd/2">cmd(command, db)</a></td>
+  
+    <td class="summary_synopsis"><p>Runs a database command</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cmd!/2">cmd!(command, db)</a></td>
+  
+    <td class="summary_synopsis"><p>See cmd/2</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#collection/2">collection(collname, db)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a collection of the database</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#getLastError/2">getLastError(w \\ 0, db)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the error status of the preceding operation.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#getLastError!/1">getLastError!(db)</a></td>
+  
+    <td class="summary_synopsis"><p>See getLastError/1</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#getLastError!/2">getLastError!(w, db)</a></td>
+  
+    <td class="summary_synopsis"><p>See getLastError/2</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#getPrevError/1">getPrevError(db)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the previous error status of the preceding operation(s).</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#getPrevError!/1">getPrevError!(db)</a></td>
+  
+    <td class="summary_synopsis"><p>See getPrevError/1</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#kill_cursor/2">kill_cursor(cursorID, db)</a></td>
+  
+    <td class="summary_synopsis"><p>Kill a cursor of the db</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#mongo/1">mongo(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Gets mongo server hosting the database</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#name/1">name(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Gets dbname</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#new/2">new(mongo, dbname)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a db record</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#resetError/1">resetError(db)</a></td>
+  
+    <td class="summary_synopsis"><p>Resets error</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#resetError!/1">resetError!(db)</a></td>
+  
+    <td class="summary_synopsis"><p>See resetError/1</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="auth/3">
+    <strong>auth(username, password, db)</strong>
+  </p>
+  
+  <div class="docstring"><p>Authenticates a user to a database</p>
+
+<p>Expects a DB record, a user and a password returns <code>:ok</code> or a string containing the error message</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L29" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="cmd/2">
+    <strong>cmd(command, db)</strong>
+  </p>
+  
+  <div class="docstring"><p>Runs a database command</p>
+
+<p>Before using this check <a href="Mongo.Collection.html"><code>Mongo.Collection</code></a>, <a href="Mongo.Db.html"><code>Mongo.Db</code></a> or <a href="Mongo.Server.html"><code>Mongo.Server</code></a>
+for commands already implemented by these modules</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L109" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="cmd!/2">
+    <strong>cmd!(command, db)</strong>
+  </p>
+  
+  <div class="docstring"><p>See cmd/2</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L116" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="collection/2">
+    <strong>collection(collname, db)</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns a collection of the database</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L65" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="getLastError/2">
+    <strong>getLastError(w \\ 0, db)</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns the error status of the preceding operation.</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L70" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="getLastError!/1">
+    <strong>getLastError!(db)</strong>
+  </p>
+  
+  <div class="docstring"><p>See getLastError/1</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L77" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="getLastError!/2">
+    <strong>getLastError!(w, db)</strong>
+  </p>
+  
+  <div class="docstring"><p>See getLastError/2</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L78" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="getPrevError/1">
+    <strong>getPrevError(db)</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns the previous error status of the preceding operation(s).</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L83" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="getPrevError!/1">
+    <strong>getPrevError!(db)</strong>
+  </p>
+  
+  <div class="docstring"><p>See getPrevError/1</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L90" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="kill_cursor/2">
+    <strong>kill_cursor(cursorID, db)</strong>
+  </p>
+  
+  <div class="docstring"><p>Kill a cursor of the db</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L121" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="mongo/1">
+    <strong>mongo(arg1)</strong>
+  </p>
+  
+  <div class="docstring"><p>Gets mongo server hosting the database</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L13" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="name/1">
+    <strong>name(arg1)</strong>
+  </p>
+  
+  <div class="docstring"><p>Gets dbname</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L17" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="new/2">
+    <strong>new(mongo, dbname)</strong>
+  </p>
+  
+  <div class="docstring"><p>Creates a db record</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L22" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="resetError/1">
+    <strong>resetError(db)</strong>
+  </p>
+  
+  <div class="docstring"><p>Resets error</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L95" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="resetError!/1">
+    <strong>resetError!(db)</strong>
+  </p>
+  
+  <div class="docstring"><p>See resetError/1</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_db.ex#L101" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

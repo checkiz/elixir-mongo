@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mongo.Find</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mongo.Find
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Find operation on MongoDB</p>
+
+        </div>
+      
+
+      
+        <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_find.ex#L1" target="_blank" class="view_source">Source</a>
+      
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#batchSize/2">batchSize(n, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Specifies the number of documents to return in each batch</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#exec/1">exec(f)</a></td>
+  
+    <td class="summary_synopsis"><p>Executes the query and returns a <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#new/3">new(collection, selector, projector)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a new find operation.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#opts/2">opts(options, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Sets query options</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#skip/2">skip(n, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Sets where MongoDB begins returning results</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#stream/1">stream(find)</a></td>
+  
+    <td class="summary_synopsis"><p>Stream documents retreived from a find query</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#toArray/1">toArray(find)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a list of documents retreived from a find query</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="batchSize/2">
+    <strong>batchSize(n, f)</strong>
+  </p>
+  
+  <div class="docstring"><p>Specifies the number of documents to return in each batch</p>
+
+<p>Must be run before executing the query</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_find.ex#L41" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="exec/1">
+    <strong>exec(f)</strong>
+  </p>
+  
+  <div class="docstring"><p>Executes the query and returns a <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a></p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_find.ex#L76" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="new/3">
+    <strong>new(collection, selector, projector)</strong>
+  </p>
+  
+  <div class="docstring"><p>Creates a new find operation.</p>
+
+<p>Not to be used directly, prefer <a href="Mongo.Collection.html#find/3"><code>Mongo.Collection.find/3</code></a> that returns a <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a></p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_find.ex#L19" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="opts/2">
+    <strong>opts(options, f)</strong>
+  </p>
+  
+  <div class="docstring"><p>Sets query options</p>
+
+<p>Defaults option set is equivalent of calling:</p>
+
+<pre><code>Find.opts(
+  awaitdata: false
+  nocursortimeout: false
+  slaveok: true
+  tailablecursor: false)
+</code></pre>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_find.ex#L99" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="skip/2">
+    <strong>skip(n, f)</strong>
+  </p>
+  
+  <div class="docstring"><p>Sets where MongoDB begins returning results</p>
+
+<p>Must be run before executing the query</p>
+
+<pre><code>iex&gt; Mongo.connect.db(&quot;test&quot;).collection(&quot;anycoll&quot;).find.skip(1).toArray |&gt; Enum.count
+5
+iex&gt; Mongo.connect.db(&quot;test&quot;).collection(&quot;anycoll&quot;).find.skip(2).toArray |&gt; Enum.count
+4
+</code></pre>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_find.ex#L34" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="stream/1">
+    <strong>stream(find)</strong>
+  </p>
+  
+  <div class="docstring"><p>Stream documents retreived from a find query</p>
+
+<p>The following 2 statements are equivalent:</p>
+
+<pre><code>Mongo.connect.db(&quot;test&quot;).collection(&quot;anycoll&quot;).find.stream |&gt; Enum.to_list
+Mongo.connect.db(&quot;test&quot;).collection(&quot;anycoll&quot;).find.toArray
+</code></pre>
+
+<p>see <code>Mongo.Cursor.stream/2</code></p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_find.ex#L53" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="toArray/1">
+    <strong>toArray(find)</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns a list of documents retreived from a find query</p>
+
+<p>see <code>Mongo.Cursor.toArray/2</code></p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_find.ex#L63" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

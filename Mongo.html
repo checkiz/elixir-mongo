@@ -26,9 +26,14 @@
       </h1>
 
       
+        <div id="moduledoc" class="docstring">
+          <p><a href="http://www.mongodb.org">MongoDB</a> driver in Elixir</p>
+
+        </div>
+      
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
+        <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
 /lib/mongo.ex#L1" target="_blank" class="view_source">Source</a>
       
 
@@ -38,13 +43,6 @@
         <h2 id="functions_summary">Functions summary</h2>
         <table class="summary">
           <tr>
-  <td class="summary_signature"><a href="#aggregate/3">aggregate(db, collection, pipeline)</a></td>
-  
-    <td class="summary_synopsis"><p>Calculates aggregate values for the data in a collection (see db.collection.aggregate)</p>
-</td>
-  
-</tr>
-<tr>
   <td class="summary_signature"><a href="#assign_id/1">assign_id(doc)</a></td>
   
     <td class="summary_synopsis"><p>Assigns id to a document or a list of document when <code>:_id</code> is missing</p>
@@ -52,104 +50,30 @@
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#auth/3">auth(db, username, password)</a></td>
+  <td class="summary_signature"><a href="#connect/0">connect()</a></td>
   
-    <td class="summary_synopsis"><p>Allows a user to authenticate to a database</p>
+    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#connect/1">connect(db)</a></td>
+  <td class="summary_signature"><a href="#connect/1">connect(host_or_mode)</a></td>
   
-    <td class="summary_synopsis"><p>connects to a database on the default server same as <a href="#connect/2"><code>connect/2</code></a> after calling <a href="#mongo/0"><code>mongo/0</code></a> to get a socket</p>
+    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#connect/2">connect(socket, db)</a></td>
+  <td class="summary_signature"><a href="#connect/2">connect(host, port_or_mode)</a></td>
   
-    <td class="summary_synopsis"><p>connects to a database on a given mongodb server</p>
+    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#count/4">count(db, collection, arg3, arg4)</a></td>
+  <td class="summary_signature"><a href="#connect/3">connect(host, port, opts)</a></td>
   
-    <td class="summary_synopsis"><p>Count documents in a collection (see db.collection.count)</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#distinct/4">distinct(db, collection, key, arg4)</a></td>
-  
-    <td class="summary_synopsis"><p>Finds the distinct values for a specified field across a single collection (see db.collection.distinct)</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#drop/2">drop(db, collection)</a></td>
-  
-    <td class="summary_synopsis"><p>Drops a collection </p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#find/5">find(db, collection, arg3, arg4, arg5)</a></td>
-  
-    <td class="summary_synopsis"><p>Runs db.find() for a given query and returns a stream of document in the form of Keyword</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#getlasterror/2">getlasterror(db, arg2)</a></td>
-  
-    <td class="summary_synopsis"><p>Returns the error status of the preceding operation.</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#group/6">group(db, collection, key, arg4, arg5, arg6)</a></td>
-  
-    <td class="summary_synopsis"><p>Groups documents in a collection by the specified key (see db.collection.group)</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#insert/3">insert(doc, db, collection)</a></td>
-  
-    <td class="summary_synopsis"><p>Insert one document or an array of documents into a collection</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#mongo/0">mongo()</a></td>
-  
-    <td class="summary_synopsis"><p>connects to a mongodb server by defaults to {&quot;127.0.0.1&quot;, 27017}</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#mongo/1">mongo(arg1)</a></td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#mr/6">mr(db, collection, map, arg4, arg5, arg6)</a></td>
-  
-    <td class="summary_synopsis"><p>Provides a wrapper around the mapReduce command (db.collection.mapReduce)</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#remove/4">remove(db, collection, query, arg4)</a></td>
-  
-    <td class="summary_synopsis"><p>Removes an existing document or documents in a collection (see db.collection.remove)</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#update/6">update(db, collection, query, update, arg5, arg6)</a></td>
-  
-    <td class="summary_synopsis"><p>Modifies an existing document or documents in a collection (see db.collection.update)</p>
+    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </td>
   
 </tr>
@@ -167,272 +91,67 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="aggregate/3">
-    <strong>aggregate(db, collection, pipeline)</strong>
-  </p>
-  
-  <div class="docstring"><p>Calculates aggregate values for the data in a collection (see db.collection.aggregate)</p>
-
-<pre><code class="elixir">mongo
-  |&gt; connect(&quot;test&quot;)
-  |&gt; Mongo.aggregate(&quot;anycoll&quot;, skip: 1, limit: 5, project: [&#39;_id&#39;: false, value: true])
-</code></pre>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L278" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
   <p class="signature" id="assign_id/1">
     <strong>assign_id(doc)</strong>
   </p>
   
   <div class="docstring"><p>Assigns id to a document or a list of document when <code>:_id</code> is missing</p>
+
+<pre><code>[a: 1] |&gt; Mongo.assign_id
+[_id: ObjectId(...), a: 1]
+</code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L435" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo.ex#L29" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="auth/3">
-    <strong>auth(db, username, password)</strong>
+  <p class="signature" id="connect/0">
+    <strong>connect()</strong>
   </p>
   
-  <div class="docstring"><p>Allows a user to authenticate to a database</p>
-
-<p>Expects a DB record, a user and a password returns <code>:ok</code> or a string containing the error message</p>
+  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L227" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo.ex#L9" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="connect/1">
-    <strong>connect(db)</strong>
+    <strong>connect(host_or_mode)</strong>
   </p>
   
-  <div class="docstring"><p>connects to a database on the default server same as <a href="#connect/2"><code>connect/2</code></a> after calling <a href="#mongo/0"><code>mongo/0</code></a> to get a socket</p>
+  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L55" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo.ex#L13" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="connect/2">
-    <strong>connect(socket, db)</strong>
+    <strong>connect(host, port_or_mode)</strong>
   </p>
   
-  <div class="docstring"><p>connects to a database on a given mongodb server</p>
+  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo.ex#L17" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="count/4">
-    <strong>count(db, collection, arg3, arg4)</strong>
+  <p class="signature" id="connect/3">
+    <strong>connect(host, port, opts)</strong>
   </p>
   
-  <div class="docstring"><p>Count documents in a collection (see db.collection.count)</p>
-
-<pre><code class="elixir">mongo
-  |&gt; connect(&quot;test&quot;)
-  |&gt; Mongo.count(&quot;anycoll&quot;, [value: [&#39;$gt&#39;: 0]])
-</code></pre>
+  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L159" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="distinct/4">
-    <strong>distinct(db, collection, key, arg4)</strong>
-  </p>
-  
-  <div class="docstring"><p>Finds the distinct values for a specified field across a single collection (see db.collection.distinct)</p>
-
-<pre><code class="elixir">mongo
-  |&gt; connect(&quot;test&quot;)
-  |&gt; Mongo.distinct(&quot;anycoll&quot;, &quot;value&quot;, [value: [&quot;$gt&quot;: 3]])
-</code></pre>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L176" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="drop/2">
-    <strong>drop(db, collection)</strong>
-  </p>
-  
-  <div class="docstring"><p>Drops a collection </p>
-
-<p>returns <code>:ok</code> or a string containing the error message</p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L261" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="find/5">
-    <strong>find(db, collection, arg3, arg4, arg5)</strong>
-  </p>
-  
-  <div class="docstring"><p>Runs db.find() for a given query and returns a stream of document in the form of Keyword</p>
-
-<p>This would provide a stream of document:</p>
-
-<pre><code class="elixir">mongo
-  |&gt; connect(&quot;test&quot;)
-  |&gt; Mongo.find(&quot;anycoll&quot;, [&#39;$maxScan&#39;: 2, &#39;$skip&#39;: 0])
-</code></pre>
-
-<p>See <code>Stream</code> in the elixir library for more info on streams. For a limited number of
-document, simply add <code>|&gt; Enum.tolist</code> to get all documents at once.</p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L72" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="getlasterror/2">
-    <strong>getlasterror(db, arg2)</strong>
-  </p>
-  
-  <div class="docstring"><p>Returns the error status of the preceding operation.</p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L142" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="group/6">
-    <strong>group(db, collection, key, arg4, arg5, arg6)</strong>
-  </p>
-  
-  <div class="docstring"><p>Groups documents in a collection by the specified key (see db.collection.group)</p>
-
-<pre><code class="elixir">mongo
-  |&gt; connect(&quot;test&quot;)
-  |&gt; Mongo.group(&quot;anycoll&quot;, a: true)
-</code></pre>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L214" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="insert/3">
-    <strong>insert(doc, db, collection)</strong>
-  </p>
-  
-  <div class="docstring"><p>Insert one document or an array of documents into a collection</p>
-
-<pre><code class="elixir">mongo
-  |&gt; connect(&quot;test&quot;)
-  |&gt; [[a: 23], [a: 24, b: 1]] |&gt; Mongo.insert(mongo, &quot;anycoll&quot;)
-</code></pre>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L107" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="mongo/0">
-    <strong>mongo()</strong>
-  </p>
-  
-  <div class="docstring"><p>connects to a mongodb server by defaults to {&quot;127.0.0.1&quot;, 27017}</p>
-
-<p>This can be overwritten by the environment variable <code>:host</code>, ie:</p>
-
-<pre><code class="erlang">[
-  {mongo, 
-    [
-      {host, {&quot;127.0.0.1&quot;, 27017}}
-    ]}
-].
-</code></pre>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L37" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="mongo/1">
-    <strong>mongo(arg1)</strong>
-  </p>
-  
-  <div class="docstring"></div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L44" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="mr/6">
-    <strong>mr(db, collection, map, arg4, arg5, arg6)</strong>
-  </p>
-  
-  <div class="docstring"><p>Provides a wrapper around the mapReduce command (db.collection.mapReduce)</p>
-
-<p>Returns  <code>:ok</code> or an array of documents (inline). <code>:out</code> option is set to inline by default.
-<code>elixir
-mongo
-  |&gt; connect(&quot;test&quot;)
-  |&gt; Mongo.mr(&quot;anycoll&quot;, &quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;function(k, vs){return Array.sum(vs)}&quot;)
-</code></p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L194" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="remove/4">
-    <strong>remove(db, collection, query, arg4)</strong>
-  </p>
-  
-  <div class="docstring"><p>Removes an existing document or documents in a collection (see db.collection.remove)</p>
-
-<pre><code class="elixir">mongo
-  |&gt; connect(&quot;test&quot;)
-  |&gt; Mongo.remove(&quot;anycoll&quot;, [b: 789])
-</code></pre>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L135" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="update/6">
-    <strong>update(db, collection, query, update, arg5, arg6)</strong>
-  </p>
-  
-  <div class="docstring"><p>Modifies an existing document or documents in a collection (see db.collection.update)</p>
-
-<pre><code class="elixir">mongo
-  |&gt; connect(&quot;test&quot;)
-  |&gt; Mongo.update(&quot;anycoll&quot;, [a: 456], [a: 123, b: 789])
-</code></pre>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0cbe01ff14356a41a66da2f55afe09f6e61f4b4d
-/lib/mongo.ex#L122" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo.ex#L21" target="_blank" class="view_source">Source</a>
   
 </div>
 

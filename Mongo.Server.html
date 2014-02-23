@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mongo.Server</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mongo.Server
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Manage the connection to a mongodb server</p>
+
+        </div>
+      
+
+      
+        <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L1" target="_blank" class="view_source">Source</a>
+      
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#active?/1">active?(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns true if connection mode is active</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#adminCmd/2">adminCmd(command, mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>Executes an admin command to the server</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect/0">connect()</a></td>
+  
+    <td class="summary_synopsis"><p>connects to local mongodb server by defaults to {&quot;127.0.0.1&quot;, 27017}</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect/1">connect(mode)</a></td>
+  
+    <td class="summary_synopsis"><p>connects to a mongodb server with mode <code>:active</code> or <code>:passive</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect/2">connect(host, port \\ @port)</a></td>
+  
+    <td class="summary_synopsis"><p>connects to a mongodb server specifying mode (default port)</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect/3">connect(host, port, mode)</a></td>
+  
+    <td class="summary_synopsis"><p>connects to a mongodb server specifying options</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#db/2">db(name, mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>Connects to a specific database</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#ping/1">ping(mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>Pings the server</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#recv/3">recv(_, _, arg3)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#recv!/1">recv!(mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>See recv/1</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#response/1">response(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Retreives a repsonce from the MongoDB server (only for passive mode)</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#response/2">response(message, arg2)</a></td>
+  
+    <td class="summary_synopsis"><p>Completes a possibly partial repsonce from the MongoDB server</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#response!/2">response!(message, mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>See response/2</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#send/2">send(message, arg2)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives message from MongoDB  </p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="active?/1">
+    <strong>active?(arg1)</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns true if connection mode is active</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L140" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="adminCmd/2">
+    <strong>adminCmd(command, mongo)</strong>
+  </p>
+  
+  <div class="docstring"><p>Executes an admin command to the server</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L122" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="connect/0">
+    <strong>connect()</strong>
+  </p>
+  
+  <div class="docstring"><p>connects to local mongodb server by defaults to {&quot;127.0.0.1&quot;, 27017}</p>
+
+<p>This can be overwritten by the environment variable <code>:host</code>, ie:</p>
+
+<pre><code class="erlang">[
+  {mongo, 
+    [
+      {host, {&quot;127.0.0.1&quot;, 27017}}
+    ]}
+].
+</code></pre>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L33" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="connect/1">
+    <strong>connect(mode)</strong>
+  </p>
+  
+  <div class="docstring"><p>connects to a mongodb server with mode <code>:active</code> or <code>:passive</code></p>
+
+<p><code>:passive</code> is the default mode</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L45" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="connect/2">
+    <strong>connect(host, port \\ @port)</strong>
+  </p>
+  
+  <div class="docstring"><p>connects to a mongodb server specifying mode (default port)</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L53" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="connect/3">
+    <strong>connect(host, port, mode)</strong>
+  </p>
+  
+  <div class="docstring"><p>connects to a mongodb server specifying options</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L67" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="db/2">
+    <strong>db(name, mongo)</strong>
+  </p>
+  
+  <div class="docstring"><p>Connects to a specific database</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L145" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="ping/1">
+    <strong>ping(mongo)</strong>
+  </p>
+  
+  <div class="docstring"><p>Pings the server</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L129" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="recv/3">
+    <strong>recv(_, _, arg3)</strong>
+  </p>
+  
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L107" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="recv!/1">
+    <strong>recv!(mongo)</strong>
+  </p>
+  
+  <div class="docstring"><p>See recv/1</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L110" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="response/1">
+    <strong>response(arg1)</strong>
+  </p>
+  
+  <div class="docstring"><p>Retreives a repsonce from the MongoDB server (only for passive mode)</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L85" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="response/2">
+    <strong>response(message, arg2)</strong>
+  </p>
+  
+  <div class="docstring"><p>Completes a possibly partial repsonce from the MongoDB server</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L96" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="response!/2">
+    <strong>response!(message, mongo)</strong>
+  </p>
+  
+  <div class="docstring"><p>See response/2</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L101" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="send/2">
+    <strong>send(message, arg2)</strong>
+  </p>
+  
+  <div class="docstring"><p>Receives message from MongoDB  </p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/d407df8f81a1f24b1961d7b83c6988b6847c391e
+/lib/mongo_server.ex#L115" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>
