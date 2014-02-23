@@ -68,7 +68,7 @@ defmodule Mongo.Db do
   Returns the error status of the preceding operation.
   """
   def getLastError(w \\ 0, db) do
-    Mongo.Request.cmd(db, getlasterror: 1).send
+    Mongo.Request.cmd(db, getlasterror: 1, w: w).send
     case db.mongo.response do
       {:ok, resp} -> resp.error
       error -> error
