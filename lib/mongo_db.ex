@@ -10,7 +10,7 @@ defmodule Mongo.Db do
   @doc """
   Gets mongo server hosting the database
   """
-  def mongo(db(mongo: mongo)=db), do: mongo
+  def mongo(db(mongo: mongo)), do: mongo
   @doc """
   Gets dbname
   """
@@ -106,7 +106,7 @@ defmodule Mongo.Db do
   Before using this check `Mongo.Collection`, `Mongo.Db` or `Mongo.Server`
   for commands already implemented by these modules
   """
-  def cmd(command, db(mongo: mongo)=db=db) do
+  def cmd(command, db(mongo: mongo)=db) do
     mongo |> Mongo.Request.cmd(db, command).send
     case mongo.response do
       {:ok, resp} -> resp.cmd
@@ -118,8 +118,8 @@ defmodule Mongo.Db do
   @doc """
   Kill a cursor of the db
   """
-  def kill_cursor(cursorID, db(mongo: mongo)=db) do
-    mongo |> Mongo.Request.kill_cursor(db, cursorID).send
+  def kill_cursor(cursorID, db(mongo: mongo)) do
+    mongo |> Mongo.Request.kill_cursor(cursorID).send
   end
 
 end

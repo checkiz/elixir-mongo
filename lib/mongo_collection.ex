@@ -233,5 +233,12 @@ defmodule Mongo.Collection do
   Returns the db of the collection
   """
   def db(coll(db: db)), do: db
+
+  @doc """
+  Creates an index for the collection
+  """
+  def createIndex(name, key, unique \\ false, coll(collname: collname, db: db)) do
+    db.collection("system.indexes").insert(name: name, ns: db.name <> "." <> collname, key: key, unique: unique)
+  end
   
 end

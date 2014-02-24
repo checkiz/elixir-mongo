@@ -32,4 +32,9 @@ defmodule Mongo.Cursor.Test do
     assert ctx[:anycoll].find.explain! |> Keyword.has_key?(:cursor)
   end  
 
+  test "find hint", ctx do
+    ctx[:anycoll].createIndex("tst_value", value: 1)
+    assert ctx[:anycoll].find.hint(value: 1).explain! |> Keyword.has_key?(:cursor)
+  end  
+
 end

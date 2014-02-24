@@ -81,7 +81,7 @@ defmodule Mongo.Request do
   @doc """
     Builds a kill_cursor command message
   """
-  def kill_cursor(db, cursorid) do
+  def kill_cursor(cursorid) do
     request payload:
       @kill_cursor <> <<0::32>> <>
       Bson.int32(1) <>

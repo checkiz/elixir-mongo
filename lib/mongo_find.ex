@@ -18,6 +18,7 @@ defmodule Mongo.Find do
 
   Not to be used directly, prefer `Mongo.Collection.find/3` that returns a `Mongo.Cursor`
   """
+  def new(collection, jsString, projector) when is_binary(jsString), do: new(collection, ['$where': jsString], projector)
   def new(collection, selector, projector) do
     find(collection: collection, selector: selector, projector: projector)
   end
@@ -92,6 +93,12 @@ defmodule Mongo.Find do
     end
   end
   defbang explain(find)
+
+  @doc """
+  Add hint opperator that forces the query optimizer to use a specific index to fulfill the query 
+  """
+  def hint(indexName, f) when is_atom(indexName), do: f.addSpecial(:'$hint', indexName)
+  def hint(hints, f) when is_list(hints), do: f.addSpecial(:'$hint', hints)
 
   @doc """
   Sets query options

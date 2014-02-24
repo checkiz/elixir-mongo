@@ -29,6 +29,13 @@ defmodule Mongo.Crud.Test do
     end
   end
 
+  test "find where", ctx do
+    if true do
+      assert ctx[:anycoll].find("obj.value == 0").stream
+        |> Enum.count == 1
+    end
+  end
+
   test "insert", ctx do
     anycoll = ctx[:anycoll]
     if true do
