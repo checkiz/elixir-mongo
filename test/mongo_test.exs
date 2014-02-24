@@ -145,12 +145,16 @@ defmodule Mongo.Test do
     end
   end
 
-  test "batchSize" do
-    assert Mongo.connect.db("test").collection("anycoll").find.batchSize(2).toArray |> Enum.count == 6
+  test "batchSize", ctx do
+    assert ctx[:anycoll].find.batchSize(2).toArray |> Enum.count == 6
   end  
 
-  test "batchArray" do
-    assert Mongo.connect.db("test").collection("anycoll").find.batchSize(2).batchArray |> Enum.count == 3
+  test "batchArray", ctx do
+    assert ctx[:anycoll].find.batchSize(2).batchArray |> Enum.count == 3
+  end  
+
+  test "explain", ctx do
+    assert ctx[:anycoll].find.explain! |> Keyword.has_key?(:cursor)
   end  
 
   test "async ping" do
@@ -158,7 +162,7 @@ defmodule Mongo.Test do
     Process.spawn_link(
       fn() ->
         mongo = Mongo.connect(:active)
-        Mongo.Request.adminCmd(mongo, ping: true).send
+        mongo |> Mongo.Request.adminCmd(mongo, ping: true).send
         receive do
           {:tcp, _, m} ->
             Process.send me, mongo.response!(m).success

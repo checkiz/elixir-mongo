@@ -127,7 +127,7 @@ defmodule Mongo.Server do
   Pings the server
   """
   def ping(mongo) do
-    Mongo.Request.adminCmd(mongo, ping: true).send
+    mongo |> Mongo.Request.adminCmd(mongo, ping: true).send
     case mongo.response do
       {:ok, resp} -> resp.success
       error -> error

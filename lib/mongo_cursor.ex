@@ -49,8 +49,9 @@ defmodule Mongo.Cursor do
   """
   def next_batch(cursor(cursorExhausted: true)), do: nil
   def next_batch(cursor(collection: collection, batchSize: batchSize, cursorID: cursorID)=c) do
-    Mongo.Request.get_more(collection, batchSize, cursorID).send
-    case collection.db.mongo.response do
+    (mongo = collection.db.mongo)
+      |> Mongo.Request.get_more(collection, batchSize, cursorID).send
+    case mongo.response do
       {:ok, resp} -> {:ok, {resp, cursor(c, response: resp, cursorExhausted: resp.exhausted?)}}
       error -> error
     end

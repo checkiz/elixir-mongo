@@ -10,7 +10,7 @@ defmodule Mongo.Db do
   @doc """
   Gets mongo server hosting the database
   """
-  def mongo(db(mongo: mongo)), do: mongo
+  def mongo(db(mongo: mongo)=db), do: mongo
   @doc """
   Gets dbname
   """
@@ -26,13 +26,13 @@ defmodule Mongo.Db do
 
   Expects a DB record, a user and a password returns `:ok` or a string containing the error message
   """
-  def auth(username, password, db) do
+  def auth(username, password, db(mongo: mongo)=db) do
     # sysDb = DB.new(mongo: mongo, db: "")
     nonce = getnonce(db)
     hash_password = hash username <> ":mongo:" <> password
     digest = hash nonce <> username <> hash_password
-    Mongo.Request.cmd(db, authenticate: 1, nonce: nonce, user: username, key: digest).send
-    case db.mongo.response do
+    mongo |> Mongo.Request.cmd(db, authenticate: 1, nonce: nonce, user: username, key: digest).send
+    case mongo.response do
       {:ok, resp} -> resp.success
       error -> error
     end
@@ -51,9 +51,9 @@ defmodule Mongo.Db do
   end
 
   # get `nonce` token from server
-  defp getnonce(db) do
-    Mongo.Request.cmd(db, getnonce: 1).send
-    case db.mongo.response do
+  defp getnonce(db(mongo: mongo)=db) do
+    mongo |> Mongo.Request.cmd(db, getnonce: 1).send
+    case mongo.response do
       {:ok, resp} -> resp.getnonce
       error -> error
     end
@@ -67,9 +67,9 @@ defmodule Mongo.Db do
   @doc """
   Returns the error status of the preceding operation.
   """
-  def getLastError(w \\ 0, db) do
-    Mongo.Request.cmd(db, getlasterror: 1, w: w).send
-    case db.mongo.response do
+  def getLastError(w \\ 0, db(mongo: mongo)=db) do
+    mongo |> Mongo.Request.cmd(db, getlasterror: 1, w: w).send
+    case mongo.response do
       {:ok, resp} -> resp.error
       error -> error
     end
@@ -80,9 +80,9 @@ defmodule Mongo.Db do
   @doc """
   Returns the previous error status of the preceding operation(s).
   """
-  def getPrevError(db) do
-    Mongo.Request.cmd(db, getPrevError: 1).send
-    case db.mongo.response do
+  def getPrevError(db(mongo: mongo)=db) do
+    mongo |> Mongo.Request.cmd(db, getPrevError: 1).send
+    case mongo.response do
       {:ok, resp} -> resp.error
       error -> error
     end
@@ -106,8 +106,8 @@ defmodule Mongo.Db do
   Before using this check `Mongo.Collection`, `Mongo.Db` or `Mongo.Server`
   for commands already implemented by these modules
   """
-  def cmd(command, db(mongo: mongo)=db) do
-    Mongo.Request.cmd(db, command).send
+  def cmd(command, db(mongo: mongo)=db=db) do
+    mongo |> Mongo.Request.cmd(db, command).send
     case mongo.response do
       {:ok, resp} -> resp.cmd
       error -> error
@@ -118,8 +118,8 @@ defmodule Mongo.Db do
   @doc """
   Kill a cursor of the db
   """
-  def kill_cursor(cursorID, db) do
-    Mongo.Request.kill_cursor(db, cursorID).send
+  def kill_cursor(cursorID, db(mongo: mongo)=db) do
+    mongo |> Mongo.Request.kill_cursor(db, cursorID).send
   end
 
 end

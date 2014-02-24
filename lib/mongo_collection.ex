@@ -78,7 +78,7 @@ defmodule Mongo.Collection do
   """
   def insert([{a,_}|_]=doc, collection) when is_atom(a), do: insert([doc], collection) |> hd
   def insert(docs, collection) do
-    Mongo.Request.insert(collection, docs).send
+    collection.db.mongo |> Mongo.Request.insert(collection, docs).send
     docs
   end
 
@@ -89,7 +89,7 @@ defmodule Mongo.Collection do
       db.collection("anycoll").update([a: 456], [a: 123, b: 789])
   """
   def update(query, update, upsert \\ false, multi \\ false, collection) do
-    Mongo.Request.update(collection, query, update, upsert, multi).send
+    collection.db.mongo |> Mongo.Request.update(collection, query, update, upsert, multi).send
   end
 
   @doc """
@@ -99,7 +99,7 @@ defmodule Mongo.Collection do
       db.collection("anycoll").remove([b: 789])
   """
   def delete(query, justOne \\ false, collection) do
-    Mongo.Request.delete(collection, query, justOne).send
+    collection.db.mongo |> Mongo.Request.delete(collection, query, justOne).send
   end
 
   @doc """
@@ -111,7 +111,7 @@ defmodule Mongo.Collection do
       {:ok, n} = db.collection.count(value: ['$gt': 0])
   """
   def count(query \\ {}, opts \\ [], coll(collname: collname, db: db)) do
-    Mongo.Request.cmd(db, Keyword.merge(opts, count: collname, query: query)).send
+    db.mongo |> Mongo.Request.cmd(db, Keyword.merge(opts, count: collname, query: query)).send
     case db.mongo.response do
       {:ok, resp} -> resp.count
       error -> error
@@ -136,7 +136,7 @@ defmodule Mongo.Collection do
       db.collection.distinct("value", value: ["$gt": 3])
   """
   def distinct(key, query \\ {}, coll(collname: collname, db: db)) do
-    Mongo.Request.cmd(db, distinct: collname, key: key, query: query).send
+    db.mongo |> Mongo.Request.cmd(db, distinct: collname, key: key, query: query).send
     case db.mongo.response do
       {:ok, resp} -> resp.distinct
       error -> error
@@ -154,7 +154,7 @@ defmodule Mongo.Collection do
       db.collection.mr("function(d){emit(this._id, this.value*2)}", "function(k, vs){return Array.sum(vs)}")
   """
   def mr(map, reduce \\ @def_reduce, out \\ [inline: true], opts \\ [], coll(collname: collname, db: db)) do
-    Mongo.Request.cmd(db, Keyword.merge(opts, mapReduce: collname, map: map, reduce: reduce, out: out)).send
+    db.mongo |> Mongo.Request.cmd(db, Keyword.merge(opts, mapReduce: collname, map: map, reduce: reduce, out: out)).send
     case db.mongo.response do
       {:ok, resp} -> resp.mr
       error -> error
@@ -172,7 +172,7 @@ defmodule Mongo.Collection do
       db.collection.group(a: true)
   """
   def group(key, reduce \\ @def_reduce, initial \\ {}, opts \\ [], coll(collname: collname, db: db)) do
-    Mongo.Request.cmd(db, group: Keyword.merge(opts, ns: collname, key: key, '$reduce': reduce, initial: initial)).send
+    db.mongo |> Mongo.Request.cmd(db, group: Keyword.merge(opts, ns: collname, key: key, '$reduce': reduce, initial: initial)).send
     case db.mongo.response do
       {:ok, resp} -> resp.group
       error -> error
@@ -189,7 +189,7 @@ defmodule Mongo.Collection do
   returns `:ok` or a string containing the error message
   """
   def drop(coll(collname: collname, db: db)) do
-    Mongo.Request.cmd(db, drop: collname).send
+    db.mongo |> Mongo.Request.cmd(db, drop: collname).send
     case db.mongo.response do
       {:ok, resp} -> resp.success
       error -> error
@@ -204,7 +204,7 @@ defmodule Mongo.Collection do
       db.collection.aggregate(skip: 1, limit: 5, project: ['_id': false, value: true])
   """
   def aggregate(pipeline, coll(collname: collname, db: db)) do
-    Mongo.Request.cmd(db, aggregate: collname, pipeline: (lc line inlist pipeline, do: pipe(line)) ).send
+    db.mongo |> Mongo.Request.cmd(db, aggregate: collname, pipeline: (lc line inlist pipeline, do: pipe(line)) ).send
     case db.mongo.response do
       {:ok, resp} -> resp.aggregate
       error -> error
