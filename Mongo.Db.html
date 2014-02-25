@@ -60,10 +60,21 @@
         <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
+  <td class="summary_signature"><a href="#auth!/3">auth!(username, password, db)</a></td>
+  
+    <td class="summary_synopsis"><p>See auth/3</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#auth/3">auth(username, password, db)</a></td>
   
     <td class="summary_synopsis"><p>Authenticates a user to a database</p>
 </td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#auth?/1">auth?(arg1)</a></td>
   
 </tr>
 <tr>
@@ -185,11 +196,44 @@
   
   <div class="docstring"><p>Authenticates a user to a database</p>
 
-<p>Expects a DB record, a user and a password returns <code>:ok</code> or a string containing the error message</p>
+<p>Expects a DB record, a user and a password returns <code>{:ok, db}</code> or <code>{:error, reason}</code></p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L29" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L30" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="auth!/3">
+    <span class="signature"><strong>auth!(username, password, db)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#auth!/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>See auth/3</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_db.ex#L33" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="auth?/1">
+    <span class="signature"><strong>auth?(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#auth?/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_db.ex#L35" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -209,7 +253,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L109" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L123" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -226,7 +270,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L116" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L130" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -243,7 +287,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L65" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L79" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -260,7 +304,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L70" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L84" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -277,7 +321,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L77" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L91" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -294,7 +338,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L78" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L92" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -311,7 +355,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L83" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L97" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -328,7 +372,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L90" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L104" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -345,7 +389,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L121" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L135" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -362,7 +406,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L13" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L14" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -379,7 +423,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L17" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L18" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -396,7 +440,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L22" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L23" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -413,7 +457,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L95" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L109" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -430,7 +474,7 @@ for commands already implemented by these modules</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L101" target="_blank" class="view_source">Source</a>
+/lib/mongo_db.ex#L115" target="_blank" class="view_source">Source</a>
   
 </div>
 
