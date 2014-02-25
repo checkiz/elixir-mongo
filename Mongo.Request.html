@@ -20,10 +20,27 @@
     </script>
 
     <div id="content">
+      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Request.html">Request</a></div>
+
       <h1>
         Mongo.Request
         
       </h1>
+
+      
+
+      <ul class="summary_links">
+        
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+        
+      </ul>
 
       
         <div id="moduledoc" class="docstring">
@@ -33,14 +50,14 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+        <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_request.ex#L1" target="_blank" class="view_source">Source</a>
       
 
       
 
       
-        <h2 id="functions_summary">Functions summary</h2>
+        <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
   <td class="summary_signature"><a href="#adminCmd/2">adminCmd(mongo, command)</a></td>
@@ -85,21 +102,21 @@
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#kill_cursor/2">kill_cursor(db, cursorid)</a></td>
+  <td class="summary_signature"><a href="#kill_cursor/1">kill_cursor(cursorid)</a></td>
   
     <td class="summary_synopsis"><p>Builds a kill_cursor command message</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#query/6">query(collection, selector, projector, skip, batchSize, opts)</a></td>
+  <td class="summary_signature"><a href="#query/1">query(f)</a></td>
   
     <td class="summary_synopsis"><p>Builds a query message</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#send/1">send(arg1)</a></td>
+  <td class="summary_signature"><a href="#send/2">send(mongo, arg2)</a></td>
   
     <td class="summary_synopsis"><p>Sends request to mongodb</p>
 </td>
@@ -119,64 +136,85 @@
       
 
       
-
-      
-
-      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="adminCmd/2">
-    <strong>adminCmd(mongo, command)</strong>
-  </p>
+  <div class="detail_header" id="adminCmd/2">
+    <span class="signature"><strong>adminCmd(mongo, command)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#adminCmd/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Builds an admin command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_request.ex#L51" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="cmd/2">
-    <strong>cmd(db, command)</strong>
-  </p>
-  
-  <div class="docstring"><p>Builds a database command message</p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_request.ex#L40" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="delete/3">
-    <strong>delete(collection, selector, justOne)</strong>
-  </p>
+  <div class="detail_header" id="cmd/2">
+    <span class="signature"><strong>cmd(db, command)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#cmd/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Builds a database command message</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_request.ex#L29" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="delete/3">
+    <span class="signature"><strong>delete(collection, selector, justOne)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#delete/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Builds a delete command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_request.ex#L84" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_request.ex#L73" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="get_more/3">
-    <strong>get_more(collection, batchsize, cursorid)</strong>
-  </p>
+  <div class="detail_header" id="get_more/3">
+    <span class="signature"><strong>get_more(collection, batchsize, cursorid)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#get_more/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Builds a get_more command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_request.ex#L105" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_request.ex#L94" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="id/2">
-    <strong>id(requestID, r)</strong>
-  </p>
+  <div class="detail_header" id="id/2">
+    <span class="signature"><strong>id(requestID, r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#id/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Sets the request ID</p>
 
@@ -184,74 +222,93 @@
 This is usefull when the connection to MongoDB is active (by default, it is passive)</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_request.ex#L130" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_request.ex#L119" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="insert/2">
-    <strong>insert(collection, docs)</strong>
-  </p>
+  <div class="detail_header" id="insert/2">
+    <span class="signature"><strong>insert(collection, docs)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#insert/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Builds an insert command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_request.ex#L58" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_request.ex#L47" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="kill_cursor/2">
-    <strong>kill_cursor(db, cursorid)</strong>
-  </p>
+  <div class="detail_header" id="kill_cursor/1">
+    <span class="signature"><strong>kill_cursor(cursorid)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#kill_cursor/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Builds a kill_cursor command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_request.ex#L95" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_request.ex#L84" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="query/6">
-    <strong>query(collection, selector, projector, skip, batchSize, opts)</strong>
-  </p>
+  <div class="detail_header" id="query/1">
+    <span class="signature"><strong>query(f)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#query/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Builds a query message</p>
-
-<ul>
-<li>collection: collection</li>
-<li>selector: selection criteria (Keyword or nil)</li>
-<li>projector: fields (Keyword or nil)</li>
-</ul>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_request.ex#L27" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_request.ex#L22" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="send/1">
-    <strong>send(arg1)</strong>
-  </p>
+  <div class="detail_header" id="send/2">
+    <span class="signature"><strong>send(mongo, arg2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#send/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Sends request to mongodb</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_request.ex#L116" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_request.ex#L105" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="update/5">
-    <strong>update(collection, selector, update, upsert, multi)</strong>
-  </p>
+  <div class="detail_header" id="update/5">
+    <span class="signature"><strong>update(collection, selector, update, upsert, multi)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#update/5" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Builds an update command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_request.ex#L69" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_request.ex#L58" target="_blank" class="view_source">Source</a>
   
 </div>
 

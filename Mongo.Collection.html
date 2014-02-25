@@ -20,10 +20,27 @@
     </script>
 
     <div id="content">
+      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Collection.html">Collection</a></div>
+
       <h1>
         Mongo.Collection
         
       </h1>
+
+      
+
+      <ul class="summary_links">
+        
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+        
+      </ul>
 
       
         <div id="moduledoc" class="docstring">
@@ -57,23 +74,16 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+        <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L1" target="_blank" class="view_source">Source</a>
       
 
       
 
       
-        <h2 id="functions_summary">Functions summary</h2>
+        <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
-  <td class="summary_signature"><a href="#aggregate/2">aggregate(pipeline, arg2)</a></td>
-  
-    <td class="summary_synopsis"><p>Calculates aggregate values for the data in the collection (see db.collection.aggregate)</p>
-</td>
-  
-</tr>
-<tr>
   <td class="summary_signature"><a href="#aggregate!/2">aggregate!(pipeline, collection)</a></td>
   
     <td class="summary_synopsis"><p>See aggregate/2</p>
@@ -81,9 +91,9 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#count/3">count(query \\ {}, opts \\ [], arg3)</a></td>
+  <td class="summary_signature"><a href="#aggregate/2">aggregate(pipeline, arg2)</a></td>
   
-    <td class="summary_synopsis"><p>Count documents in the collection (see db.collection.count)</p>
+    <td class="summary_synopsis"><p>Calculates aggregate values for the data in the collection (see db.collection.aggregate)</p>
 </td>
   
 </tr>
@@ -109,6 +119,20 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#count/3">count(query \\ {}, opts \\ [], arg3)</a></td>
+  
+    <td class="summary_synopsis"><p>Count documents in the collection (see db.collection.count)</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#createIndex/4">createIndex(name, key, unique \\ false, arg4)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates an index for the collection</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#db/1">db(arg1)</a></td>
   
     <td class="summary_synopsis"><p>Returns the db of the collection</p>
@@ -119,13 +143,6 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   <td class="summary_signature"><a href="#delete/3">delete(query, justOne \\ false, collection)</a></td>
   
     <td class="summary_synopsis"><p>Removes an existing document or documents in the collection (see db.collection.remove)</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#distinct/3">distinct(key, query \\ {}, arg3)</a></td>
-  
-    <td class="summary_synopsis"><p>Finds the distinct values for a specified field across a single collection (see db.collection.distinct)</p>
 </td>
   
 </tr>
@@ -144,9 +161,9 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#drop/1">drop(arg1)</a></td>
+  <td class="summary_signature"><a href="#distinct/3">distinct(key, query \\ {}, arg3)</a></td>
   
-    <td class="summary_synopsis"><p>Drops the collection </p>
+    <td class="summary_synopsis"><p>Finds the distinct values for a specified field across a single collection (see db.collection.distinct)</p>
 </td>
   
 </tr>
@@ -158,16 +175,16 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#find/3">find(criteria \\ [], projection \\ [], collection)</a></td>
+  <td class="summary_signature"><a href="#drop/1">drop(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Runs db.find() for a given query and returns a <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a></p>
+    <td class="summary_synopsis"><p>Drops the collection</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#group/5">group(key, reduce \\ @def_reduce, initial \\ {}, opts \\ [], arg5)</a></td>
+  <td class="summary_signature"><a href="#find/3">find(criteria \\ [], projection \\ [], collection)</a></td>
   
-    <td class="summary_synopsis"><p>Groups documents in the collection by the specified key (see db.collection.group)</p>
+    <td class="summary_synopsis"><p>Runs db.find() for a given query and returns a <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a></p>
 </td>
   
 </tr>
@@ -200,16 +217,16 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#insert/2">insert(doc, collection)</a></td>
+  <td class="summary_signature"><a href="#group/5">group(key, reduce \\ @def_reduce, initial \\ {}, opts \\ [], arg5)</a></td>
   
-    <td class="summary_synopsis"><p>Insert one document or an array of documents into the collection</p>
+    <td class="summary_synopsis"><p>Groups documents in the collection by the specified key (see db.collection.group)</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#mr/5">mr(map, reduce \\ @def_reduce, out \\ [inline: true], opts \\ [], arg5)</a></td>
+  <td class="summary_signature"><a href="#insert/2">insert(doc, collection)</a></td>
   
-    <td class="summary_synopsis"><p>Provides a wrapper around the mapReduce command (db.collection.mapReduce)</p>
+    <td class="summary_synopsis"><p>Insert one document or an array of documents into the collection</p>
 </td>
   
 </tr>
@@ -242,6 +259,13 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#mr/5">mr(map, reduce \\ @def_reduce, out \\ [inline: true], opts \\ [], arg5)</a></td>
+  
+    <td class="summary_synopsis"><p>Provides a wrapper around the mapReduce command (db.collection.mapReduce)</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#name/1">name(arg1)</a></td>
   
     <td class="summary_synopsis"><p>Gets the collection name</p>
@@ -269,16 +293,17 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
       
 
       
-
-      
-
-      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="aggregate/2">
-    <strong>aggregate(pipeline, arg2)</strong>
-  </p>
+  <div class="detail_header" id="aggregate/2">
+    <span class="signature"><strong>aggregate(pipeline, arg2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#aggregate/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Calculates aggregate values for the data in the collection (see db.collection.aggregate)</p>
 
@@ -287,26 +312,36 @@ db.collection.aggregate(skip: 1, limit: 5, project: [&#39;_id&#39;: false, value
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L206" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="aggregate!/2">
-    <strong>aggregate!(pipeline, collection)</strong>
-  </p>
+  <div class="detail_header" id="aggregate!/2">
+    <span class="signature"><strong>aggregate!(pipeline, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#aggregate!/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See aggregate/2</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L213" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="count/3">
-    <strong>count(query \\ {}, opts \\ [], arg3)</strong>
-  </p>
+  <div class="detail_header" id="count/3">
+    <span class="signature"><strong>count(query \\ {}, opts \\ [], arg3)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#count/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Count documents in the collection (see db.collection.count)</p>
 
@@ -317,62 +352,104 @@ db.collection.aggregate(skip: 1, limit: 5, project: [&#39;_id&#39;: false, value
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L113" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="count!/1">
-    <strong>count!(collection)</strong>
-  </p>
+  <div class="detail_header" id="count!/1">
+    <span class="signature"><strong>count!(collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#count!/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See count/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L128" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="count!/2">
-    <strong>count!(query, collection)</strong>
-  </p>
+  <div class="detail_header" id="count!/2">
+    <span class="signature"><strong>count!(query, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#count!/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See count/2</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L129" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="count!/3">
-    <strong>count!(query, opts, collection)</strong>
-  </p>
+  <div class="detail_header" id="count!/3">
+    <span class="signature"><strong>count!(query, opts, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#count!/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See count/3</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L130" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="db/1">
-    <strong>db(arg1)</strong>
-  </p>
+  <div class="detail_header" id="createIndex/4">
+    <span class="signature"><strong>createIndex(name, key, unique \\ false, arg4)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#createIndex/4" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Creates an index for the collection</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_collection.ex#L240" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="db/1">
+    <span class="signature"><strong>db(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#db/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Returns the db of the collection</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L235" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="delete/3">
-    <strong>delete(query, justOne \\ false, collection)</strong>
-  </p>
+  <div class="detail_header" id="delete/3">
+    <span class="signature"><strong>delete(query, justOne \\ false, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#delete/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Removes an existing document or documents in the collection (see db.collection.remove)</p>
 
@@ -381,14 +458,19 @@ db.collection(&quot;anycoll&quot;).remove([b: 789])
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L101" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="distinct/3">
-    <strong>distinct(key, query \\ {}, arg3)</strong>
-  </p>
+  <div class="detail_header" id="distinct/3">
+    <span class="signature"><strong>distinct(key, query \\ {}, arg3)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#distinct/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Finds the distinct values for a specified field across a single collection (see db.collection.distinct)</p>
 
@@ -397,64 +479,89 @@ db.collection.distinct(&quot;value&quot;, value: [&quot;$gt&quot;: 3])
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L138" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="distinct!/2">
-    <strong>distinct!(key, collection)</strong>
-  </p>
+  <div class="detail_header" id="distinct!/2">
+    <span class="signature"><strong>distinct!(key, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#distinct!/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See distinct/2</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L145" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="distinct!/3">
-    <strong>distinct!(key, query, collection)</strong>
-  </p>
+  <div class="detail_header" id="distinct!/3">
+    <span class="signature"><strong>distinct!(key, query, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#distinct!/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See distinct/3</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L146" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="drop/1">
-    <strong>drop(arg1)</strong>
-  </p>
+  <div class="detail_header" id="drop/1">
+    <span class="signature"><strong>drop(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#drop/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Drops the collection </p>
 
 <p>returns <code>:ok</code> or a string containing the error message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L191" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="drop!/1">
-    <strong>drop!(collection)</strong>
-  </p>
+  <div class="detail_header" id="drop!/1">
+    <span class="signature"><strong>drop!(collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#drop!/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See drop/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L198" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="find/3">
-    <strong>find(criteria \\ [], projection \\ [], collection)</strong>
-  </p>
+  <div class="detail_header" id="find/3">
+    <span class="signature"><strong>find(criteria \\ [], projection \\ [], collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#find/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Runs db.find() for a given query and returns a <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a></p>
 
@@ -465,14 +572,19 @@ db.collection.distinct(&quot;value&quot;, value: [&quot;$gt&quot;: 3])
 See <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a> for more detail on other options to retreive documents.</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L59" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="group/5">
-    <strong>group(key, reduce \\ @def_reduce, initial \\ {}, opts \\ [], arg5)</strong>
-  </p>
+  <div class="detail_header" id="group/5">
+    <span class="signature"><strong>group(key, reduce \\ @def_reduce, initial \\ {}, opts \\ [], arg5)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#group/5" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Groups documents in the collection by the specified key (see db.collection.group)</p>
 
@@ -481,62 +593,87 @@ db.collection.group(a: true)
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L174" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="group!/2">
-    <strong>group!(key, collection)</strong>
-  </p>
+  <div class="detail_header" id="group!/2">
+    <span class="signature"><strong>group!(key, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#group!/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See group/2</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L181" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="group!/3">
-    <strong>group!(key, reduce, collection)</strong>
-  </p>
+  <div class="detail_header" id="group!/3">
+    <span class="signature"><strong>group!(key, reduce, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#group!/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See group/3</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L182" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="group!/4">
-    <strong>group!(key, reduce, initial, collection)</strong>
-  </p>
+  <div class="detail_header" id="group!/4">
+    <span class="signature"><strong>group!(key, reduce, initial, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#group!/4" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See group/4</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L183" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="group!/5">
-    <strong>group!(key, reduce, initial, opts, collection)</strong>
-  </p>
+  <div class="detail_header" id="group!/5">
+    <span class="signature"><strong>group!(key, reduce, initial, opts, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#group!/5" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See group/5</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L184" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="insert/2">
-    <strong>insert(doc, collection)</strong>
-  </p>
+  <div class="detail_header" id="insert/2">
+    <span class="signature"><strong>insert(doc, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#insert/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Insert one document or an array of documents into the collection</p>
 
@@ -555,14 +692,19 @@ db.collection(&quot;anycoll&quot;).insert
 <p><code>Mongo.Collection.insert</code> returns the list of documents it received.</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L79" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="mr/5">
-    <strong>mr(map, reduce \\ @def_reduce, out \\ [inline: true], opts \\ [], arg5)</strong>
-  </p>
+  <div class="detail_header" id="mr/5">
+    <span class="signature"><strong>mr(map, reduce \\ @def_reduce, out \\ [inline: true], opts \\ [], arg5)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#mr/5" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Provides a wrapper around the mapReduce command (db.collection.mapReduce)</p>
 
@@ -573,62 +715,87 @@ db.collection.mr(&quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;fu
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L156" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="mr!/2">
-    <strong>mr!(map, collection)</strong>
-  </p>
+  <div class="detail_header" id="mr!/2">
+    <span class="signature"><strong>mr!(map, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#mr!/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See mr/2</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L163" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="mr!/3">
-    <strong>mr!(map, reduce, collection)</strong>
-  </p>
+  <div class="detail_header" id="mr!/3">
+    <span class="signature"><strong>mr!(map, reduce, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#mr!/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See mr/3</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L164" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="mr!/4">
-    <strong>mr!(map, reduce, out, collection)</strong>
-  </p>
+  <div class="detail_header" id="mr!/4">
+    <span class="signature"><strong>mr!(map, reduce, out, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#mr!/4" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See mr/4</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L165" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="mr!/5">
-    <strong>mr!(map, reduce, out, opts, collection)</strong>
-  </p>
+  <div class="detail_header" id="mr!/5">
+    <span class="signature"><strong>mr!(map, reduce, out, opts, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#mr!/5" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See mr/5</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L166" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="name/1">
-    <strong>name(arg1)</strong>
-  </p>
+  <div class="detail_header" id="name/1">
+    <span class="signature"><strong>name(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#name/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Gets the collection name</p>
 
@@ -637,26 +804,36 @@ db.collection.mr(&quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;fu
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L48" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="new/2">
-    <strong>new(db, collname)</strong>
-  </p>
+  <div class="detail_header" id="new/2">
+    <span class="signature"><strong>new(db, collname)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#new/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>New collection</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L40" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="update/5">
-    <strong>update(query, update, upsert \\ false, multi \\ false, collection)</strong>
-  </p>
+  <div class="detail_header" id="update/5">
+    <span class="signature"><strong>update(query, update, upsert \\ false, multi \\ false, collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#update/5" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Modifies an existing document or documents in the collection</p>
 
@@ -665,7 +842,7 @@ db.collection(&quot;anycoll&quot;).update([a: 456], [a: 123, b: 789])
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_collection.ex#L91" target="_blank" class="view_source">Source</a>
   
 </div>

@@ -20,10 +20,27 @@
     </script>
 
     <div id="content">
+      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Response.html">Response</a></div>
+
       <h1>
         Mongo.Response
         
       </h1>
+
+      
+
+      <ul class="summary_links">
+        
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+        
+      </ul>
 
       
         <div id="moduledoc" class="docstring">
@@ -33,14 +50,14 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+        <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L1" target="_blank" class="view_source">Source</a>
       
 
       
 
       
-        <h2 id="functions_summary">Functions summary</h2>
+        <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
   <td class="summary_signature"><a href="#aggregate/1">aggregate(r)</a></td>
@@ -120,13 +137,6 @@
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#new/1">new(arg1)</a></td>
-  
-    <td class="summary_synopsis"><p>Parses a response message</p>
-</td>
-  
-</tr>
-<tr>
   <td class="summary_signature"><a href="#new!/1">new!(message)</a></td>
   
     <td class="summary_synopsis"><p>See new/1</p>
@@ -134,9 +144,16 @@
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#new/1">new(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Parses a response message</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#next/1">next(r)</a></td>
   
-    <td class="summary_synopsis"><p>Gets next doc within the current batch return <code>nil</code> after last doc of the bacth </p>
+    <td class="summary_synopsis"><p>Gets next doc within the current batch return <code>nil</code> after last doc of the bacth</p>
 </td>
   
 </tr>
@@ -165,234 +182,315 @@
       
 
       
-
-      
-
-      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="aggregate/1">
-    <strong>aggregate(r)</strong>
-  </p>
+  <div class="detail_header" id="aggregate/1">
+    <span class="signature"><strong>aggregate(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#aggregate/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parse a aggregate respsonse</p>
 
 <p>Returns <code>{:ok, result}</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L168" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="cmd/1">
-    <strong>cmd(r)</strong>
-  </p>
+  <div class="detail_header" id="cmd/1">
+    <span class="signature"><strong>cmd(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#cmd/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parse a command respsonse</p>
 
 <p>Returns <code>{:ok, doc}</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L87" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="count/1">
-    <strong>count(r)</strong>
-  </p>
+  <div class="detail_header" id="count/1">
+    <span class="signature"><strong>count(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#count/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parse a count respsonse</p>
 
 <p>Returns <code>{:ok, n}</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L104" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="cursorID/1">
-    <strong>cursorID(arg1)</strong>
-  </p>
+  <div class="detail_header" id="cursorID/1">
+    <span class="signature"><strong>cursorID(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#cursorID/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Returns the cursor ID</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L69" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="distinct/1">
-    <strong>distinct(r)</strong>
-  </p>
+  <div class="detail_header" id="distinct/1">
+    <span class="signature"><strong>distinct(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#distinct/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parse a distinct respsonse</p>
 
 <p>Returns <code>{:ok, values}</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L128" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="error/1">
-    <strong>error(r)</strong>
-  </p>
+  <div class="detail_header" id="error/1">
+    <span class="signature"><strong>error(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#error/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parse a error respsonse</p>
 
 <p>Returns <code>{:ok, nonce}</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L190" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="exhausted?/1">
-    <strong>exhausted?(arg1)</strong>
-  </p>
+  <div class="detail_header" id="exhausted?/1">
+    <span class="signature"><strong>exhausted?(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#exhausted?/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Returns <code>true</code> if the cursor is exhausted</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L74" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="getnonce/1">
-    <strong>getnonce(r)</strong>
-  </p>
+  <div class="detail_header" id="getnonce/1">
+    <span class="signature"><strong>getnonce(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#getnonce/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parse a getnonce respsonse</p>
 
 <p>Returns <code>{:ok, nonce}</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L179" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="group/1">
-    <strong>group(r)</strong>
-  </p>
+  <div class="detail_header" id="group/1">
+    <span class="signature"><strong>group(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#group/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parse a group respsonse</p>
 
 <p>Returns <code>{:ok, retval}</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L156" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="hasNext/1">
-    <strong>hasNext(r)</strong>
-  </p>
+  <div class="detail_header" id="hasNext/1">
+    <span class="signature"><strong>hasNext(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#hasNext/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Returns <code>true</code> if there are more documents to fetch from this batch or if the cursor is not exhausted</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L80" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="mr/1">
-    <strong>mr(r)</strong>
-  </p>
+  <div class="detail_header" id="mr/1">
+    <span class="signature"><strong>mr(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#mr/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parse a map-reduce respsonse</p>
 
 <p>Returns <code>{:ok, results}</code> (inline) or <code>:ok</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L140" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="new/1">
-    <strong>new(arg1)</strong>
-  </p>
+  <div class="detail_header" id="new/1">
+    <span class="signature"><strong>new(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#new/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parses a response message</p>
 
 <p>If the message is partial, this method makes shure the response is complete by fetching additional messages</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L20" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="new!/1">
-    <strong>new!(message)</strong>
-  </p>
+  <div class="detail_header" id="new!/1">
+    <span class="signature"><strong>new!(message)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#new!/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See new/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L46" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="next/1">
-    <strong>next(r)</strong>
-  </p>
+  <div class="detail_header" id="next/1">
+    <span class="signature"><strong>next(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#next/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Gets next doc within the current batch return <code>nil</code> after last doc of the bacth </p>
 
 <p>When this function returns <code>nil</code>, it does not mean the cursor is exhausted, see <code>Mongo.Response.hasNext/1</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L59" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="next/2">
-    <strong>next(_, arg2)</strong>
-  </p>
+  <div class="detail_header" id="next/2">
+    <span class="signature"><strong>next(_, arg2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#next/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L64" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="next?/1">
-    <strong>next?(arg1)</strong>
-  </p>
+  <div class="detail_header" id="next?/1">
+    <span class="signature"><strong>next?(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#next?/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Returns <code>true</code> if there are more documents to fetch regardless whether the cursor is exhausted or not</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L51" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="success/1">
-    <strong>success(r)</strong>
-  </p>
+  <div class="detail_header" id="success/1">
+    <span class="signature"><strong>success(r)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#success/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Parse a success respsonse</p>
 
 <p>Returns <code>:ok</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_response.ex#L116" target="_blank" class="view_source">Source</a>
   
 </div>

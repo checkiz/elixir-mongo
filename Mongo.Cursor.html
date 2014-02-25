@@ -20,10 +20,27 @@
     </script>
 
     <div id="content">
+      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Cursor.html">Cursor</a></div>
+
       <h1>
         Mongo.Cursor
         
       </h1>
+
+      
+
+      <ul class="summary_links">
+        
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+        
+      </ul>
 
       
         <div id="moduledoc" class="docstring">
@@ -35,14 +52,14 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+        <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_cursor.ex#L1" target="_blank" class="view_source">Source</a>
       
 
       
 
       
-        <h2 id="functions_summary">Functions summary</h2>
+        <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
   <td class="summary_signature"><a href="#batchSize/2">batchSize(n, c)</a></td>
@@ -66,16 +83,16 @@
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#next_batch/1">next_batch(c)</a></td>
+  <td class="summary_signature"><a href="#next_batch!/1">next_batch!(c)</a></td>
   
-    <td class="summary_synopsis"><p>Returns response for the next batch of document of a given cursor</p>
+    <td class="summary_synopsis"><p>See next_batch/1</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#next_batch!/1">next_batch!(c)</a></td>
+  <td class="summary_signature"><a href="#next_batch/1">next_batch(c)</a></td>
   
-    <td class="summary_synopsis"><p>See next_batch/1</p>
+    <td class="summary_synopsis"><p>Returns response for the next batch of document of a given cursor</p>
 </td>
   
 </tr>
@@ -100,76 +117,102 @@
       
 
       
-
-      
-
-      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="batchSize/2">
-    <strong>batchSize(n, c)</strong>
-  </p>
+  <div class="detail_header" id="batchSize/2">
+    <span class="signature"><strong>batchSize(n, c)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#batchSize/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Specifies the number of documents to return in next batch(es)</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_cursor.ex#L138" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_cursor.ex#L139" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="kill/1">
-    <strong>kill(arg1)</strong>
-  </p>
+  <div class="detail_header" id="kill/1">
+    <span class="signature"><strong>kill(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#kill/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Kills the cursor</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_cursor.ex#L89" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_cursor.ex#L90" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="new/3">
-    <strong>new(collection, initialResponse, batchSize)</strong>
-  </p>
+  <div class="detail_header" id="new/3">
+    <span class="signature"><strong>new(collection, initialResponse, batchSize)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#new/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Creates a cursor record</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_cursor.ex#L19" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="next_batch/1">
-    <strong>next_batch(c)</strong>
-  </p>
+  <div class="detail_header" id="next_batch/1">
+    <span class="signature"><strong>next_batch(c)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#next_batch/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Returns response for the next batch of document of a given cursor</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
 /lib/mongo_cursor.ex#L50" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="next_batch!/1">
-    <strong>next_batch!(c)</strong>
-  </p>
+  <div class="detail_header" id="next_batch!/1">
+    <span class="signature"><strong>next_batch!(c)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#next_batch!/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>See next_batch/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_cursor.ex#L58" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_cursor.ex#L59" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="stream/1">
-    <strong>stream(c)</strong>
-  </p>
+  <div class="detail_header" id="stream/1">
+    <span class="signature"><strong>stream(c)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#stream/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Creates a stream of documents for the given the cursor</p>
 
@@ -177,14 +220,19 @@
 When exhausted, it kills the cursor.</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_cursor.ex#L66" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_cursor.ex#L67" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="toArray/1">
-    <strong>toArray(find)</strong>
-  </p>
+  <div class="detail_header" id="toArray/1">
+    <span class="signature"><strong>toArray(find)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#toArray/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
   
   <div class="docstring"><p>Creates a list of document retreive by a find query</p>
 
@@ -192,8 +240,8 @@ When exhausted, it kills the cursor.</p>
 It calls <code>Mongo.Cursor/1</code> then pipes the resulting stream to <code>Enum.to_list/1</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/5dbaaeaef6574cc059adf32a543d285a3d63e797
-/lib/mongo_cursor.ex#L130" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+/lib/mongo_cursor.ex#L131" target="_blank" class="view_source">Source</a>
   
 </div>
 
