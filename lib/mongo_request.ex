@@ -102,8 +102,9 @@ defmodule Mongo.Request do
   @doc """
   Sends request to mongodb
   """
-  def send(mongo, request(payload: payload, requestID: requestID)) do
+  def send(mongo, async \\ false, request(payload: payload, requestID: requestID)) do
     requestID = if requestID==nil, do: gen_reqid, else: requestID
+    if async, do: mongo.async
     case message(payload, requestID) |> mongo.send do
       :ok -> requestID
       error -> error

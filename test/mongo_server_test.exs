@@ -16,6 +16,15 @@ defmodule Mongo.Server.Test do
     end
   end
  
+  test "async request" do
+    mongo = Mongo.connect
+    mongo |> Mongo.Request.adminCmd(mongo, ping: true).send true
+    receive do
+      {:tcp, _, m} ->
+        assert :ok == mongo.response!(m).success
+    end
+  end
+ 
   test "async ping" do
     me = self()
     Process.spawn_link(

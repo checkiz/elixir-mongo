@@ -129,6 +129,11 @@ defmodule Mongo.Server do
     :inet.setopts(socket, active: :once)
     :gen_tcp.send(socket, message)
   end
+  @doc false
+  # preprares for a one-time async request
+  def async(mongo(socket: socket, mode: :passive)) do
+    :inet.setopts(socket, active: :once)
+  end
 
   @doc """
   Executes an admin command to the server
