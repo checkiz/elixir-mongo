@@ -14,7 +14,7 @@ defmodule Mongo.Mixfile do
   # Configuration for the OTP application
   def application do
     [
-      applications: [:socket],
+      applications: [],
       env: [host: {"127.0.0.1", 27017}]
     ]
   end
@@ -22,8 +22,7 @@ defmodule Mongo.Mixfile do
   # Returns the list of dependencies for prod
   defp deps(:prod) do
     [
-      {:bson, github: "checkiz/elixir-bson"},
-      {:socket, github: "meh/elixir-socket"}
+      {:bson, github: "checkiz/elixir-bson"}
     ]
   end
 

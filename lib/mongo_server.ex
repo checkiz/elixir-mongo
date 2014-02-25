@@ -6,10 +6,9 @@ defmodule Mongo.Server do
   defrecordp :mongo, __MODULE__ ,
     host: nil,
     port: nil,
-    active: false,
+    mode: false,
     timeout: nil,
-    socket: nil,
-    opts: nil
+    socket: nil
 
   @port    27017
   @mode    :passive
@@ -31,61 +30,73 @@ defmodule Mongo.Server do
   ```
   """
   def connect() do
-    case :application.get_env(:mongo, :host) do
-        {:ok, {host, port}} -> connect host, port, mode: @mode
-        _                   -> connect @host, @port, mode: @mode
-    end
-  end
-
-  @doc """
-  connects to a mongodb server with mode `:active` or `:passive`
-
-  `:passive` is the default mode
-  """
-  def connect(mode) when mode == :active or mode == :passive do
-    {host, port} = default_host
-    connect(host, port, mode)
+    connect []
   end
 
   @doc """
   connects to a mongodb server
   """
-  def connect(host, port \\ @port) when port |> is_integer do
-    connect(host, port, mode: @mode)
+  def connect(host, port) when is_binary(host) and port |> is_integer do
+    connect(host: host, port: port)
   end
 
   @doc """
   connects to a mongodb server specifying mode (default port)
   """
-  def connect(host, mode) when mode == :active or mode == :passive do
-    connect(host, @port, mode)
+  def connect(host, mode) when is_binary(host) and (mode == :active or mode == :passive) do
+    connect(host: host, mode: mode)
   end
 
   @doc """
   connects to a mongodb server specifying mode
   """
   def connect(host, port, mode) when mode == :active or mode == :passive do
-    connect(host, port, mode: mode, timeout: @timeout)
+    connect(host: host, port: port, mode: mode)
   end
 
   @doc """
   connects to a mongodb server specifying options
+
+  Opts must be a Keyword
   """
-  def connect(host, port, opts) when opts |> is_list do
-    mongo(
-      host: host, port: port, opts: opts,
-      active: opts[:mode]!=:passive,
-      timeout: opts[:timeout],
-      socket: Socket.TCP.connect!(host, port, opts))
+  def connect(opts) when opts |> is_list do
+    opts    = default_env(opts)
+    host    = Keyword.get(opts, :host,    @host)
+    port    = Keyword.get(opts, :port,    @port)
+    timeout = Keyword.get(opts, :timeout, @timeout)
+    mode    = Keyword.get(opts, :mode,    @mode)
+    if is_binary(host) do
+      host = String.to_char_list!(host)
+    end
+    case mongo(host: host, port: port, mode: mode, timeout: timeout).tcp_connect do
+      { :ok, m } ->
+        m
+      {:error, reason} ->
+        raise Mongo.error, reason: reason
+    end
+  end
+
+  @doc false
+  def tcp_connect(mongo(host: host, port: port, timeout: timeout)=m) do
+    case :gen_tcp.connect(host, port, tcp_options(m), timeout) do
+      {:ok, socket} ->
+        {:ok, mongo(m, socket: socket)}
+      error -> error
+    end
+  end
+
+  @doc false
+  defp tcp_recv(mongo(socket: socket, timeout: timeout)) do
+    :gen_tcp.recv(socket, 0, timeout)
   end
 
   @doc """
   Retreives a repsonce from the MongoDB server (only for passive mode)
   """
-  def response(mongo(socket: socket, timeout: timeout, active: false)) do
-    case recv({socket, timeout}) do
+  def response(mongo) do
+    case tcp_recv(mongo) do
       {:ok, <<messageLength::[little, signed, size(32)], _::binary>> = message} ->
-        complete(messageLength, message, {socket, timeout}) |> Mongo.Response.new
+        complete(messageLength, message, mongo) |> Mongo.Response.new
       error -> error
     end
   end
@@ -95,25 +106,16 @@ defmodule Mongo.Server do
   """
   def response(
     <<messageLength::[little, signed, size(32)], _::binary>> = message,
-    mongo(socket: socket, timeout: timeout, active: true)) do
-    complete(messageLength, message, {socket, timeout}) |> Mongo.Response.new
+    mongo) do
+    complete(messageLength, message, mongo) |> Mongo.Response.new
   end
   defbang response(message, mongo)
-
-  #Receives message from the MongoDB server
-  defp recv({socket, timeout}) do
-    Socket.Stream.recv(socket, timeout: timeout)
-  end
-  def recv(_, _, mongo(active: true)) do
-    raise Mongo.Error, reason: "Cannot reveive message from an active connection"
-  end
-  defbang recv(mongo)
 
   @doc """
   Receives message from MongoDB  
   """
   def send(message, mongo(socket: socket)) do
-    Socket.Stream.send(socket, message)
+     :gen_tcp.send(socket, message)
   end
 
   @doc """
@@ -137,7 +139,7 @@ defmodule Mongo.Server do
   @doc """
   Returns true if connection mode is active
   """
-  def active?(mongo(active: mode)), do: mode
+  def active?(mongo(mode: mode)), do: mode == :active
 
   @doc """
   Connects to a specific database
@@ -146,15 +148,52 @@ defmodule Mongo.Server do
     Mongo.Db.new(mongo, name)
   end
 
-  defp default_host() do
+  @doc """
+  Closes the connection
+  """
+  def close(mongo(socket: socket)) do
+    :gen_tcp.close(socket)
+  end
+
+  defp default_env(opts) do
     case :application.get_env(:mongo, :host) do
-        {:ok, {host, port}} -> {host, port}
-        _                   -> {@host, @port}
+        {:ok, {host, port}} ->
+          opts |> Keyword.put_new(:host, host) |> Keyword.put_new(:port, port)
+        _ -> opts
     end
   end
 
   # makes shure response is complete
-  defp complete(expected_length, buffer, _host) when size(buffer) == expected_length, do: buffer
-  defp complete(expected_length, buffer, _host) when size(buffer) >  expected_length, do: binary_part(buffer, 0, expected_length)
-  defp complete(expected_length, buffer, host), do: complete(expected_length, buffer <> Mongo.recv(host), mongo)
+  defp complete(expected_length, buffer, _mongo) when size(buffer) == expected_length, do: buffer
+  defp complete(expected_length, buffer, _mongo) when size(buffer) >  expected_length, do: binary_part(buffer, 0, expected_length)
+  defp complete(expected_length, buffer, mongo) do
+    case tcp_recv(mongo) do
+      {:ok, mess} -> complete(expected_length, buffer <> mess, mongo)
+    end
+  end
+
+  # Convert TCP options to `:inet.setopts` compatible arguments.
+  defp tcp_options(m) do
+    args = options(m)
+
+    # default to binary
+    args = [:binary | args]
+
+    args
+  end
+  defp options(mongo(mode: mode)) do
+    args = []
+
+    # mode active or passive
+    args = case mode do
+      :active ->
+        [{ :active, :once } | args]
+
+      :passive ->
+        [{ :active, false } | args]
+    end
+
+    args
+  end
+
 end

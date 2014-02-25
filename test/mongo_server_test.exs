@@ -8,7 +8,7 @@ defmodule Mongo.Server.Test do
   end
  
   test "active mode" do
-    mongo = Mongo.connect(:active)
+    mongo = Mongo.connect(mode: :active)
     mongo |> Mongo.Request.adminCmd(mongo, ping: true).send
     receive do
       {:tcp, _, m} ->
@@ -20,7 +20,7 @@ defmodule Mongo.Server.Test do
     me = self()
     Process.spawn_link(
       fn() ->
-        mongo = Mongo.connect(:active)
+        mongo = Mongo.connect(mode: :active)
         mongo |> Mongo.Request.adminCmd(mongo, ping: true).send
         receive do
           {:tcp, _, m} ->
@@ -34,4 +34,14 @@ defmodule Mongo.Server.Test do
     assert {:ok, {_, _}} = :application.get_env(:mongo, :host)
   end
 
+  test "chunked messages" do
+    db = Mongo.connect.db("test")
+    anycoll = db.collection("coll_large")
+    anycoll.drop
+    1..5000 |>
+      Enum.map(&([a: &1, value: "this should be long enough"]))
+      |> anycoll.insert
+    assert 5000 == anycoll.find().toArray |> Enum.count
+
+  end
 end
