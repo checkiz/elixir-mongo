@@ -5,7 +5,7 @@ defmodule Mongo.Cursor.Test do
 
   # # In order to run the tests a mongodb server must be listening locally on the default port
   setup do
-    db = Mongo.connect.db("test")
+    db = Mongo.connect!.db("test")
     anycoll = db.collection("coll_cursor")
     anycoll.drop
     [

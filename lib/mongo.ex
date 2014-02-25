@@ -1,4 +1,5 @@
 defmodule Mongo do
+  use Mongo.Helpers
   @moduledoc """
   [MongoDB](http://www.mongodb.org) driver in Elixir
   """
@@ -10,16 +11,14 @@ defmodule Mongo do
   @doc """
   Connects to a Mongo Database Server, see module `Mongo.Server`for details
   """
-  defdelegate connect(host_or_mode),        to: Mongo.Server
+  defdelegate connect(host, port),  to: Mongo.Server
   @doc """
   Connects to a Mongo Database Server, see module `Mongo.Server`for details
   """
-  defdelegate connect(host, port_or_mode),  to: Mongo.Server
-  @doc """
-  Connects to a Mongo Database Server, see module `Mongo.Server`for details
-  """
-  defdelegate connect(host, port, opts),    to: Mongo.Server
-
+  defdelegate connect(opts),    to: Mongo.Server
+  defbang connect
+  defbang connect(host, port)
+  defbang connect(opts)
   @doc """
   Assigns id to a document or a list of document when `:_id` is missing
 

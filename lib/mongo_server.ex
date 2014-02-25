@@ -41,20 +41,6 @@ defmodule Mongo.Server do
   end
 
   @doc """
-  connects to a mongodb server specifying mode (default port)
-  """
-  def connect(host, mode) when is_binary(host) and (mode == :active or mode == :passive) do
-    connect(host: host, mode: mode)
-  end
-
-  @doc """
-  connects to a mongodb server specifying mode
-  """
-  def connect(host, port, mode) when mode == :active or mode == :passive do
-    connect(host: host, port: port, mode: mode)
-  end
-
-  @doc """
   connects to a mongodb server specifying options
 
   Opts must be a Keyword
@@ -68,19 +54,13 @@ defmodule Mongo.Server do
     if is_binary(host) do
       host = String.to_char_list!(host)
     end
-    case mongo(host: host, port: port, mode: mode, timeout: timeout).tcp_connect do
-      { :ok, m } ->
-        m
-      {:error, reason} ->
-        raise Mongo.error, reason: reason
-    end
+    mongo(host: host, port: port, mode: mode, timeout: timeout).tcp_connect
   end
   def connect(mongo()=m) do
     case m.tcp_connect do
       { :ok, m } ->
         m
-      {:error, reason} ->
-        raise Mongo.error, reason: reason
+      error -> error
     end    
   end
 
@@ -198,11 +178,10 @@ defmodule Mongo.Server do
 
     args
   end
-  defp options(mongo(mode: mode)) do
-    args = []
+  defp options(mongo(timeout: timeout)) do
 
     # mode active or passive
-    args = [{ :active, false }]
+    args = [{ :active, false }, { :send_timeout, timeout }, { :send_timeout_close, true } ]
 
     args
   end

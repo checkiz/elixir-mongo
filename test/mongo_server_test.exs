@@ -4,11 +4,12 @@ defmodule Mongo.Server.Test do
   use ExUnit.Case, async: true
 
   test "ping" do
-    assert :ok == Mongo.connect.ping
+    assert :ok == Mongo.connect!.ping
+    assert :nok == Mongo.connect!("1.1.1.1", 2027).ping
   end
  
   test "active mode" do
-    mongo = Mongo.connect(mode: :active)
+    mongo = Mongo.connect!(mode: :active)
     mongo |> Mongo.Request.adminCmd(mongo, ping: true).send
     receive do
       {:tcp, _, m} ->
@@ -17,7 +18,7 @@ defmodule Mongo.Server.Test do
   end
  
   test "async request" do
-    mongo = Mongo.connect
+    mongo = Mongo.connect!
     mongo |> Mongo.Request.adminCmd(mongo, ping: true).send true
     receive do
       {:tcp, _, m} ->
@@ -29,7 +30,7 @@ defmodule Mongo.Server.Test do
     me = self()
     Process.spawn_link(
       fn() ->
-        mongo = Mongo.connect(mode: :active)
+        mongo = Mongo.connect!(mode: :active)
         mongo |> Mongo.Request.adminCmd(mongo, ping: true).send
         receive do
           {:tcp, _, m} ->
@@ -44,7 +45,7 @@ defmodule Mongo.Server.Test do
   end
 
   test "chunked messages" do
-    db = Mongo.connect.db("test")
+    db = Mongo.connect!.db("test")
     anycoll = db.collection("coll_large")
     anycoll.drop
     1..5000 |>
