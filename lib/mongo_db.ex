@@ -4,7 +4,8 @@ defmodule Mongo.Db do
   """
   defrecordp :db, __MODULE__ ,
     dbname: nil,
-    mongo: nil
+    mongo: nil,
+    auth: nil
   use Mongo.Helpers
 
   @doc """
@@ -24,16 +25,29 @@ defmodule Mongo.Db do
   @doc """
   Authenticates a user to a database
 
-  Expects a DB record, a user and a password returns `:ok` or a string containing the error message
+  Expects a DB record, a user and a password returns `{:ok, db}` or `{:error, reason}`
   """
-  def auth(username, password, db(mongo: mongo)=db) do
-    # sysDb = DB.new(mongo: mongo, db: "")
+  def auth(username, password, db) do
+    db(db, auth: {username, hash(username <> ":mongo:" <> password)}).auth
+  end
+  defbang auth(username, password, db)
+
+  def auth?(db(auth: nil)), do: false
+  def auth?(_), do: true
+
+  @doc false
+  # Authenticates a user to a database (or do it again after failure)
+  def auth(db(auth: nil)=db), do: {:ok, db}
+  def auth(db(mongo: mongo, auth: {username, hash_password})=db) do
     nonce = getnonce(db)
-    hash_password = hash username <> ":mongo:" <> password
     digest = hash nonce <> username <> hash_password
     mongo |> Mongo.Request.cmd(db, authenticate: 1, nonce: nonce, user: username, key: digest).send
     case mongo.response do
-      {:ok, resp} -> resp.success
+      {:ok, resp} ->
+        case resp.success do
+          :ok ->{:ok, db}
+          error -> error
+        end
       error -> error
     end
   end

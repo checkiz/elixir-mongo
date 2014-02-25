@@ -75,6 +75,14 @@ defmodule Mongo.Server do
         raise Mongo.error, reason: reason
     end
   end
+  def connect(mongo()=m) do
+    case m.tcp_connect do
+      { :ok, m } ->
+        m
+      {:error, reason} ->
+        raise Mongo.error, reason: reason
+    end    
+  end
 
   @doc false
   def tcp_connect(mongo(host: host, port: port, timeout: timeout)=m) do
@@ -112,10 +120,14 @@ defmodule Mongo.Server do
   defbang response(message, mongo)
 
   @doc """
-  Receives message from MongoDB  
+  Sends a message to MongoDB  
   """
-  def send(message, mongo(socket: socket)) do
+  def send(message, mongo(socket: socket, mode: :passive)) do
      :gen_tcp.send(socket, message)
+  end
+  def send(message, mongo(socket: socket, mode: :active)) do
+    :inet.setopts(socket, active: :once)
+    :gen_tcp.send(socket, message)
   end
 
   @doc """
@@ -185,13 +197,7 @@ defmodule Mongo.Server do
     args = []
 
     # mode active or passive
-    args = case mode do
-      :active ->
-        [{ :active, :once } | args]
-
-      :passive ->
-        [{ :active, false } | args]
-    end
+    args = [{ :active, false }]
 
     args
   end
