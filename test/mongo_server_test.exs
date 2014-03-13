@@ -1,11 +1,20 @@
 Code.require_file "test_helper.exs", __DIR__
 
 defmodule Mongo.Server.Test do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   test "ping" do
     assert :ok == Mongo.connect!.ping
-    # assert :nok == Mongo.connect!("1.1.1.1", 2027).ping
+    ping_timeout = 
+      case Mongo.connect(port: 80, timeout: 1) do
+        {:ok, localhost} ->
+          # a Mongo ping on 80 should timout!
+          localhost.ping
+        _ ->
+          #can't test this without localhost:80
+          {:error, :no_localhost_80}
+      end
+    assert ping_timeout == {:error, :timeout}
   end
  
   test "active mode" do
@@ -46,12 +55,34 @@ defmodule Mongo.Server.Test do
 
   test "chunked messages" do
     db = Mongo.connect!.db("test")
-    anycoll = db.collection("coll_large")
-    anycoll.drop
+    chunked_test = db.collection("chunked_test")
+    chunked_test.drop
+    1..5000 |> Enum.map(&([a: &1, value: "this should be long enough"])) |> chunked_test.insert
+    # db = Mongo.connect!.db("test")
+    # chunked_test = db.collection("chunked_test")
+    assert 5000 == chunked_test.find().toArray |> Enum.count
+  end
+
+  test "write concern" do
+    db = Mongo.connect!.db("test")
+    chunked_test = db.collection("chunked_test")
+    chunked_test.drop
+    1..5000 |> Enum.map(&([a: &1, value: "this should be long enough"])) |> chunked_test.insert
+    assert 5000 > Mongo.connect!.db("test").collection("chunked_test").find().toArray |> Enum.count
+    assert :ok = db.getLastError
+    assert 5000 == Mongo.connect!.db("test").collection("chunked_test").find().toArray |> Enum.count
+  end
+
+  test "timout recv" do
+    db = Mongo.connect!.db("test")
+    timout_test = db.collection("timout_test")
+    timout_test.drop
     1..5000 |>
       Enum.map(&([a: &1, value: "this should be long enough"]))
-      |> anycoll.insert
-    assert 5000 == anycoll.find().toArray |> Enum.count
-
+      |> timout_test.insert
+    assert :ok = db.getLastError
+    db = Mongo.connect!(timeout: 1).db("test")
+    timout_test = db.collection("timout_test")
+    assert_raise Mongo.Error, fn -> Enum.count(timout_test.find("obj.a == 1 || obj.a == 49000").toArray) end
   end
 end

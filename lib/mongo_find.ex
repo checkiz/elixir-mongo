@@ -20,7 +20,7 @@ defmodule Mongo.Find do
   """
   def new(collection, jsString, projector) when is_binary(jsString), do: new(collection, ['$where': jsString], projector)
   def new(collection, selector, projector) do
-    find(collection: collection, selector: selector, projector: projector)
+    find(collection: collection, selector: selector, projector: projector, opts: collection.read_opts)
   end
 
   @doc """

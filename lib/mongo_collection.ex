@@ -30,14 +30,15 @@ defmodule Mongo.Collection do
 
   defrecordp :coll, __MODULE__ ,
     collname: nil,
-    db: nil
+    db: nil,
+    opts: []
 
   @def_reduce "function(k, vs){return Array.sum(vs)}"
   
   @doc """
   New collection
   """
-  def new(db, collname), do: coll(db: db, collname: collname)
+  def new(db, collname), do: coll(db: db, collname: collname, opts: db.coll_opts)
 
   @doc """
   Gets the collection name
@@ -61,7 +62,25 @@ defmodule Mongo.Collection do
   end
 
   @doc """
-  Insert one document or an array of documents into the collection
+  Insert one document into the collection
+
+  
+      db = mongo.connect.db("test")
+      [a: 23] |> 
+      db.collection("anycoll").insert
+
+  `Mongo.Collection.insert_one` returns the document it received.
+  """
+  def insert_one([{a,_}|_]=doc, collection) when is_atom(a) do
+    case insert([doc], collection) do
+      {:ok, docs} -> {:ok, docs |> hd}
+      error -> error
+    end
+  end
+  defbang insert_one(docs, collection)
+
+  @doc """
+  Insert a list of documents into the collection
 
   
       db = mongo.connect.db("test")
@@ -76,11 +95,17 @@ defmodule Mongo.Collection do
 
   `Mongo.Collection.insert` returns the list of documents it received.
   """
-  def insert([{a,_}|_]=doc, collection) when is_atom(a), do: insert([doc], collection) |> hd
-  def insert(docs, collection) do
-    collection.db.mongo |> Mongo.Request.insert(collection, docs).send
-    docs
+  def insert(docs, coll(opts: opts, db: db)=collection) do
+    db.mongo |> Mongo.Request.insert(collection, docs).send
+    case opts[:wc] do
+      nil -> {:ok, docs}
+      :safe -> case db.getLastError do
+        :ok -> {:ok, docs}
+        error -> error
+      end
+    end
   end
+  defbang insert(docs, collection)
 
   @doc """
   Modifies an existing document or documents in the collection
@@ -88,8 +113,12 @@ defmodule Mongo.Collection do
       db = mongo.connect.db("test")
       db.collection("anycoll").update([a: 456], [a: 123, b: 789])
   """
-  def update(query, update, upsert \\ false, multi \\ false, collection) do
-    collection.db.mongo |> Mongo.Request.update(collection, query, update, upsert, multi).send
+  def update(query, update, upsert \\ false, multi \\ false, coll(opts: opts, db: db)=collection) do
+    db.mongo |> Mongo.Request.update(collection, query, update, upsert, multi).send
+    case opts[:wc] do
+      nil -> :ok
+      :safe -> db.getLastError
+    end
   end
 
   @doc """
@@ -98,8 +127,12 @@ defmodule Mongo.Collection do
       db = mongo.connect.db("test")
       db.collection("anycoll").remove([b: 789])
   """
-  def delete(query, justOne \\ false, collection) do
-    collection.db.mongo |> Mongo.Request.delete(collection, query, justOne).send
+  def delete(query, justOne \\ false, coll(opts: opts, db: db)=collection) do
+    db.mongo |> Mongo.Request.delete(collection, query, justOne).send
+    case opts[:wc] do
+      nil -> :ok
+      :safe -> db.getLastError
+    end
   end
 
   @doc """
@@ -110,24 +143,17 @@ defmodule Mongo.Collection do
       db = mongo.connect.db("test")
       {:ok, n} = db.collection.count(value: ['$gt': 0])
   """
-  def count(query \\ {}, opts \\ [], coll(collname: collname, db: db)) do
-    db.mongo |> Mongo.Request.cmd(db, Keyword.merge(opts, count: collname, query: query)).send
+  def count(query \\ {}, skip_limit \\ [], coll(collname: collname, db: db)) do
+    skip_limit = Keyword.take(skip_limit, [:skip, :limit])
+    db.mongo |> Mongo.Request.cmd(db, Keyword.merge(skip_limit, count: collname, query: query)).send
     case db.mongo.response do
       {:ok, resp} -> resp.count
       error -> error
     end
   end
-  @doc """
-  Count documents in the collection (see db.collection.count)
-  
-  Returns `n`, the result of count, or raise an error
-
-      db = mongo.connect.db("test")
-      n = db.collection.count!(value: ['$gt': 0])
-  """
   defbang count(collection)
   defbang count(query, collection)
-  defbang count(query, opts, collection)
+  defbang count(query, skip_limit, collection)
 
   @doc """
   Finds the distinct values for a specified field across a single collection (see db.collection.distinct)
@@ -153,8 +179,9 @@ defmodule Mongo.Collection do
       db = mongo.connect.db("test")
       db.collection.mr("function(d){emit(this._id, this.value*2)}", "function(k, vs){return Array.sum(vs)}")
   """
-  def mr(map, reduce \\ @def_reduce, out \\ [inline: true], opts \\ [], coll(collname: collname, db: db)) do
-    db.mongo |> Mongo.Request.cmd(db, Keyword.merge(opts, mapReduce: collname, map: map, reduce: reduce, out: out)).send
+  def mr(map, reduce \\ @def_reduce, out \\ [inline: true], params \\ [], coll(collname: collname, db: db)) do
+    params = Keyword.take(params, [:limit, :finalize, :scope, :jsMode, :verbose])
+    db.mongo |> Mongo.Request.cmd(db, Keyword.merge(params, mapReduce: collname, map: map, reduce: reduce, out: out)).send
     case db.mongo.response do
       {:ok, resp} -> resp.mr
       error -> error
@@ -163,7 +190,7 @@ defmodule Mongo.Collection do
   defbang mr(map, collection)
   defbang mr(map, reduce, collection)
   defbang mr(map, reduce, out, collection)
-  defbang mr(map, reduce, out, opts, collection)
+  defbang mr(map, reduce, out, more, collection)
 
   @doc """
   Groups documents in the collection by the specified key (see db.collection.group)
@@ -171,8 +198,10 @@ defmodule Mongo.Collection do
       db = mongo.connect.db("test")
       db.collection.group(a: true)
   """
-  def group(key, reduce \\ @def_reduce, initial \\ {}, opts \\ [], coll(collname: collname, db: db)) do
-    db.mongo |> Mongo.Request.cmd(db, group: Keyword.merge(opts, ns: collname, key: key, '$reduce': reduce, initial: initial)).send
+  def group(key, reduce \\ @def_reduce, initial \\ {}, params \\ [], coll(collname: collname, db: db)) do
+    params = Keyword.take(params, [:'$keyf', :cond, :finalize])
+    if params[:keyf], do: params = Keyword.put_new(:'$keyf', params[:keyf])
+    db.mongo |> Mongo.Request.cmd(db, group: Keyword.merge(params, ns: collname, key: key, '$reduce': reduce, initial: initial)).send
     case db.mongo.response do
       {:ok, resp} -> resp.group
       error -> error
@@ -181,7 +210,7 @@ defmodule Mongo.Collection do
   defbang group(key, collection)
   defbang group(key, reduce, collection)
   defbang group(key, reduce, initial, collection)
-  defbang group(key, reduce, initial, opts, collection)
+  defbang group(key, reduce, initial, params, collection)
 
   @doc """
   Drops the collection 
@@ -212,6 +241,33 @@ defmodule Mongo.Collection do
   end
   defbang aggregate(pipeline, collection)
 
+  @doc """
+  Adds options to the collection overwriting database options
+
+  new_opts must be a keyword with zero or more pairs represeting one of these options:
+  
+  * read: `:awaitdata`, `:nocursortimeout`, `:slaveok`, `:tailablecursor`
+  * write: concern: `:wc`
+  * socket: `:mode`, `:timeout`
+  """
+  def opts(new_opts, coll(opts: opts)=c) do
+    coll(c, opts: Keyword.merge(opts, new_opts))
+  end
+
+  @doc """
+  Gets read default options
+  """
+  def read_opts(coll(opts: opts)) do
+    Keyword.take(opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :mode, :timeout])
+  end
+
+  @doc """
+  Gets write default options
+  """
+  def write_opts(coll(opts: opts)) do
+    Keyword.take(opts, [:wc, :mode, :timeout])
+  end
+
   # Reshapes a document stream. $project can rename, add, or remove fields as well as create computed values and sub-documents
   defp pipe({:project, kw}), do: ['$project': kw]
   # Filters the document stream, and only allows matching documents to pass into the next pipeline stage. $match uses standard MongoDB queries
@@ -238,7 +294,7 @@ defmodule Mongo.Collection do
   Creates an index for the collection
   """
   def createIndex(name, key, unique \\ false, coll(collname: collname, db: db)) do
-    db.collection("system.indexes").insert(name: name, ns: db.name <> "." <> collname, key: key, unique: unique)
+    db.collection("system.indexes").insert_one(name: name, ns: db.name <> "." <> collname, key: key, unique: unique)
   end
   
 end

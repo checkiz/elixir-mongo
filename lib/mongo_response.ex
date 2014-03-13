@@ -32,7 +32,7 @@ defmodule Mongo.Response do
         {:error, "Cursor not found"}
       queryFailure>0 ->
         if numberReturned>0 do
-          {:error, "Query error: " <> (Bson.decode(docBuffer) |> inspect)}
+          {:error, Keyword.take(Bson.decode(docBuffer), [:'$err', :err, :errmsg, :code, :connectionId])}
         else
           {:error, "Query error"}
         end
@@ -91,7 +91,7 @@ defmodule Mongo.Response do
           if doc[:ok] > 0 do
             {:ok, doc}
           else
-            {:error, doc}
+            {:error, Keyword.take(doc, [:err, :errmsg, :code, :connectionId])}
           end
       end
   end
@@ -192,7 +192,7 @@ defmodule Mongo.Response do
       {:ok, doc} ->
         case doc[:err] do
           nil -> :ok
-          err -> {:error, err}
+          _ -> {:error, Keyword.take(doc, [:err, :errmsg, :code, :connectionId])}
         end
       error -> error
     end

@@ -5,7 +5,8 @@ defmodule Mongo.Crud.Test do
 
   # # In order to run the tests a mongodb server must be listening locally on the default port
   setup do
-    db = Mongo.connect!.db("test")
+    mongo = Mongo.connect!
+    db = mongo.db("test")
     anycoll = db.collection("coll_crud")
     anycoll.drop
     [
@@ -16,8 +17,8 @@ defmodule Mongo.Crud.Test do
       [a: 4, value: 1],
       [a: 5, value: 3]
     ]
-      |> anycoll.insert
-    { :ok, db: db, anycoll: anycoll }
+      |> anycoll.insert!
+    { :ok, mongo: mongo, db: db, anycoll: anycoll }
   end
 
   test "find", ctx do
@@ -39,11 +40,11 @@ defmodule Mongo.Crud.Test do
   test "insert", ctx do
     anycoll = ctx[:anycoll]
     if true do
-      assert [a: 23] |> anycoll.insert == [a: 23]
-      assert [[a: 23], [a: 24, b: 1]] |> anycoll.insert |> is_list
+      assert [a: 23] |> anycoll.insert_one! == [a: 23]
+      assert [[a: 23], [a: 24, b: 1]] |> anycoll.insert! |> is_list
     end
     if true do
-      assert ['_id': 2, a: 456] |> anycoll.insert |> Keyword.keyword?
+      assert ['_id': 2, a: 456] |> anycoll.insert_one! |> Keyword.keyword?
       assert ctx[:db].getLastError == :ok
     end
   end
@@ -65,7 +66,7 @@ defmodule Mongo.Crud.Test do
   test "objid", ctx do
     if true do
       anycoll = ctx[:anycoll]
-      assert [[a: -23], [a: -24, b: 1]] |> Mongo.assign_id |> anycoll.insert |> is_list
+      assert [[a: -23], [a: -24, b: 1]] |> ctx[:mongo].assign_id |> anycoll.insert! |> is_list
     end
   end
 
@@ -78,8 +79,8 @@ defmodule Mongo.Crud.Test do
   test "insert error", ctx do
     anycoll = ctx[:anycoll]
     if true do
-      [_id: 1, a: 31] |> anycoll.insert
-      [_id: 1, a: 32] |> anycoll.insert
+      [_id: 1, a: 31] |> anycoll.insert_one!
+      [_id: 1, a: 32] |> anycoll.insert_one!
       assert {:error, _} = ctx[:db].getLastError
     end
   end

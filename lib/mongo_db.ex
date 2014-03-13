@@ -5,7 +5,8 @@ defmodule Mongo.Db do
   defrecordp :db, __MODULE__ ,
     dbname: nil,
     mongo: nil,
-    auth: nil
+    auth: nil,
+    opts: []
   use Mongo.Helpers
 
   @doc """
@@ -20,7 +21,7 @@ defmodule Mongo.Db do
   @doc """
   Creates a db record
   """
-  def new(mongo, dbname), do: db(mongo: mongo, dbname: dbname)
+  def new(mongo, dbname), do: db(mongo: mongo, dbname: dbname, opts: mongo.db_opts)
 
   @doc """
   Authenticates a user to a database
@@ -81,15 +82,14 @@ defmodule Mongo.Db do
   @doc """
   Returns the error status of the preceding operation.
   """
-  def getLastError(w \\ 0, db(mongo: mongo)=db) do
-    mongo |> Mongo.Request.cmd(db, getlasterror: 1, w: w).send
+  def getLastError(db(mongo: mongo)=db) do
+    mongo |> Mongo.Request.cmd(db, getlasterror: true).send
     case mongo.response do
       {:ok, resp} -> resp.error
       error -> error
     end
   end
   defbang getLastError(db)
-  defbang getLastError(w, db)
 
   @doc """
   Returns the previous error status of the preceding operation(s).
@@ -134,6 +134,26 @@ defmodule Mongo.Db do
   """
   def kill_cursor(cursorID, db(mongo: mongo)) do
     mongo |> Mongo.Request.kill_cursor(cursorID).send
+  end
+
+  @doc """
+  Adds options to the database overwriting mongo server connection options
+
+  new_opts must be a keyword with zero or more pairs represeting one of these options:
+  
+  * read: `:awaitdata`, `:nocursortimeout`, `:slaveok`, `:tailablecursor`
+  * write: concern: `:wc`
+  * socket: `:mode`, `:timeout`
+  """
+  def opts(new_opts, db(opts: opts)=db) do
+    db(db, opts: Keyword.merge(opts, new_opts))
+  end
+
+  @doc """
+  Gets collection default options
+  """
+  def coll_opts(db(opts: opts)) do
+    Keyword.take(opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :wc])
   end
 
 end
