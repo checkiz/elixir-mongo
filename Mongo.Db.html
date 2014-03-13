@@ -50,7 +50,7 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+        <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo_db.ex#L1" target="_blank" class="view_source">Source</a>
       
 
@@ -92,6 +92,13 @@
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#coll_opts/1">coll_opts(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Gets collection default options</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#collection/2">collection(collname, db)</a></td>
   
     <td class="summary_synopsis"><p>Returns a collection of the database</p>
@@ -106,14 +113,7 @@
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#getLastError!/2">getLastError!(w, db)</a></td>
-  
-    <td class="summary_synopsis"><p>See getLastError/2</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#getLastError/2">getLastError(w \\ 0, db)</a></td>
+  <td class="summary_signature"><a href="#getLastError/1">getLastError(db)</a></td>
   
     <td class="summary_synopsis"><p>Returns the error status of the preceding operation</p>
 </td>
@@ -162,6 +162,13 @@
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#opts/2">opts(new_opts, db)</a></td>
+  
+    <td class="summary_synopsis"><p>Adds options to the database overwriting mongo server connection options</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#resetError!/1">resetError!(db)</a></td>
   
     <td class="summary_synopsis"><p>See resetError/1</p>
@@ -199,8 +206,8 @@
 <p>Expects a DB record, a user and a password returns <code>{:ok, db}</code> or <code>{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L30" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L31" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -216,8 +223,8 @@
   <div class="docstring"><p>See auth/3</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L33" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L34" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -232,8 +239,8 @@
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L35" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L36" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -252,7 +259,7 @@
 for commands already implemented by these modules</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo_db.ex#L123" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -269,8 +276,25 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>See cmd/2</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo_db.ex#L130" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="coll_opts/1">
+    <span class="signature"><strong>coll_opts(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#coll_opts/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Gets collection default options</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L155" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -286,16 +310,16 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>Returns a collection of the database</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L79" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L80" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <div class="detail_header" id="getLastError/2">
-    <span class="signature"><strong>getLastError(w \\ 0, db)</strong></span>
+  <div class="detail_header" id="getLastError/1">
+    <span class="signature"><strong>getLastError(db)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
-      <a href="#getLastError/2" class="detail_link" title="Link to this function">#</a>
+      <a href="#getLastError/1" class="detail_link" title="Link to this function">#</a>
       <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
     </div>
   </div>
@@ -303,8 +327,8 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>Returns the error status of the preceding operation.</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L84" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L85" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -320,24 +344,7 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>See getLastError/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L91" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <div class="detail_header" id="getLastError!/2">
-    <span class="signature"><strong>getLastError!(w, db)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#getLastError!/2" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-  <div class="docstring"><p>See getLastError/2</p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo_db.ex#L92" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -354,7 +361,7 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>Returns the previous error status of the preceding operation(s).</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo_db.ex#L97" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -371,7 +378,7 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>See getPrevError/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo_db.ex#L104" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -388,7 +395,7 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>Kill a cursor of the db</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo_db.ex#L135" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -405,8 +412,8 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>Gets mongo server hosting the database</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L14" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L15" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -422,8 +429,8 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>Gets dbname</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L18" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L19" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -439,8 +446,33 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>Creates a db record</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo_db.ex#L23" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L24" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="opts/2">
+    <span class="signature"><strong>opts(new_opts, db)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#opts/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Adds options to the database overwriting mongo server connection options</p>
+
+<p>new_opts must be a keyword with zero or more pairs represeting one of these options:</p>
+
+<ul>
+<li>read: <code>:awaitdata</code>, <code>:nocursortimeout</code>, <code>:slaveok</code>, <code>:tailablecursor</code></li>
+<li>write: concern: <code>:wc</code></li>
+<li>socket: <code>:mode</code>, <code>:timeout</code></li>
+</ul>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo_db.ex#L148" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -456,7 +488,7 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>Resets error</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo_db.ex#L109" target="_blank" class="view_source">Source</a>
   
 </div>
@@ -473,7 +505,7 @@ for commands already implemented by these modules</p>
   <div class="docstring"><p>See resetError/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo_db.ex#L115" target="_blank" class="view_source">Source</a>
   
 </div>

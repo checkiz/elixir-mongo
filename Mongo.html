@@ -50,7 +50,7 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+        <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo.ex#L1" target="_blank" class="view_source">Source</a>
       
 
@@ -60,9 +60,37 @@
         <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
-  <td class="summary_signature"><a href="#assign_id/1">assign_id(doc)</a></td>
+  <td class="summary_signature"><a href="#assign_id/1">assign_id(docs)</a></td>
   
-    <td class="summary_synopsis"><p>Assigns id to a document or a list of document when <code>:_id</code> is missing</p>
+    <td class="summary_synopsis"><p>Assigns radom ids to a list of documents when <code>:_id</code> is missing</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#assign_id/2">assign_id(docs, mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>Assigns sequential ids to a list of documents when <code>:_id</code> is missing</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect!/0">connect!()</a></td>
+  
+    <td class="summary_synopsis"><p>See connect/0</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect!/1">connect!(opts)</a></td>
+  
+    <td class="summary_synopsis"><p>See connect/1</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect!/2">connect!(host, port)</a></td>
+  
+    <td class="summary_synopsis"><p>See connect/2</p>
 </td>
   
 </tr>
@@ -74,21 +102,14 @@
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#connect/1">connect(host_or_mode)</a></td>
+  <td class="summary_signature"><a href="#connect/1">connect(opts)</a></td>
   
     <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#connect/2">connect(host, port_or_mode)</a></td>
-  
-    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#connect/3">connect(host, port, opts)</a></td>
+  <td class="summary_signature"><a href="#connect/2">connect(host, port)</a></td>
   
     <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </td>
@@ -105,7 +126,7 @@
           <h2>Functions</h2>
           <div class="detail">
   <div class="detail_header" id="assign_id/1">
-    <span class="signature"><strong>assign_id(doc)</strong></span>
+    <span class="signature"><strong>assign_id(docs)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#assign_id/1" class="detail_link" title="Link to this function">#</a>
@@ -113,15 +134,36 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Assigns id to a document or a list of document when <code>:_id</code> is missing</p>
+  <div class="docstring"><p>Assigns radom ids to a list of documents when <code>:_id</code> is missing</p>
 
 <pre><code>[a: 1] |&gt; Mongo.assign_id
 [_id: ObjectId(...), a: 1]
 </code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo.ex#L29" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="assign_id/2">
+    <span class="signature"><strong>assign_id(docs, mongo)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#assign_id/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Assigns sequential ids to a list of documents when <code>:_id</code> is missing</p>
+
+<pre><code>[a: 1] |&gt; Mongo.assign_id(mongo)
+[_id: ObjectId(...), a: 1]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo.ex#L37" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -137,13 +179,13 @@
   <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo.ex#L9" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo.ex#L10" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="connect/1">
-    <span class="signature"><strong>connect(host_or_mode)</strong></span>
+    <span class="signature"><strong>connect(opts)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#connect/1" class="detail_link" title="Link to this function">#</a>
@@ -154,13 +196,13 @@
   <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo.ex#L13" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo.ex#L18" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="connect/2">
-    <span class="signature"><strong>connect(host, port_or_mode)</strong></span>
+    <span class="signature"><strong>connect(host, port)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#connect/2" class="detail_link" title="Link to this function">#</a>
@@ -171,24 +213,58 @@
   <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
-/lib/mongo.ex#L17" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo.ex#L14" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <div class="detail_header" id="connect/3">
-    <span class="signature"><strong>connect(host, port, opts)</strong></span>
+  <div class="detail_header" id="connect!/0">
+    <span class="signature"><strong>connect!()</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
-      <a href="#connect/3" class="detail_link" title="Link to this function">#</a>
+      <a href="#connect!/0" class="detail_link" title="Link to this function">#</a>
       <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
     </div>
   </div>
   
-  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
+  <div class="docstring"><p>See connect/0</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/845e3dd10cf30bd0ee18f91107791957c7122c20
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo.ex#L19" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="connect!/1">
+    <span class="signature"><strong>connect!(opts)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#connect!/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>See connect/1</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
+/lib/mongo.ex#L20" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="connect!/2">
+    <span class="signature"><strong>connect!(host, port)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#connect!/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>See connect/2</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
 /lib/mongo.ex#L21" target="_blank" class="view_source">Source</a>
   
 </div>
