@@ -20,7 +20,7 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Request.html">Request</a></div>
+      <div class="breadcrumbs">mongo v0.2.0 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Request.html">Request</a></div>
 
       <h1>
         Mongo.Request
@@ -60,16 +60,16 @@
         <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
-  <td class="summary_signature"><a href="#adminCmd/2">adminCmd(mongo, command)</a></td>
+  <td class="summary_signature"><a href="#adminCmd/3">adminCmd(mongo, command, command_args \\ %{})</a></td>
   
     <td class="summary_synopsis"><p>Builds an admin command message</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#cmd/2">cmd(db, command)</a></td>
+  <td class="summary_signature"><a href="#cmd/3">cmd(db, command, command_args \\ %{})</a></td>
   
-    <td class="summary_synopsis"><p>Builds a database command message</p>
+    <td class="summary_synopsis"><p>Builds a database command message composed of command (map of 2) and its arguments</p>
 </td>
   
 </tr>
@@ -139,11 +139,11 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <div class="detail_header" id="adminCmd/2">
-    <span class="signature"><strong>adminCmd(mongo, command)</strong></span>
+  <div class="detail_header" id="adminCmd/3">
+    <span class="signature"><strong>adminCmd(mongo, command, command_args \\ %{})</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
-      <a href="#adminCmd/2" class="detail_link" title="Link to this function">#</a>
+      <a href="#adminCmd/3" class="detail_link" title="Link to this function">#</a>
       <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
     </div>
   </div>
@@ -156,16 +156,16 @@
   
 </div>
 <div class="detail">
-  <div class="detail_header" id="cmd/2">
-    <span class="signature"><strong>cmd(db, command)</strong></span>
+  <div class="detail_header" id="cmd/3">
+    <span class="signature"><strong>cmd(db, command, command_args \\ %{})</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
-      <a href="#cmd/2" class="detail_link" title="Link to this function">#</a>
+      <a href="#cmd/3" class="detail_link" title="Link to this function">#</a>
       <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
     </div>
   </div>
   
-  <div class="docstring"><p>Builds a database command message</p>
+  <div class="docstring"><p>Builds a database command message composed of command (map of 2) and its arguments.</p>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f

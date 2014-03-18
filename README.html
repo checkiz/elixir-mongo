@@ -20,53 +20,89 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="readme.html">README</a></div>
+      <div class="breadcrumbs">mongo v0.2.0 &rarr; <a href="readme.html">README</a></div>
       <h1>elixir-mongo</h1>
 
 <p>A <a href="http://www.mongodb.org">MongoDB</a> driver in Elixir.</p>
 
-<h3>Connecting:</h3>
+<p>Document are exchanged using <code>Maps</code>.</p>
 
-<ul>
-<li><code>mongo = Mongo.connect</code></li>
-<li><code>db = mongo.db(&quot;test&quot;)</code></li>
-<li><code>anycoll = db.collection(&quot;anycoll&quot;)</code></li>
-</ul>
+<h3>Connecting</h3>
 
-<h3>Wrappers for CRUD operations:</h3>
+<p>Example preparing access to the <code>anycoll</code> collection in the <code>test</code> db :
+```elixir</p>
 
-<ul>
-<li><code>anycoll.find.toArray</code></li>
-<li><code>anycoll.find.stream |&gt; Enum.to_list</code></li>
-<li><code>anycoll.find.skip(1).toArray</code></li>
-<li><code>[[a: 23], [a: 24, b: 1]] |&gt; anycoll.insert</code></li>
-<li><code>anycoll.update([a: 456], [a: 123, b: 789])</code></li>
-<li><code>anycoll.delete([b: 789])</code></li>
-</ul>
+<h1>Connect the mongo server (by default port 27017 at 127.0.0.1)</h1>
 
-<h3>Wrappers for Aggregate operations:</h3>
+<p>mongo = Mongo.connect</p>
 
-<ul>
-<li><code>anycoll.count([value: [&#39;$gt&#39;: 0]])</code></li>
-<li><code>anycoll.distinct(&quot;value&quot;, [value: [&quot;$gt&quot;: 1]])</code></li>
-<li><code>anycoll.mr(&quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;function(k, vs){return Array.sum(vs)}&quot;)</code></li>
-<li><code>anycoll.group(a: true)</code></li>
-<li><code>anycoll.aggregate(skip: 1, limit: 5, project: [&#39;_id&#39;: false, value: true])</code></li>
-</ul>
+<h1>Select the db to access</h1>
+
+<p>db = mongo.db(&quot;test&quot;)  </p>
+
+<h1>Select the collection to access</h1>
+
+<p>anycoll = db.collection(&quot;anycoll&quot;)<br>
+```</p>
+
+<h3>Wrappers for CRUD operations</h3>
+
+<p>Examples accessing the <code>anycoll</code> collection via CRUD operations :</p>
+
+<pre><code class="elixir"># Return the list of all docs in the collection (list of Maps)
+anycoll.find.toArray   
+anycoll.find.stream |&gt; Enum.to_list   # Same as above
+anycoll.find.skip(1).toArray          # Same as above but skip first doc
+# Insert a list of two docs into the collection
+[%{a: 23}, %{a: 24, b: 1}] |&gt; anycoll.insert  
+# Updates the doc matching &quot;a&quot; == 456 with new values
+anycoll.update(%{a: 456}, %{a: 123, b: 789})  
+# Delete the document matching &quot;b&quot; == 789
+anycoll.delete(%{b: 789}) 
+</code></pre>
+
+<h3>Wrappers for Aggregate operations</h3>
+
+<p>Example of aggregate operation applied to the <code>anycoll</code> collection :</p>
+
+<pre><code class="elixir"># Return docs with &quot;value&quot; &gt; 0
+anycoll.count(%{value: %{&#39;$gt&#39;: 0}}) 
+# Return distinct &quot;value&quot; for docs with &quot;value&quot; &gt; 0
+anycoll.distinct(&quot;value&quot;, %{value: %{&quot;$gt&quot;: 1}})  
+# Apply a map-reduce to the collection specifying the map function then the apply function
+anycoll.mr(&quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;function(k, vs){return Array.sum(vs)}&quot;)
+# Groups documents in a collection by the specified keys
+anycoll.group(a: true)
+# Aggregate operation
+anycoll.aggregate([
+  %{&#39;$skip&#39;: 1},    # skip the first doc
+  %{&#39;$limit&#39;: 5},   # take five
+  %{&#39;$project&#39;: %{&#39;_id&#39;: false, value: true}} # project : select only &quot;_id&quot; and &quot;value&quot;
+])
+# Drop a collection
+db.collection(&quot;anycoll&quot;).drop
+</code></pre>
 
 <h3>Other commands</h3>
 
+<pre><code class="elixir"># Authenticate against the db
+db.auth(&quot;testuser&quot;, &quot;123&quot;)`
+# Retrieve the last error
+db.getLastError
+</code></pre>
+
+<h3>Documentation</h3>
+
 <ul>
-<li><code>db.auth(&quot;testuser&quot;, &quot;123&quot;)</code></li>
-<li><code>db.getLastError</code></li>
-<li><code>db.collection(&quot;anycoll&quot;).drop</code></li>
+<li><a href="http://checkiz.github.io/elixir-mongo">documentation</a></li>
 </ul>
 
-<p>elixir-mongo on GitHub <a href="https://github.com/checkiz/elixir-mongo">source repo</a> - 
-<a href="http://checkiz.github.io/elixir-mongo">documentation</a></p>
+<h3>Dependencies</h3>
 
-<p>MongoDB needs a Bson encoder/decoder, this project uses elixir-bson see <a href="https://github.com/checkiz/elixir-bson">elixir-bson source repo</a> and its 
-<a href="http://checkiz.github.io/elixir-bson">documentation</a></p>
+<ul>
+<li>MongoDB needs a Bson encoder/decoder, this project uses the elixir-bson encoder/decoder. See <a href="https://github.com/checkiz/elixir-bson">elixir-bson source repo</a> and its 
+<a href="http://checkiz.github.io/elixir-bson">documentation</a></li>
+</ul>
 
     </div>
   </body>

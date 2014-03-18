@@ -20,7 +20,7 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Collection.html">Collection</a></div>
+      <div class="breadcrumbs">mongo v0.2.0 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Collection.html">Collection</a></div>
 
       <h1>
         Mongo.Collection
@@ -119,7 +119,7 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#count/3">count(query \\ {}, skip_limit \\ [], arg3)</a></td>
+  <td class="summary_signature"><a href="#count/3">count(query \\ %{}, skip_limit \\ %{}, arg3)</a></td>
   
     <td class="summary_synopsis"><p>Count documents in the collection (see db.collection.count)</p>
 </td>
@@ -161,7 +161,7 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#distinct/3">distinct(key, query \\ {}, arg3)</a></td>
+  <td class="summary_signature"><a href="#distinct/3">distinct(key, query \\ %{}, arg3)</a></td>
   
     <td class="summary_synopsis"><p>Finds the distinct values for a specified field across a single collection (see db.collection.distinct)</p>
 </td>
@@ -182,7 +182,7 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#find/3">find(criteria \\ [], projection \\ [], collection)</a></td>
+  <td class="summary_signature"><a href="#find/3">find(criteria \\ %{}, projection \\ %{}, collection)</a></td>
   
     <td class="summary_synopsis"><p>Runs db.find() for a given query and returns a <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a></p>
 </td>
@@ -217,7 +217,7 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#group/5">group(key, reduce \\ @def_reduce, initial \\ {}, params \\ [], arg5)</a></td>
+  <td class="summary_signature"><a href="#group/5">group(key, reduce \\ &quot;function(k, vs){return Array.sum(vs)}&quot;, initial \\ %{}, params \\ %{}, arg5)</a></td>
   
     <td class="summary_synopsis"><p>Groups documents in the collection by the specified key (see db.collection.group)</p>
 </td>
@@ -280,7 +280,7 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#mr/5">mr(map, reduce \\ @def_reduce, out \\ [inline: true], params \\ [], arg5)</a></td>
+  <td class="summary_signature"><a href="#mr/5">mr(map, reduce \\ &quot;function(k, vs){return Array.sum(vs)}&quot;, out \\ %{inline: true}, params \\ %{}, arg5)</a></td>
   
     <td class="summary_synopsis"><p>Provides a wrapper around the mapReduce command (db.collection.mapReduce)</p>
 </td>
@@ -350,12 +350,16 @@ iex&gt; anycoll.count!(a: [&#39;$in&#39;: 1])
   <div class="docstring"><p>Calculates aggregate values for the data in the collection (see db.collection.aggregate)</p>
 
 <pre><code>db = mongo.connect.db(&quot;test&quot;)
-db.collection.aggregate(skip: 1, limit: 5, project: [&#39;_id&#39;: false, value: true])
+db.collection.aggregate([
+  %{&#39;$skip&#39;: 1}, 
+  %{&#39;$limit&#39;: 5}, 
+  %{&#39;$project&#39;: %{&#39;_id&#39;: false, value: true}}
+])
 </code></pre>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_collection.ex#L235" target="_blank" class="view_source">Source</a>
+/lib/mongo_collection.ex#L240" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -372,12 +376,12 @@ db.collection.aggregate(skip: 1, limit: 5, project: [&#39;_id&#39;: false, value
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_collection.ex#L242" target="_blank" class="view_source">Source</a>
+/lib/mongo_collection.ex#L247" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="count/3">
-    <span class="signature"><strong>count(query \\ {}, skip_limit \\ [], arg3)</strong></span>
+    <span class="signature"><strong>count(query \\ %{}, skip_limit \\ %{}, arg3)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#count/3" class="detail_link" title="Link to this function">#</a>
@@ -390,7 +394,7 @@ db.collection.aggregate(skip: 1, limit: 5, project: [&#39;_id&#39;: false, value
 <p>Returns <code>{:ok, n}</code>, the result of count, or <code>{:error, reason}</code></p>
 
 <pre><code>db = mongo.connect.db(&quot;test&quot;)
-{:ok, n} = db.collection.count(value: [&#39;$gt&#39;: 0])
+{:ok, n} = db.collection.count(%{value: %{&#39;$gt&#39;: 0}})
 </code></pre>
 </div>
   
@@ -463,7 +467,7 @@ db.collection.aggregate(skip: 1, limit: 5, project: [&#39;_id&#39;: false, value
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_collection.ex#L296" target="_blank" class="view_source">Source</a>
+/lib/mongo_collection.ex#L284" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -480,7 +484,7 @@ db.collection.aggregate(skip: 1, limit: 5, project: [&#39;_id&#39;: false, value
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_collection.ex#L291" target="_blank" class="view_source">Source</a>
+/lib/mongo_collection.ex#L279" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -496,7 +500,7 @@ db.collection.aggregate(skip: 1, limit: 5, project: [&#39;_id&#39;: false, value
   <div class="docstring"><p>Removes an existing document or documents in the collection (see db.collection.remove)</p>
 
 <pre><code>db = mongo.connect.db(&quot;test&quot;)
-db.collection(&quot;anycoll&quot;).remove([b: 789])
+db.collection(&quot;anycoll&quot;).remove(%{b: 789})
 </code></pre>
 </div>
   
@@ -506,7 +510,7 @@ db.collection(&quot;anycoll&quot;).remove([b: 789])
 </div>
 <div class="detail">
   <div class="detail_header" id="distinct/3">
-    <span class="signature"><strong>distinct(key, query \\ {}, arg3)</strong></span>
+    <span class="signature"><strong>distinct(key, query \\ %{}, arg3)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#distinct/3" class="detail_link" title="Link to this function">#</a>
@@ -517,7 +521,7 @@ db.collection(&quot;anycoll&quot;).remove([b: 789])
   <div class="docstring"><p>Finds the distinct values for a specified field across a single collection (see db.collection.distinct)</p>
 
 <pre><code>db = mongo.connect.db(&quot;test&quot;)
-db.collection.distinct(&quot;value&quot;, value: [&quot;$gt&quot;: 3])
+db.collection.distinct(&quot;value&quot;, %{value: %{&quot;$gt&quot;: 3}})
 </code></pre>
 </div>
   
@@ -592,12 +596,12 @@ db.collection.distinct(&quot;value&quot;, value: [&quot;$gt&quot;: 3])
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_collection.ex#L227" target="_blank" class="view_source">Source</a>
+/lib/mongo_collection.ex#L228" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="find/3">
-    <span class="signature"><strong>find(criteria \\ [], projection \\ [], collection)</strong></span>
+    <span class="signature"><strong>find(criteria \\ %{}, projection \\ %{}, collection)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#find/3" class="detail_link" title="Link to this function">#</a>
@@ -620,7 +624,7 @@ See <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a> for more detail on
 </div>
 <div class="detail">
   <div class="detail_header" id="group/5">
-    <span class="signature"><strong>group(key, reduce \\ @def_reduce, initial \\ {}, params \\ [], arg5)</strong></span>
+    <span class="signature"><strong>group(key, reduce \\ &quot;function(k, vs){return Array.sum(vs)}&quot;, initial \\ %{}, params \\ %{}, arg5)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#group/5" class="detail_link" title="Link to this function">#</a>
@@ -631,7 +635,7 @@ See <a href="Mongo.Cursor.html"><code>Mongo.Cursor</code></a> for more detail on
   <div class="docstring"><p>Groups documents in the collection by the specified key (see db.collection.group)</p>
 
 <pre><code>db = mongo.connect.db(&quot;test&quot;)
-db.collection.group(a: true)
+db.collection.group(%{a: true})
 </code></pre>
 </div>
   
@@ -720,14 +724,14 @@ db.collection.group(a: true)
   <div class="docstring"><p>Insert a list of documents into the collection</p>
 
 <pre><code>db = mongo.connect.db(&quot;test&quot;)
-[[a: 23], [a: 24, b: 1]] |&gt; 
+[%{a: 23}, %{a: 24, b: 1}] |&gt; 
 db.collection(&quot;anycoll&quot;).insert
 </code></pre>
 
 <p>If you need object ID to be added to your documents, you can run</p>
 
 <pre><code>db = mongo.connect.db(&quot;test&quot;)
-[[a: 23], [a: 24, b: 1]] |&gt; Mongo.assign_id
+[%{a: 23}, %{a: 24, b: 1}] |&gt; Mongo.assign_id
 db.collection(&quot;anycoll&quot;).insert
 </code></pre>
 
@@ -768,8 +772,8 @@ db.collection(&quot;anycoll&quot;).insert
   <div class="docstring"><p>Insert one document into the collection</p>
 
 <pre><code>db = mongo.connect.db(&quot;test&quot;)
-[a: 23] |&gt; 
-db.collection(&quot;anycoll&quot;).insert
+%{a: 23} |&gt; 
+db.collection(&quot;anycoll&quot;).insert_one
 </code></pre>
 
 <p><code>Mongo.Collection.insert_one</code> returns the document it received.</p>
@@ -798,7 +802,7 @@ db.collection(&quot;anycoll&quot;).insert
 </div>
 <div class="detail">
   <div class="detail_header" id="mr/5">
-    <span class="signature"><strong>mr(map, reduce \\ @def_reduce, out \\ [inline: true], params \\ [], arg5)</strong></span>
+    <span class="signature"><strong>mr(map, reduce \\ &quot;function(k, vs){return Array.sum(vs)}&quot;, out \\ %{inline: true}, params \\ %{}, arg5)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#mr/5" class="detail_link" title="Link to this function">#</a>
@@ -947,7 +951,7 @@ db.collection.mr(&quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;fu
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_collection.ex#L253" target="_blank" class="view_source">Source</a>
+/lib/mongo_collection.ex#L258" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -964,7 +968,7 @@ db.collection.mr(&quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;fu
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_collection.ex#L260" target="_blank" class="view_source">Source</a>
+/lib/mongo_collection.ex#L265" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -980,7 +984,7 @@ db.collection.mr(&quot;function(d){emit(this._id, this.value*2)}&quot;, &quot;fu
   <div class="docstring"><p>Modifies an existing document or documents in the collection</p>
 
 <pre><code>db = mongo.connect.db(&quot;test&quot;)
-db.collection(&quot;anycoll&quot;).update([a: 456], [a: 123, b: 789])
+db.collection(&quot;anycoll&quot;).update(%{a: 456}, %{a: 123, b: 789})
 </code></pre>
 </div>
   
@@ -1002,7 +1006,7 @@ db.collection(&quot;anycoll&quot;).update([a: 456], [a: 123, b: 789])
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_collection.ex#L267" target="_blank" class="view_source">Source</a>
+/lib/mongo_collection.ex#L272" target="_blank" class="view_source">Source</a>
   
 </div>
 

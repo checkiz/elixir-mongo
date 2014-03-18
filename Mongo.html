@@ -20,7 +20,7 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a></div>
+      <div class="breadcrumbs">mongo v0.2.0 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a></div>
 
       <h1>
         Mongo
@@ -45,6 +45,8 @@
       
         <div id="moduledoc" class="docstring">
           <p><a href="http://www.mongodb.org">MongoDB</a> driver in Elixir</p>
+
+<p>See <a href="https://github.com/checkiz/elixir-mongo">elixir-mongo source repo</a></p>
 
         </div>
       
@@ -136,13 +138,13 @@
   
   <div class="docstring"><p>Assigns radom ids to a list of documents when <code>:_id</code> is missing</p>
 
-<pre><code>[a: 1] |&gt; Mongo.assign_id
-[_id: ObjectId(...), a: 1]
+<pre><code>[%{a: 1}] |&gt; Mongo.assign_id
+[%{_id: ObjectId(...), a: 1}]
 </code></pre>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L29" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L31" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -157,13 +159,13 @@
   
   <div class="docstring"><p>Assigns sequential ids to a list of documents when <code>:_id</code> is missing</p>
 
-<pre><code>[a: 1] |&gt; Mongo.assign_id(mongo)
-[_id: ObjectId(...), a: 1]
+<pre><code>[%{a: 1}] |&gt; Mongo.assign_id(mongo)
+[%{_id: ObjectId(...), a: 1}]
 </code></pre>
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L37" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L39" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -180,7 +182,7 @@
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L10" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L12" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -197,7 +199,7 @@
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L18" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L20" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -214,7 +216,7 @@
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L14" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L16" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -231,7 +233,7 @@
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L19" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L21" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -248,7 +250,7 @@
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L20" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L22" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -265,7 +267,7 @@
 </div>
   
     <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L21" target="_blank" class="view_source">Source</a>
+/lib/mongo.ex#L23" target="_blank" class="view_source">Source</a>
   
 </div>
 
