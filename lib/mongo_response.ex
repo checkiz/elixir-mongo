@@ -32,7 +32,7 @@ defmodule Mongo.Response do
         {:error, "Cursor not found"}
       queryFailure>0 ->
         if numberReturned>0 do
-          {:error, Keyword.take(Bson.decode(docBuffer), [:'$err', :err, :errmsg, :code, :connectionId])}
+          {:error, Map.take(Bson.decode(docBuffer), [:'$err', :err, :errmsg, :code, :connectionId])}
         else
           {:error, "Query error"}
         end
@@ -80,7 +80,7 @@ defmodule Mongo.Response do
   def hasNext(r), do: r.next? or not r.exhausted
 
   @doc """
-  Parse a command respsonse
+  Parse a command response
 
   Returns `{:ok, doc}` or `{:error, reason}`
   """
@@ -91,7 +91,7 @@ defmodule Mongo.Response do
           if doc[:ok] > 0 do
             {:ok, doc}
           else
-            {:error, Keyword.take(doc, [:err, :errmsg, :code, :connectionId])}
+            {:error, Map.take(doc, [:err, :errmsg, :code, :connectionId])}
           end
       end
   end
@@ -192,7 +192,7 @@ defmodule Mongo.Response do
       {:ok, doc} ->
         case doc[:err] do
           nil -> :ok
-          _ -> {:error, Keyword.take(doc, [:err, :errmsg, :code, :connectionId])}
+          _ -> {:error, Map.take(doc, [:err, :errmsg, :code, :connectionId])}
         end
       error -> error
     end

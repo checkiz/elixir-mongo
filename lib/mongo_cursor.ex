@@ -138,12 +138,4 @@ defmodule Mongo.Cursor do
   """
   def batchSize(n, c), do: cursor(c, batchSize: n)
 
-  # # no doc  
-  # def inspect(cursor(cursorID: cursorID)) do
-  #   [__MODULE__, [cursorID: cursorID]]
-  # end
-  # defimpl Inspect, for: __MODULE__ do
-  #   def inspect(c, _o), do: Mongo.Cursor.inspect(c)
-  # end
-
 end

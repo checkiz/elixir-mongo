@@ -6,7 +6,7 @@ defmodule Mongo.Db do
     dbname: nil,
     mongo: nil,
     auth: nil,
-    opts: []
+    opts: %{}
   use Mongo.Helpers
 
   @doc """
@@ -42,7 +42,7 @@ defmodule Mongo.Db do
   def auth(db(mongo: mongo, auth: {username, hash_password})=db) do
     nonce = getnonce(db)
     digest = hash nonce <> username <> hash_password
-    mongo |> Mongo.Request.cmd(db, authenticate: 1, nonce: nonce, user: username, key: digest).send
+    mongo |> Mongo.Request.cmd(db, %{authenticate: 1}, %{nonce: nonce, user: username, key: digest}).send
     case mongo.response do
       {:ok, resp} ->
         case resp.success do
@@ -67,7 +67,7 @@ defmodule Mongo.Db do
 
   # get `nonce` token from server
   defp getnonce(db(mongo: mongo)=db) do
-    mongo |> Mongo.Request.cmd(db, getnonce: 1).send
+    mongo |> Mongo.Request.cmd(db, %{getnonce: 1}).send
     case mongo.response do
       {:ok, resp} -> resp.getnonce
       error -> error
@@ -83,7 +83,7 @@ defmodule Mongo.Db do
   Returns the error status of the preceding operation.
   """
   def getLastError(db(mongo: mongo)=db) do
-    mongo |> Mongo.Request.cmd(db, getlasterror: true).send
+    mongo |> Mongo.Request.cmd(db, %{getlasterror: true}).send
     case mongo.response do
       {:ok, resp} -> resp.error
       error -> error
@@ -95,7 +95,7 @@ defmodule Mongo.Db do
   Returns the previous error status of the preceding operation(s).
   """
   def getPrevError(db(mongo: mongo)=db) do
-    mongo |> Mongo.Request.cmd(db, getPrevError: 1).send
+    mongo |> Mongo.Request.cmd(db, %{getPrevError: 1}).send
     case mongo.response do
       {:ok, resp} -> resp.error
       error -> error
@@ -107,7 +107,7 @@ defmodule Mongo.Db do
   Resets error
   """
   def resetError(db) do
-    case db.cmd(resetError: 1) do
+    case db.cmd(%{resetError: 1}) do
       {:ok, _} -> :ok
       error -> error
     end
@@ -146,14 +146,14 @@ defmodule Mongo.Db do
   * socket: `:mode`, `:timeout`
   """
   def opts(new_opts, db(opts: opts)=db) do
-    db(db, opts: Keyword.merge(opts, new_opts))
+    db(db, opts: Map.merge(opts, new_opts))
   end
 
   @doc """
   Gets collection default options
   """
   def coll_opts(db(opts: opts)) do
-    Keyword.take(opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :wc])
+    Map.take(opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :wc])
   end
 
 end

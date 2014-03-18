@@ -24,21 +24,21 @@ defmodule Mongo.Request do
   end
 
   @doc """
-    Builds a database command message
+    Builds a database command message composed of command (map of 2) and its arguments.
   """
-  def cmd(db, command) do
+  def cmd(db, command, command_args \\ %{}) do
     request payload:
       @query <> @query_opts <> <<0::24>> <> # [slaveok: true]
       db.name <> ".$cmd" <>
       <<0::40, 255, 255, 255, 255>> <> # skip(0), batchSize(-1)
-      document(command)
+      document(command, command_args)
   end
 
   @doc """
     Builds an admin command message
   """
-  def adminCmd(mongo, command) do
-    cmd(mongo.db("admin"), command)
+  def adminCmd(mongo, command, command_args \\ %{}) do
+    cmd(mongo.db("admin"), command, command_args)
   end
 
   @doc """
@@ -120,9 +120,8 @@ defmodule Mongo.Request do
   def id(requestID, r), do: request(r, requestID: requestID)
 
   # transform a document into bson
-  defp document(nil), do: document({})
-  defp document(doc) when is_binary(doc), do: doc
-  defp document(doc), do: Bson.encode(doc)
+  defp document(command), do: Bson.encode(command)
+  defp document(command, command_args), do: Bson.encode({Mongo_cmd, command, command_args})
 
   defp message(payload, reqid) do
     <<(byte_size(payload) + 12)::[size(32),little]>> <> reqid <> <<0::32>> <> <<payload::binary>>
@@ -133,5 +132,25 @@ defmodule Mongo.Request do
     <<tail::24, 0::1, head::7>>
   end
 
-
 end
+
+defimpl BsonEncoder, for: Mongo_cmd do
+  def encode({Mongo_cmd, command, command_args}, name) when is_map(command) and is_map(command_args) do
+    "\x03" <> name <> "\x00" <> encode_e_list(command, command_args)
+  end
+
+  def encode_e_list(map1, map2) do
+    bitlist1 = :maps.fold( fn 
+      k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> atom_to_binary)|acc]
+      k, v, acc -> [BsonEncoder.encode(v, Bson.encode(k))|acc]
+    end, [], map1)
+    :maps.fold( fn 
+      k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> atom_to_binary)|acc]
+      k, v, acc -> [BsonEncoder.encode(v, Bson.encode(k))|acc]
+    end, bitlist1, map2)
+      |> bitlist_to_bsondoc
+  end
+
+  defp bitlist_to_bsondoc(arrbin), do: arrbin |> Enum.reverse |> iolist_to_binary |> Bson.doc
+end
+

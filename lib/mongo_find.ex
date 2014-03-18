@@ -6,19 +6,19 @@ defmodule Mongo.Find do
   defrecordp :find, __MODULE__ ,
     mongo: nil,
     collection: nil,
-    selector: {},
-    projector: {},
+    selector: %{},
+    projector: %{},
     batchSize: 0,
     skip: 0,
-    opts: [],
-    mods: []
+    opts: %{},
+    mods: %{}
 
   @doc """
   Creates a new find operation.
 
   Not to be used directly, prefer `Mongo.Collection.find/3` that returns a `Mongo.Cursor`
   """
-  def new(collection, jsString, projector) when is_binary(jsString), do: new(collection, ['$where': jsString], projector)
+  def new(collection, jsString, projector) when is_binary(jsString), do: new(collection, %{'$where': jsString}, projector)
   def new(collection, selector, projector) do
     find(collection: collection, selector: selector, projector: projector, opts: collection.read_opts)
   end
@@ -98,7 +98,7 @@ defmodule Mongo.Find do
   Add hint opperator that forces the query optimizer to use a specific index to fulfill the query 
   """
   def hint(indexName, f) when is_atom(indexName), do: f.addSpecial(:'$hint', indexName)
-  def hint(hints, f) when is_list(hints), do: f.addSpecial(:'$hint', hints)
+  def hint(hints, f) when is_map(hints), do: f.addSpecial(:'$hint', hints)
 
   @doc """
   Sets query options
@@ -114,7 +114,7 @@ defmodule Mongo.Find do
   def opts(options, f), do: find(f, opts: options)
 
   def addSpecial(k, v, find(mods: mods)=f) do
-    find(f, mods: Keyword.put(mods, k, v))
+    find(f, mods: Map.put(mods, k, v))
   end
 
   @query       <<0xd4, 0x07, 0, 0>> # 2004  query a collection
@@ -124,11 +124,11 @@ defmodule Mongo.Find do
     Builds a query message
 
     * collection: collection
-    * selector: selection criteria (Keyword or nil)
-    * projector: fields (Keyword or nil)
+    * selector: selection criteria (Map or nil)
+    * projector: fields (Map or nil)
   """
   def query(find(collection: collection, selector: selector, projector: projector, skip: skip, batchSize: batchSize, opts: opts, mods: mods)) do
-    selector = if mods == [], do: selector, else: Keyword.put(mods, :'$query', selector)
+    selector = if mods == %{}, do: selector, else: Map.put(mods, :'$query', selector)
     @query <> (Enum.reduce(opts, @query_opts, &queryopt_red/2)) <> <<0::24>> <>
       collection.db.name <> "." <>  collection.name <> <<0::8>> <>
       Bson.int32(skip) <>

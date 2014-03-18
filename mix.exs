@@ -4,8 +4,7 @@ defmodule Mongo.Mixfile do
   def project do
     [ app: :mongo,
       name: "mongo",
-      version: "0.0.1",
-      elixir: "~> 0.12.2",
+      version: "0.2.0",
       source_url: "https://github.com/checkiz/elixir-mongo",
       deps: deps(Mix.env),
       docs: &docs/0 ]
@@ -34,8 +33,8 @@ defmodule Mongo.Mixfile do
   defp deps(_), do: deps(:prod)
 
   defp docs do
-    [ readme: true,
-      main: "README",
+    [ #readme: false,
+      #main: "README",
       source_ref: System.cmd("git rev-parse --verify --quiet HEAD") ]
   end
 

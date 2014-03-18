@@ -8,7 +8,7 @@ defmodule Mongo.Server do
     port: nil,
     mode: false,
     timeout: nil,
-    opts: [],
+    opts: %{},
     id_prefix: nil,
     socket: nil
 
@@ -31,28 +31,28 @@ defmodule Mongo.Server do
   ].
   ```
   """
-  def connect() do
-    connect []
+  def connect do
+    connect %{}
   end
 
   @doc """
   connects to a mongodb server
   """
-  def connect(host, port) when is_binary(host) and port |> is_integer do
-    connect(host: host, port: port)
+  def connect(host, port) when is_binary(host) and is_integer(port) do
+    connect %{host: host, port: port}
   end
 
   @doc """
   connects to a mongodb server specifying options
 
-  Opts must be a Keyword
+  Opts must be a Map
   """
-  def connect(opts) when opts |> is_list do
+  def connect(opts) when is_map(opts) do
     opts    = default_env(opts)
-    host    = Keyword.get(opts, :host,    @host)
-    port    = Keyword.get(opts, :port,    @port)
-    timeout = Keyword.get(opts, :timeout, @timeout)
-    mode    = Keyword.get(opts, :mode,    @mode)
+    host    = Map.get(opts, :host,    @host)
+    port    = Map.get(opts, :port,    @port)
+    timeout = Map.get(opts, :timeout, @timeout)
+    mode    = Map.get(opts, :mode,    @mode)
     if is_binary(host) do
       host = String.to_char_list!(host)
     end
@@ -128,7 +128,7 @@ defmodule Mongo.Server do
   Pings the server
   """
   def ping(mongo) do
-    mongo |> Mongo.Request.adminCmd(mongo, ping: true).send
+    mongo |> Mongo.Request.adminCmd(mongo, %{ping: true}).send
     case mongo.response do
       {:ok, resp} -> resp.success
       error -> error
@@ -157,7 +157,7 @@ defmodule Mongo.Server do
   defp default_env(opts) do
     case :application.get_env(:mongo, :host) do
         {:ok, {host, port}} ->
-          opts |> Keyword.put_new(:host, host) |> Keyword.put_new(:port, port)
+          opts |> Map.put_new(:host, host) |> Map.put_new(:port, port)
         _ -> opts
     end
   end
@@ -212,14 +212,14 @@ defmodule Mongo.Server do
   * socket: `:mode`, `:timeout`
   """
   def opts(new_opts, mongo(opts: opts)=mongo) do
-    mongo(mongo, opts: Keyword.merge(opts, new_opts))
+    mongo(mongo, opts: Map.merge(opts, new_opts))
   end
 
   @doc """
   Gets the mongo connection default options
   """
   def db_opts(mongo(opts: opts)) do
-    Keyword.take(opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :wc, :mode, :timeout])
+    Map.take(opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :wc, :mode, :timeout])
   end
 
   @doc false
@@ -229,7 +229,7 @@ defmodule Mongo.Server do
     Enum.map_reduce(
       docs,
       {client_prefix, gen_trans_prefix, :crypto.rand_uniform(0, 4294967295)},
-      fn(doc, id) -> { Keyword.put(doc, :'_id', Bson.ObjectId.new(oid: to_oid(id))), next_id(id) } end)
+      fn(doc, id) -> { Map.put(doc, :'_id', Bson.ObjectId.new(oid: to_oid(id))), next_id(id) } end)
       |> elem(0)
   end
 

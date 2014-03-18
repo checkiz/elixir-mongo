@@ -2,6 +2,8 @@ defmodule Mongo do
   use Mongo.Helpers
   @moduledoc """
   [MongoDB](http://www.mongodb.org) driver in Elixir
+
+  See [elixir-mongo source repo](https://github.com/checkiz/elixir-mongo)
   """
 
   @doc """
@@ -23,16 +25,16 @@ defmodule Mongo do
   @doc """
   Assigns radom ids to a list of documents when `:_id` is missing
 
-      [a: 1] |> Mongo.assign_id
-      [_id: ObjectId(...), a: 1]
+      [%{a: 1}] |> Mongo.assign_id
+      [%{_id: ObjectId(...), a: 1}]
   """
   defdelegate assign_id(docs), to: Mongo.Server
 
   @doc """
   Assigns sequential ids to a list of documents when `:_id` is missing
 
-      [a: 1] |> Mongo.assign_id(mongo)
-      [_id: ObjectId(...), a: 1]
+      [%{a: 1}] |> Mongo.assign_id(mongo)
+      [%{_id: ObjectId(...), a: 1}]
   """
   defdelegate assign_id(docs, mongo), to: Mongo.Server
 
