@@ -3,7 +3,8 @@ defmodule Mongo.Response do
   Receives, decode and parse MongoDB response from the server
   """
   use Mongo.Helpers
-  defrecordp :response, __MODULE__ ,
+  require Record
+  Record.defrecordp :response, __MODULE__ ,
     cursorID: nil,
     startingFrom: nil,
     nbDoc: nil,

@@ -20,7 +20,7 @@ defmodule Mongo.Helpers do
 
     {:__block__, [], quoted} = 
     quote bind_quoted: [name: Macro.escape(name), args: Macro.escape(args)] do
-      def unquote(to_string(name) <> "!" |> binary_to_atom)(unquote_splicing(args)) do
+      def unquote(to_string(name) <> "!" |> String.to_atom)(unquote_splicing(args)) do
         case unquote(name)(unquote_splicing(args)) do
           :ok -> :ok
           nil -> nil

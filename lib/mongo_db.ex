@@ -2,7 +2,8 @@ defmodule Mongo.Db do
   @moduledoc """
  Module holding operations that can be performed on MongoDB databases
   """
-  defrecordp :db, __MODULE__ ,
+  require Record
+  Record.defrecordp :db, __MODULE__ ,
     dbname: nil,
     mongo: nil,
     auth: nil,
@@ -60,8 +61,8 @@ defmodule Mongo.Db do
 
   # creates an hex string from binary
   defp binary_to_hex(bin) do
-    bc <<b::4>> inbits bin do
-        <<integer_to_binary(b,16)::binary>>
+    for << <<b::4>> <- bin >>, into: <<>> do
+        <<Integer.to_string(b,16)::binary>>
     end |> String.downcase
   end
 

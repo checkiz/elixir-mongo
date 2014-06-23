@@ -1,4 +1,5 @@
 defmodule Mongo.Cursor do
+  require Record
   @moduledoc """
   Manages MongoDB [cursors](http://docs.mongodb.org/manual/core/cursors/).
 
@@ -6,7 +7,7 @@ defmodule Mongo.Cursor do
   """
   use Mongo.Helpers
 
-  defrecordp :cursor, __MODULE__ ,
+  Record.defrecordp :cursor, __MODULE__ ,
     collection: nil,
     batchSize: 0,
     response: nil,

@@ -28,7 +28,8 @@ defmodule Mongo.Collection do
   """
   use Mongo.Helpers
 
-  defrecordp :coll, __MODULE__ ,
+  require Record
+  Record.defrecordp :coll, __MODULE__ ,
     collname: nil,
     db: nil,
     opts: %{}

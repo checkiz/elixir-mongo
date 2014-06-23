@@ -38,13 +38,12 @@ defmodule Mongo do
   """
   defdelegate assign_id(docs, mongo), to: Mongo.Server
 
-  defexception Error, reason: nil, context: nil do
-
-    def message(Error[reason: reason, context: nil]) do
-      inspect(reason)
-    end
-    def message(Error[reason: reason, context: context]) do
-      inspect(reason) <> "\n" <> inspect(context)
+  defmodule Error do
+    defexception [:message]
+    def exception(message) when is_bitstring(message), do: %Error{message: message}
+    def exception(reason: reason), do: %Error{message: inspect(reason)}
+    def exception(reason: reason, context: context) do
+      %Error{message: inspect(reason) <> "\n" <> inspect(context)}
     end
   end
 end

@@ -1,9 +1,10 @@
 defmodule Mongo.Request do
+  require Record
   @moduledoc """
   Defines, encodes and sends MongoDB operations to the server
   """
 
-  defrecordp :request, __MODULE__ ,
+  Record.defrecordp :request, __MODULE__ ,
     requestID: nil,
     payload: nil
 
@@ -119,9 +120,13 @@ defmodule Mongo.Request do
   """
   def id(requestID, r), do: request(r, requestID: requestID)
 
+  defmodule Cmd do
+    defstruct cmd: nil, args: nil
+  end
+
   # transform a document into bson
   defp document(command), do: Bson.encode(command)
-  defp document(command, command_args), do: Bson.encode({Mongo_cmd, command, command_args})
+  defp document(command, command_args), do: Bson.encode(%Mongo.Request.Cmd{cmd: command, args: command_args})
 
   defp message(payload, reqid) do
     <<(byte_size(payload) + 12)::[size(32),little]>> <> reqid <> <<0::32>> <> <<payload::binary>>
@@ -134,23 +139,23 @@ defmodule Mongo.Request do
 
 end
 
-defimpl BsonEncoder, for: Mongo_cmd do
-  def encode({Mongo_cmd, command, command_args}, name) when is_map(command) and is_map(command_args) do
+defimpl BsonEncoder, for: Mongo.Request.Cmd do
+  def encode(%Mongo.Request.Cmd{cmd: command, args: command_args}, name) when is_map(command) and is_map(command_args) do
     "\x03" <> name <> "\x00" <> encode_e_list(command, command_args)
   end
 
   def encode_e_list(map1, map2) do
     bitlist1 = :maps.fold( fn 
-      k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> atom_to_binary)|acc]
+      k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> Atom.to_string)|acc]
       k, v, acc -> [BsonEncoder.encode(v, Bson.encode(k))|acc]
     end, [], map1)
     :maps.fold( fn 
-      k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> atom_to_binary)|acc]
+      k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> Atom.to_string)|acc]
       k, v, acc -> [BsonEncoder.encode(v, Bson.encode(k))|acc]
     end, bitlist1, map2)
       |> bitlist_to_bsondoc
   end
 
-  defp bitlist_to_bsondoc(arrbin), do: arrbin |> Enum.reverse |> iolist_to_binary |> Bson.doc
+  defp bitlist_to_bsondoc(arrbin), do: arrbin |> Enum.reverse |> IO.iodata_to_binary |> Bson.doc
 end
 

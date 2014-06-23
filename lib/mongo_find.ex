@@ -3,7 +3,8 @@ defmodule Mongo.Find do
   Find operation on MongoDB
   """
   use Mongo.Helpers
-  defrecordp :find, __MODULE__ ,
+  require Record
+  Record.defrecordp :find, __MODULE__ ,
     mongo: nil,
     collection: nil,
     selector: %{},
