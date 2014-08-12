@@ -25,7 +25,7 @@ defmodule Mongo.Server do
 
   ```erlang
   [
-    {mongo, 
+    {mongo,
       [
         {host, {"127.0.0.1", 27017}}
       ]}
@@ -64,7 +64,7 @@ defmodule Mongo.Server do
       { :ok, m } ->
         m
       error -> error
-    end    
+    end
   end
 
   @doc false
@@ -86,7 +86,7 @@ defmodule Mongo.Server do
   """
   def response(mongo) do
     case tcp_recv(mongo) do
-      {:ok, <<messageLength::[little, signed, size(32)], _::binary>> = message} ->
+      {:ok, <<messageLength::size(32)-signed-little, _::binary>> = message} ->
         complete(messageLength, message, mongo) |> Mongo.Response.new
       error -> error
     end
@@ -96,14 +96,14 @@ defmodule Mongo.Server do
   Completes a possibly partial repsonce from the MongoDB server
   """
   def response(
-    <<messageLength::[little, signed, size(32)], _::binary>> = message,
+    <<messageLength::size(32)-signed-little, _::binary>> = message,
     mongo) do
     complete(messageLength, message, mongo) |> Mongo.Response.new
   end
   defbang response(message, mongo)
 
   @doc """
-  Sends a message to MongoDB  
+  Sends a message to MongoDB
   """
   def send(message, mongo(socket: socket, mode: :passive)) do
      :gen_tcp.send(socket, message)
@@ -164,8 +164,8 @@ defmodule Mongo.Server do
   end
 
   # makes shure response is complete
-  defp complete(expected_length, buffer, _mongo) when size(buffer) == expected_length, do: buffer
-  defp complete(expected_length, buffer, _mongo) when size(buffer) >  expected_length, do: binary_part(buffer, 0, expected_length)
+  defp complete(expected_length, buffer, _mongo) when byte_size(buffer) == expected_length, do: buffer
+  defp complete(expected_length, buffer, _mongo) when byte_size(buffer) >  expected_length, do: binary_part(buffer, 0, expected_length)
   defp complete(expected_length, buffer, mongo) do
     case tcp_recv(mongo) do
       {:ok, mess} -> complete(expected_length, buffer <> mess, mongo)
@@ -207,7 +207,7 @@ defmodule Mongo.Server do
   Adds options to the mongo server connection
 
   new_opts must be a keyword with zero or more pairs represeting one of these options:
-  
+
   * read: `:awaitdata`, `:nocursortimeout`, `:slaveok`, `:tailablecursor`
   * write: concern: `:wc`
   * socket: `:mode`, `:timeout`

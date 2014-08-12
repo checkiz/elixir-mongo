@@ -129,7 +129,7 @@ defmodule Mongo.Request do
   defp document(command, command_args), do: Bson.encode(%Mongo.Request.Cmd{cmd: command, args: command_args})
 
   defp message(payload, reqid) do
-    <<(byte_size(payload) + 12)::[size(32),little]>> <> reqid <> <<0::32>> <> <<payload::binary>>
+    <<(byte_size(payload) + 12)::size(32)-little>> <> reqid <> <<0::32>> <> <<payload::binary>>
   end
   # generates a request Id when not provided (makes sure it is a positive integer)
   defp gen_reqid() do
@@ -145,11 +145,11 @@ defimpl BsonEncoder, for: Mongo.Request.Cmd do
   end
 
   def encode_e_list(map1, map2) do
-    bitlist1 = :maps.fold( fn 
+    bitlist1 = :maps.fold( fn
       k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> Atom.to_string)|acc]
       k, v, acc -> [BsonEncoder.encode(v, Bson.encode(k))|acc]
     end, [], map1)
-    :maps.fold( fn 
+    :maps.fold( fn
       k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> Atom.to_string)|acc]
       k, v, acc -> [BsonEncoder.encode(v, Bson.encode(k))|acc]
     end, bitlist1, map2)
@@ -158,4 +158,3 @@ defimpl BsonEncoder, for: Mongo.Request.Cmd do
 
   defp bitlist_to_bsondoc(arrbin), do: arrbin |> Enum.reverse |> IO.iodata_to_binary |> Bson.doc
 end
-

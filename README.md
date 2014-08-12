@@ -10,7 +10,7 @@ Document are exchanged using `Maps`.
 Example preparing access to the `anycoll` collection in the `test` db :
 ```elixir
 # Connect the mongo server (by default port 27017 at 127.0.0.1)
-mongo = Mongo.connect
+mongo = Mongo.connect!
 # Select the db to access  
 db = mongo.db("test")  
 # Select the collection to access

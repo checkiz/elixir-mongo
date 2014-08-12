@@ -4,8 +4,8 @@ defmodule Mongo.Mixfile do
   def project do
     [ app: :mongo,
       name: "mongo",
-      version: "0.3.0",
-      elixir: "~> 0.14.1",
+      version: "0.3.1",
+      elixir: "~> 0.15.1",
       source_url: "https://github.com/checkiz/elixir-mongo",
       deps: deps(Mix.env),
       docs: &docs/0 ]
@@ -18,11 +18,11 @@ defmodule Mongo.Mixfile do
       env: [host: {"127.0.0.1", 27017}]
     ]
   end
-  
+
   # Returns the list of dependencies for prod
   defp deps(:prod) do
     [
-      {:bson, github: "checkiz/elixir-bson", tag: "0.3"}
+      {:bson, github: "checkiz/elixir-bson"}
     ]
   end
 
