@@ -2,7 +2,7 @@ language: erlang
 services:
   - mongodb
 notifications:
-  recipients:
+  email:
     - jerp@checkiz.com
 otp_release:
   - 17.1
