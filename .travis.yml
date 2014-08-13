@@ -14,4 +14,4 @@ before_script:
   - mix archive.install http://s3.hex.pm/installs/hex.ez --force
   - mix deps.get
 script:
-  - mix do test
+  - mix test
