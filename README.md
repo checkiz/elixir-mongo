@@ -1,5 +1,6 @@
 elixir-mongo
 ============
+[![Build Status](https://travis-ci.org/checkiz/elixir-mongo.png?branch=master)](https://travis-ci.org/checkiz/elixir-mongo)
 
 A [MongoDB](http://www.mongodb.org) driver in Elixir.
 
