@@ -20,17 +20,14 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Cursor.html">Cursor</a></div>
+      <div class="breadcrumbs">mongo v0.3.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Cursor.html">Cursor</a></div>
 
       <h1>
         Mongo.Cursor
         
       </h1>
 
-      
-
       <ul class="summary_links">
-        
         
           <li><a href="#summary">Summary</a></li>
         
@@ -45,17 +42,14 @@
       
         <div id="moduledoc" class="docstring">
           <p>Manages MongoDB <a href="http://docs.mongodb.org/manual/core/cursors/">cursors</a>.</p>
-
-<p>Cursors are returned by a find see <a href="Mongo.Collection.html#find/3"><code>Mongo.Collection.find/3</code></a>.</p>
+<p>Cursors are returned by a find see <a href="Mongo.Collection.html#find/3"><code class="inline">Mongo.Collection.find/3</code></a>.</p>
 
         </div>
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_cursor.ex#L1" target="_blank" class="view_source">Source</a>
-      
-
+        <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_cursor.ex#L1" class="view_source">Source</a>
       
 
       
@@ -132,8 +126,8 @@
   <div class="docstring"><p>Specifies the number of documents to return in next batch(es)</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_cursor.ex#L139" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_cursor.ex#L140" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -149,8 +143,8 @@
   <div class="docstring"><p>Kills the cursor</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_cursor.ex#L90" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_cursor.ex#L91" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -166,8 +160,8 @@
   <div class="docstring"><p>Creates a cursor record</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_cursor.ex#L19" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_cursor.ex#L20" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -183,8 +177,8 @@
   <div class="docstring"><p>Returns response for the next batch of document of a given cursor</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_cursor.ex#L50" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_cursor.ex#L51" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -200,8 +194,8 @@
   <div class="docstring"><p>See next_batch/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_cursor.ex#L59" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_cursor.ex#L60" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -215,13 +209,12 @@
   </div>
   
   <div class="docstring"><p>Creates a stream of documents for the given the cursor</p>
-
-<p><code>stream</code>, exectutes the query if not done yet, then, streams documents one by one (retreived from DB by batch).
+<p><code class="inline">stream</code>, exectutes the query if not done yet, then, streams documents one by one (retreived from DB by batch).
 When exhausted, it kills the cursor.</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_cursor.ex#L67" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_cursor.ex#L68" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -235,13 +228,12 @@ When exhausted, it kills the cursor.</p>
   </div>
   
   <div class="docstring"><p>Creates a list of document retreive by a find query</p>
-
-<p><code>toArray</code>, exectutes the query then accumulate in a list all documents one by one.
-It calls <code>Mongo.Cursor/1</code> then pipes the resulting stream to <code>Enum.to_list/1</code></p>
+<p><code class="inline">toArray</code>, exectutes the query then accumulate in a list all documents one by one.
+It calls <code class="inline">Mongo.Cursor/1</code> then pipes the resulting stream to <code class="inline">Enum.to_list/1</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_cursor.ex#L131" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_cursor.ex#L132" class="view_source">Source</a>
   
 </div>
 

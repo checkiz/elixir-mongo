@@ -20,17 +20,14 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Request.html">Request</a></div>
+      <div class="breadcrumbs">mongo v0.3.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Request.html">Request</a></div>
 
       <h1>
         Mongo.Request
         
       </h1>
 
-      
-
       <ul class="summary_links">
-        
         
           <li><a href="#summary">Summary</a></li>
         
@@ -50,26 +47,24 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L1" target="_blank" class="view_source">Source</a>
-      
-
+        <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L1" class="view_source">Source</a>
       
 
       
         <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
-  <td class="summary_signature"><a href="#adminCmd/2">adminCmd(mongo, command)</a></td>
+  <td class="summary_signature"><a href="#adminCmd/3">adminCmd(mongo, command, command_args \\ %{})</a></td>
   
     <td class="summary_synopsis"><p>Builds an admin command message</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#cmd/2">cmd(db, command)</a></td>
+  <td class="summary_signature"><a href="#cmd/3">cmd(db, command, command_args \\ %{})</a></td>
   
-    <td class="summary_synopsis"><p>Builds a database command message</p>
+    <td class="summary_synopsis"><p>Builds a database command message composed of command (map of 2) and its arguments</p>
 </td>
   
 </tr>
@@ -139,37 +134,37 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <div class="detail_header" id="adminCmd/2">
-    <span class="signature"><strong>adminCmd(mongo, command)</strong></span>
+  <div class="detail_header" id="adminCmd/3">
+    <span class="signature"><strong>adminCmd(mongo, command, command_args \\ %{})</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
-      <a href="#adminCmd/2" class="detail_link" title="Link to this function">#</a>
+      <a href="#adminCmd/3" class="detail_link" title="Link to this function">#</a>
       <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
     </div>
   </div>
   
-  <div class="docstring"><p>Builds an admin command message</p>
+  <div class="docstring"><p>  Builds an admin command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L40" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L41" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <div class="detail_header" id="cmd/2">
-    <span class="signature"><strong>cmd(db, command)</strong></span>
+  <div class="detail_header" id="cmd/3">
+    <span class="signature"><strong>cmd(db, command, command_args \\ %{})</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
-      <a href="#cmd/2" class="detail_link" title="Link to this function">#</a>
+      <a href="#cmd/3" class="detail_link" title="Link to this function">#</a>
       <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
     </div>
   </div>
   
-  <div class="docstring"><p>Builds a database command message</p>
+  <div class="docstring"><p>  Builds a database command message composed of command (map of 2) and its arguments.</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L29" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L30" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -182,11 +177,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Builds a delete command message</p>
+  <div class="docstring"><p>  Builds a delete command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L73" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L74" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -199,11 +194,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Builds a get_more command message</p>
+  <div class="docstring"><p>  Builds a get_more command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L94" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L95" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -217,13 +212,12 @@
   </div>
   
   <div class="docstring"><p>Sets the request ID</p>
-
 <p>By default, request ID is generated, but it can be set using this function.
 This is usefull when the connection to MongoDB is active (by default, it is passive)</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L120" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L121" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -236,11 +230,11 @@ This is usefull when the connection to MongoDB is active (by default, it is pass
     </div>
   </div>
   
-  <div class="docstring"><p>Builds an insert command message</p>
+  <div class="docstring"><p>  Builds an insert command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L47" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L48" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -253,11 +247,11 @@ This is usefull when the connection to MongoDB is active (by default, it is pass
     </div>
   </div>
   
-  <div class="docstring"><p>Builds a kill_cursor command message</p>
+  <div class="docstring"><p>  Builds a kill_cursor command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L84" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L85" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -270,11 +264,11 @@ This is usefull when the connection to MongoDB is active (by default, it is pass
     </div>
   </div>
   
-  <div class="docstring"><p>Builds a query message</p>
+  <div class="docstring"><p>  Builds a query message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L22" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L23" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -290,8 +284,8 @@ This is usefull when the connection to MongoDB is active (by default, it is pass
   <div class="docstring"><p>Sends request to mongodb</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L105" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L106" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -304,11 +298,11 @@ This is usefull when the connection to MongoDB is active (by default, it is pass
     </div>
   </div>
   
-  <div class="docstring"><p>Builds an update command message</p>
+  <div class="docstring"><p>  Builds an update command message</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_request.ex#L58" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_request.ex#L59" class="view_source">Source</a>
   
 </div>
 

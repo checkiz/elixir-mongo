@@ -20,17 +20,14 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Server.html">Server</a></div>
+      <div class="breadcrumbs">mongo v0.3.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Server.html">Server</a></div>
 
       <h1>
         Mongo.Server
         
       </h1>
 
-      
-
       <ul class="summary_links">
-        
         
           <li><a href="#summary">Summary</a></li>
         
@@ -50,10 +47,8 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L1" target="_blank" class="view_source">Source</a>
-      
-
+        <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L1" class="view_source">Source</a>
       
 
       
@@ -83,7 +78,7 @@
 <tr>
   <td class="summary_signature"><a href="#connect/0">connect()</a></td>
   
-    <td class="summary_synopsis"><p>connects to local mongodb server by defaults to {&quot;127.0.0.1&quot;, 27017}</p>
+    <td class="summary_synopsis"><p>connects to local mongodb server by defaults to {“127.0.0.1”, 27017}</p>
 </td>
   
 </tr>
@@ -179,8 +174,8 @@
   <div class="docstring"><p>Returns true if connection mode is active</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L141" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L142" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -196,8 +191,8 @@
   <div class="docstring"><p>Executes an admin command to the server</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L123" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L124" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -213,8 +208,8 @@
   <div class="docstring"><p>Closes the connection</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L153" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L154" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -227,21 +222,18 @@
     </div>
   </div>
   
-  <div class="docstring"><p>connects to local mongodb server by defaults to {&quot;127.0.0.1&quot;, 27017}</p>
-
-<p>This can be overwritten by the environment variable <code>:host</code>, ie:</p>
-
+  <div class="docstring"><p>connects to local mongodb server by defaults to {“127.0.0.1”, 27017}</p>
+<p>This can be overwritten by the environment variable <code class="inline">:host</code>, ie:</p>
 <pre><code class="erlang">[
-  {mongo, 
+  {mongo,
     [
       {host, {&quot;127.0.0.1&quot;, 27017}}
     ]}
-].
-</code></pre>
+].</code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L34" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L35" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -255,12 +247,11 @@
   </div>
   
   <div class="docstring"><p>connects to a mongodb server specifying options</p>
-
-<p>Opts must be a Keyword</p>
+<p>Opts must be a Map</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L50" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L51" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -276,8 +267,8 @@
   <div class="docstring"><p>connects to a mongodb server</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L41" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L42" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -293,8 +284,8 @@
   <div class="docstring"><p>Connects to a specific database</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L146" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L147" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -310,8 +301,8 @@
   <div class="docstring"><p>Gets the mongo connection default options</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L221" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L222" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -325,18 +316,19 @@
   </div>
   
   <div class="docstring"><p>Adds options to the mongo server connection</p>
-
 <p>new_opts must be a keyword with zero or more pairs represeting one of these options:</p>
-
 <ul>
-<li>read: <code>:awaitdata</code>, <code>:nocursortimeout</code>, <code>:slaveok</code>, <code>:tailablecursor</code></li>
-<li>write: concern: <code>:wc</code></li>
-<li>socket: <code>:mode</code>, <code>:timeout</code></li>
+<li>read: <code class="inline">:awaitdata</code>, <code class="inline">:nocursortimeout</code>, <code class="inline">:slaveok</code>, <code class="inline">:tailablecursor</code>
+</li>
+<li>write: concern: <code class="inline">:wc</code>
+</li>
+<li>socket: <code class="inline">:mode</code>, <code class="inline">:timeout</code>
+</li>
 </ul>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L214" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L215" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -352,8 +344,8 @@
   <div class="docstring"><p>Pings the server</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L130" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L131" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -369,8 +361,8 @@
   <div class="docstring"><p>Retreives a repsonce from the MongoDB server (only for passive mode)</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L86" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L87" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -386,8 +378,8 @@
   <div class="docstring"><p>Completes a possibly partial repsonce from the MongoDB server</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L97" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L98" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -403,8 +395,8 @@
   <div class="docstring"><p>See response/2</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L102" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L103" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -417,11 +409,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Sends a message to MongoDB  </p>
+  <div class="docstring"><p>Sends a message to MongoDB</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_server.ex#L107" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_server.ex#L108" class="view_source">Source</a>
   
 </div>
 

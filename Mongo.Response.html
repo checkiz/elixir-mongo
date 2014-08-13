@@ -20,17 +20,14 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Response.html">Response</a></div>
+      <div class="breadcrumbs">mongo v0.3.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Response.html">Response</a></div>
 
       <h1>
         Mongo.Response
         
       </h1>
 
-      
-
       <ul class="summary_links">
-        
         
           <li><a href="#summary">Summary</a></li>
         
@@ -50,10 +47,8 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L1" target="_blank" class="view_source">Source</a>
-      
-
+        <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L1" class="view_source">Source</a>
       
 
       
@@ -69,7 +64,7 @@
 <tr>
   <td class="summary_signature"><a href="#cmd/1">cmd(r)</a></td>
   
-    <td class="summary_synopsis"><p>Parse a command respsonse</p>
+    <td class="summary_synopsis"><p>Parse a command response</p>
 </td>
   
 </tr>
@@ -104,7 +99,7 @@
 <tr>
   <td class="summary_signature"><a href="#exhausted?/1">exhausted?(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Returns <code>true</code> if the cursor is exhausted</p>
+    <td class="summary_synopsis"><p>Returns <code class="inline">true</code> if the cursor is exhausted</p>
 </td>
   
 </tr>
@@ -125,7 +120,7 @@
 <tr>
   <td class="summary_signature"><a href="#hasNext/1">hasNext(r)</a></td>
   
-    <td class="summary_synopsis"><p>Returns <code>true</code> if there are more documents to fetch from this batch or if the cursor is not exhausted</p>
+    <td class="summary_synopsis"><p>Returns <code class="inline">true</code> if there are more documents to fetch from this batch or if the cursor is not exhausted</p>
 </td>
   
 </tr>
@@ -153,18 +148,18 @@
 <tr>
   <td class="summary_signature"><a href="#next/1">next(r)</a></td>
   
-    <td class="summary_synopsis"><p>Gets next doc within the current batch return <code>nil</code> after last doc of the bacth</p>
+    <td class="summary_synopsis"><p>Gets next doc within the current batch return <code class="inline">nil</code> after last doc of the bacth</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#next/2">next(_, arg2)</a></td>
+  <td class="summary_signature"><a href="#next/2">next(, arg2)</a></td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#next?/1">next?(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Returns <code>true</code> if there are more documents to fetch regardless whether the cursor is exhausted or not</p>
+    <td class="summary_synopsis"><p>Returns <code class="inline">true</code> if there are more documents to fetch regardless whether the cursor is exhausted or not</p>
 </td>
   
 </tr>
@@ -195,12 +190,11 @@
   </div>
   
   <div class="docstring"><p>Parse a aggregate respsonse</p>
-
-<p>Returns <code>{:ok, result}</code> or <code>{:error, reason}</code></p>
+<p>Returns <code class="inline">{:ok, result}</code> or <code class="inline">{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L168" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L169" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -213,13 +207,12 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Parse a command respsonse</p>
-
-<p>Returns <code>{:ok, doc}</code> or <code>{:error, reason}</code></p>
+  <div class="docstring"><p>Parse a command response</p>
+<p>Returns <code class="inline">{:ok, doc}</code> or <code class="inline">{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L87" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L88" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -233,12 +226,11 @@
   </div>
   
   <div class="docstring"><p>Parse a count respsonse</p>
-
-<p>Returns <code>{:ok, n}</code> or <code>{:error, reason}</code></p>
+<p>Returns <code class="inline">{:ok, n}</code> or <code class="inline">{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L104" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L105" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -254,8 +246,8 @@
   <div class="docstring"><p>Returns the cursor ID</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L69" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L70" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -269,12 +261,11 @@
   </div>
   
   <div class="docstring"><p>Parse a distinct respsonse</p>
-
-<p>Returns <code>{:ok, values}</code> or <code>{:error, reason}</code></p>
+<p>Returns <code class="inline">{:ok, values}</code> or <code class="inline">{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L128" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L129" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -288,12 +279,11 @@
   </div>
   
   <div class="docstring"><p>Parse a error respsonse</p>
-
-<p>Returns <code>{:ok, nonce}</code> or <code>{:error, reason}</code></p>
+<p>Returns <code class="inline">{:ok, nonce}</code> or <code class="inline">{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L190" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L191" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -306,11 +296,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Returns <code>true</code> if the cursor is exhausted</p>
+  <div class="docstring"><p>Returns <code class="inline">true</code> if the cursor is exhausted</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L74" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L75" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -324,12 +314,11 @@
   </div>
   
   <div class="docstring"><p>Parse a getnonce respsonse</p>
-
-<p>Returns <code>{:ok, nonce}</code> or <code>{:error, reason}</code></p>
+<p>Returns <code class="inline">{:ok, nonce}</code> or <code class="inline">{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L179" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L180" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -343,12 +332,11 @@
   </div>
   
   <div class="docstring"><p>Parse a group respsonse</p>
-
-<p>Returns <code>{:ok, retval}</code> or <code>{:error, reason}</code></p>
+<p>Returns <code class="inline">{:ok, retval}</code> or <code class="inline">{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L156" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L157" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -361,11 +349,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Returns <code>true</code> if there are more documents to fetch from this batch or if the cursor is not exhausted</p>
+  <div class="docstring"><p>Returns <code class="inline">true</code> if there are more documents to fetch from this batch or if the cursor is not exhausted</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L80" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L81" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -379,12 +367,11 @@
   </div>
   
   <div class="docstring"><p>Parse a map-reduce respsonse</p>
-
-<p>Returns <code>{:ok, results}</code> (inline) or <code>:ok</code> or <code>{:error, reason}</code></p>
+<p>Returns <code class="inline">{:ok, results}</code> (inline) or <code class="inline">:ok</code> or <code class="inline">{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L140" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L141" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -398,12 +385,11 @@
   </div>
   
   <div class="docstring"><p>Parses a response message</p>
-
 <p>If the message is partial, this method makes shure the response is complete by fetching additional messages</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L20" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L21" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -419,8 +405,8 @@
   <div class="docstring"><p>See new/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L46" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L47" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -433,18 +419,17 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Gets next doc within the current batch return <code>nil</code> after last doc of the bacth </p>
-
-<p>When this function returns <code>nil</code>, it does not mean the cursor is exhausted, see <code>Mongo.Response.hasNext/1</code></p>
+  <div class="docstring"><p>Gets next doc within the current batch return <code class="inline">nil</code> after last doc of the bacth</p>
+<p>When this function returns <code class="inline">nil</code>, it does not mean the cursor is exhausted, see <code class="inline">Mongo.Response.hasNext/1</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L59" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L60" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="next/2">
-    <span class="signature"><strong>next(_, arg2)</strong></span>
+    <span class="signature"><strong>next(, arg2)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#next/2" class="detail_link" title="Link to this function">#</a>
@@ -454,8 +439,8 @@
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L65" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -468,11 +453,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Returns <code>true</code> if there are more documents to fetch regardless whether the cursor is exhausted or not</p>
+  <div class="docstring"><p>Returns <code class="inline">true</code> if there are more documents to fetch regardless whether the cursor is exhausted or not</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L51" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L52" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -486,12 +471,11 @@
   </div>
   
   <div class="docstring"><p>Parse a success respsonse</p>
-
-<p>Returns <code>:ok</code> or <code>{:error, reason}</code></p>
+<p>Returns <code class="inline">:ok</code> or <code class="inline">{:error, reason}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo_response.ex#L116" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo_response.ex#L117" class="view_source">Source</a>
   
 </div>
 

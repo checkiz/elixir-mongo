@@ -20,17 +20,14 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a></div>
+      <div class="breadcrumbs">mongo v0.3.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a></div>
 
       <h1>
         Mongo
         
       </h1>
 
-      
-
       <ul class="summary_links">
-        
         
           <li><a href="#summary">Summary</a></li>
         
@@ -45,15 +42,14 @@
       
         <div id="moduledoc" class="docstring">
           <p><a href="http://www.mongodb.org">MongoDB</a> driver in Elixir</p>
+<p>See <a href="https://github.com/checkiz/elixir-mongo">elixir-mongo source repo</a></p>
 
         </div>
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L1" target="_blank" class="view_source">Source</a>
-      
-
+        <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo.ex#L1" class="view_source">Source</a>
       
 
       
@@ -62,14 +58,14 @@
           <tr>
   <td class="summary_signature"><a href="#assign_id/1">assign_id(docs)</a></td>
   
-    <td class="summary_synopsis"><p>Assigns radom ids to a list of documents when <code>:_id</code> is missing</p>
+    <td class="summary_synopsis"><p>Assigns radom ids to a list of documents when <code class="inline">:_id</code> is missing</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#assign_id/2">assign_id(docs, mongo)</a></td>
   
-    <td class="summary_synopsis"><p>Assigns sequential ids to a list of documents when <code>:_id</code> is missing</p>
+    <td class="summary_synopsis"><p>Assigns sequential ids to a list of documents when <code class="inline">:_id</code> is missing</p>
 </td>
   
 </tr>
@@ -97,21 +93,21 @@
 <tr>
   <td class="summary_signature"><a href="#connect/0">connect()</a></td>
   
-    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
+    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code class="inline">Mongo.Server</code></a>for details</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#connect/1">connect(opts)</a></td>
   
-    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
+    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code class="inline">Mongo.Server</code></a>for details</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#connect/2">connect(host, port)</a></td>
   
-    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
+    <td class="summary_synopsis"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code class="inline">Mongo.Server</code></a>for details</p>
 </td>
   
 </tr>
@@ -134,15 +130,13 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Assigns radom ids to a list of documents when <code>:_id</code> is missing</p>
-
-<pre><code>[a: 1] |&gt; Mongo.assign_id
-[_id: ObjectId(...), a: 1]
-</code></pre>
+  <div class="docstring"><p>Assigns radom ids to a list of documents when <code class="inline">:_id</code> is missing</p>
+<pre><code>[%{a: 1}] |&gt; Mongo.assign_id
+[%{_id: ObjectId(...), a: 1}]</code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L29" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo.ex#L31" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -155,15 +149,13 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Assigns sequential ids to a list of documents when <code>:_id</code> is missing</p>
-
-<pre><code>[a: 1] |&gt; Mongo.assign_id(mongo)
-[_id: ObjectId(...), a: 1]
-</code></pre>
+  <div class="docstring"><p>Assigns sequential ids to a list of documents when <code class="inline">:_id</code> is missing</p>
+<pre><code>[%{a: 1}] |&gt; Mongo.assign_id(mongo)
+[%{_id: ObjectId(...), a: 1}]</code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L37" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo.ex#L39" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -176,11 +168,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
+  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code class="inline">Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L10" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo.ex#L12" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -193,11 +185,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
+  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code class="inline">Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L18" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo.ex#L20" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -210,11 +202,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code>Mongo.Server</code></a>for details</p>
+  <div class="docstring"><p>Connects to a Mongo Database Server, see module <a href="Mongo.Server.html"><code class="inline">Mongo.Server</code></a>for details</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L14" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo.ex#L16" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -230,8 +222,8 @@
   <div class="docstring"><p>See connect/0</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L19" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo.ex#L21" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -247,8 +239,8 @@
   <div class="docstring"><p>See connect/1</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L20" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo.ex#L22" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -264,8 +256,8 @@
   <div class="docstring"><p>See connect/2</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/90f52b1f4c932de859feb7fc99b646223d25e18f
-/lib/mongo.ex#L21" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+/lib/mongo.ex#L23" class="view_source">Source</a>
   
 </div>
 
