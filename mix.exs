@@ -31,14 +31,17 @@ defmodule Mongo.Mixfile do
   # Returns the list of dependencies for docs
   defp deps(:docs) do
     deps(:prod) ++
-      [ex_doc: "~> 0.5.1"]
+      [
+        {:ex_doc, ">= 0.0.0" },
+        {:earmark, ">= 0.0.0"}
+      ]
   end
   defp deps(_), do: deps(:prod)
 
   defp docs do
     [ #readme: false,
       #main: "README",
-      source_ref: System.cmd("git", ["rev-parse", "--verify", "--quiet", "HEAD"]) ]
+      source_ref: System.cmd("git", ["rev-parse", "--verify", "--quiet", "HEAD"])|>elem(0) ]
   end
 
   defp package do
