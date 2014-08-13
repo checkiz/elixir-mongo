@@ -13,7 +13,7 @@ Example preparing access to the `anycoll` collection in the `test` db :
 mongo = Mongo.connect!
 # Select the db to access  
 db = mongo.db("test")  
-# Select the collection to access
+# Select the db to access
 anycoll = db.collection("anycoll")  
 ```
 
@@ -23,7 +23,7 @@ Examples accessing the `anycoll` collection via CRUD operations :
 
 ```elixir
 # Return the list of all docs in the collection (list of Maps)
-anycoll.find.toArray   
+anycoll.find.toArray
 anycoll.find.stream |> Enum.to_list   # Same as above
 anycoll.find.skip(1).toArray          # Same as above but skip first doc
 # Insert a list of two docs into the collection
@@ -31,7 +31,7 @@ anycoll.find.skip(1).toArray          # Same as above but skip first doc
 # Updates the doc matching "a" == 456 with new values
 anycoll.update(%{a: 456}, %{a: 123, b: 789})  
 # Delete the document matching "b" == 789
-anycoll.delete(%{b: 789}) 
+anycoll.delete(%{b: 789})
 ```
 
 ### Wrappers for Aggregate operations
@@ -40,7 +40,7 @@ Example of aggregate operation applied to the `anycoll` collection :
 
 ```elixir
 # Return docs with "value" > 0
-anycoll.count(%{value: %{'$gt': 0}}) 
+anycoll.count(%{value: %{'$gt': 0}})
 # Return distinct "value" for docs with "value" > 0
 anycoll.distinct("value", %{value: %{"$gt": 1}})  
 # Apply a map-reduce to the collection specifying the map function then the apply function
@@ -72,5 +72,5 @@ db.getLastError
 
 ### Dependencies
 
-- MongoDB needs a Bson encoder/decoder, this project uses the elixir-bson encoder/decoder. See [elixir-bson source repo](https://github.com/checkiz/elixir-bson) and its 
+- MongoDB needs a Bson encoder/decoder, this project uses the elixir-bson encoder/decoder. See [elixir-bson source repo](https://github.com/checkiz/elixir-bson) and its
 [documentation](http://checkiz.github.io/elixir-bson)

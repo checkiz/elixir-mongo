@@ -5,18 +5,15 @@ defmodule Mongo.Server.Test do
 
   test "ping" do
     assert :ok == Mongo.connect!.ping
-    ping_timeout = 
-      case Mongo.connect %{port: 80, timeout: 1} do
-        {:ok, localhost} ->
-          # a Mongo ping on 80 should timout!
-          localhost.ping
-        _ ->
-          #can't test this without localhost:80
-          {:error, :no_localhost_80}
-      end
-    assert ping_timeout == {:error, :timeout}
+    case Mongo.connect %{port: 80, timeout: 1} do
+      {:ok, localhost} ->
+        ping_timeout = localhost.ping
+        assert ping_timeout == {:error, :timeout}
+      _ ->
+        {:error, :no_localhost_80}
+    end
   end
- 
+
   test "active mode" do
     mongo = Mongo.connect! %{mode: :active}
     mongo |> Mongo.Request.adminCmd(mongo, %{ping: true}).send
@@ -25,7 +22,7 @@ defmodule Mongo.Server.Test do
         assert :ok == mongo.response!(m).success
     end
   end
- 
+
   test "async request" do
     mongo = Mongo.connect!
     mongo |> Mongo.Request.adminCmd(mongo, %{ping: true}).send true
@@ -34,7 +31,7 @@ defmodule Mongo.Server.Test do
         assert :ok == mongo.response!(m).success
     end
   end
- 
+
   test "async ping" do
     me = self()
     spawn_link(
