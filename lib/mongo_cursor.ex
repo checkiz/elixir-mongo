@@ -41,7 +41,12 @@ defmodule Mongo.Cursor do
           {:error, reason} -> raise Mongo.Error, reason: reason
         end
       end,
-      &next_batch!/1,
+      fn(c) ->
+        case next_batch!(c) do
+          nil -> {:halt, c}
+          {resp, c} -> {[resp], c}
+        end
+      end,
       &kill/1)
   end
 
@@ -100,10 +105,10 @@ defmodule Mongo.Cursor do
   # """
   defp next({r, c}) do
     case next?({r, c}) do
-      false -> nil
+      false -> {:halt, {r, c}}
       {r, c} ->
         {d, r} = r.next
-        {d, {r, c}}
+        {[d], {r, c}}
     end
   end
   # @doc """
