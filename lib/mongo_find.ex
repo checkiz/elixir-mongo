@@ -96,7 +96,7 @@ defmodule Mongo.Find do
   defbang explain(find)
 
   @doc """
-  Add hint opperator that forces the query optimizer to use a specific index to fulfill the query 
+  Add hint opperator that forces the query optimizer to use a specific index to fulfill the query
   """
   def hint(indexName, f) when is_atom(indexName), do: f.addSpecial(:'$hint', indexName)
   def hint(hints, f) when is_map(hints), do: f.addSpecial(:'$hint', hints)
@@ -132,12 +132,12 @@ defmodule Mongo.Find do
     selector = if mods == %{}, do: selector, else: Map.put(mods, :'$query', selector)
     @query <> (Enum.reduce(opts, @query_opts, &queryopt_red/2)) <> <<0::24>> <>
       collection.db.name <> "." <>  collection.name <> <<0::8>> <>
-      Bson.int32(skip) <>
-      Bson.int32(batchSize) <>
+      <<skip::32-little-signed>> <>
+      <<batchSize::32-little-signed>> <>
       Bson.encode(selector) <>
       Bson.encode(projector)
   end
-  
+
   use Bitwise
   # Operates one option
   defp queryopt_red({opt, true},  bits), do: bits ||| queryopt(opt)

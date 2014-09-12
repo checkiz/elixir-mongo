@@ -85,8 +85,8 @@ defmodule Mongo.Request do
   def kill_cursor(cursorid) do
     request payload:
       @kill_cursor <> <<0::32>> <>
-      Bson.int32(1) <>
-      Bson.int64(cursorid)
+      <<1::32-little-signed>> <>
+      <<cursorid::64-little-signed>>
   end
 
   @doc """
@@ -96,8 +96,8 @@ defmodule Mongo.Request do
     request payload:
       @get_more <> <<0::32>> <>
       collection.db.name <> "." <>  collection.name <> <<0::8>> <>
-      Bson.int32(batchsize) <>
-      Bson.int64(cursorid)
+      <<batchsize::32-little-signed>> <>
+      <<cursorid::64-little-signed>>
   end
 
   @doc """
@@ -126,7 +126,7 @@ defmodule Mongo.Request do
 
   # transform a document into bson
   defp document(command), do: Bson.encode(command)
-  defp document(command, command_args), do: Bson.encode(%Mongo.Request.Cmd{cmd: command, args: command_args})
+  defp document(command, command_args), do: Bson.Encoder.document(command) <> Bson.Encoder.document(command_args)
 
   defp message(payload, reqid) do
     <<(byte_size(payload) + 12)::size(32)-little>> <> reqid <> <<0::32>> <> <<payload::binary>>
@@ -139,22 +139,8 @@ defmodule Mongo.Request do
 
 end
 
-defimpl BsonEncoder, for: Mongo.Request.Cmd do
-  def encode(%Mongo.Request.Cmd{cmd: command, args: command_args}, name) when is_map(command) and is_map(command_args) do
-    "\x03" <> name <> "\x00" <> encode_e_list(command, command_args)
+defimpl Bson.Encoder.Protocol, for: Mongo.Request.Cmd do
+  def encode(%Mongo.Request.Cmd{cmd: command, args: command_args}) do
+    {"\x03", [Bson.Encoder.document(command), Bson.Encoder.document(command_args)]}
   end
-
-  def encode_e_list(map1, map2) do
-    bitlist1 = :maps.fold( fn
-      k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> Atom.to_string)|acc]
-      k, v, acc -> [BsonEncoder.encode(v, Bson.encode(k))|acc]
-    end, [], map1)
-    :maps.fold( fn
-      k, v, acc when is_atom(k) -> [BsonEncoder.encode(v, k |> Atom.to_string)|acc]
-      k, v, acc -> [BsonEncoder.encode(v, Bson.encode(k))|acc]
-    end, bitlist1, map2)
-      |> bitlist_to_bsondoc
-  end
-
-  defp bitlist_to_bsondoc(arrbin), do: arrbin |> Enum.reverse |> IO.iodata_to_binary |> Bson.doc
 end

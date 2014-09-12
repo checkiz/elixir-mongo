@@ -9,8 +9,7 @@ defmodule Mongo.Response do
     startingFrom: nil,
     nbDoc: nil,
     docBuffer: nil,
-    requestID: nil,
-    bufferOffset: 0
+    requestID: nil
   @msg         <<1, 0, 0, 0>>    #    1  Opcode OP_REPLY : Reply to a client request
 
   @doc """
@@ -57,10 +56,12 @@ defmodule Mongo.Response do
 
   When this function returns `nil`, it does not mean the cursor is exhausted, see `Mongo.Response.hasNext/1`
   """
-  def next(response(nbDoc: nbDoc, bufferOffset: off, docBuffer: docBuffer)=r) when nbDoc>0 do
+  def next(response(nbDoc: nbDoc, docBuffer: docBuffer)=r) when nbDoc>0 do
     # get document part of documents from this offset
-    partlen = Bson.int32(docBuffer, off)
-    {Bson.decode({off, partlen}, docBuffer), response(r, nbDoc: nbDoc-1, bufferOffset: off+partlen)}
+    case Bson.Decoder.document(docBuffer) do
+      {doc, rest} ->
+        {doc, response(r, nbDoc: nbDoc-1, docBuffer: rest)}
+    end
   end
   def next(_, response(nbDoc: 0)),    do: nil
 
