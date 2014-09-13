@@ -1,3 +1,7 @@
+# v0.4.0-dev
+* compatible with Elixir v1.0.0
+* elixir-bson v0.4.0
+
 # v0.3.1
 * compatible with Elixir v0.15.1
 
