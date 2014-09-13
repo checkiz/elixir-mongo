@@ -1,4 +1,6 @@
 language: erlang
+services:
+  - mongodb
 notifications:
   email:
     - jerp@checkiz.com
