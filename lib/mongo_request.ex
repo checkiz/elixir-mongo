@@ -126,7 +126,7 @@ defmodule Mongo.Request do
 
   # transform a document into bson
   defp document(command), do: Bson.encode(command)
-  defp document(command, command_args), do: Bson.Encoder.document(command) <> Bson.Encoder.document(command_args)
+  defp document(command, command_args), do: Bson.Encoder.document(Enum.to_list(command) ++ Enum.to_list(command_args))
 
   defp message(payload, reqid) do
     <<(byte_size(payload) + 12)::size(32)-little>> <> reqid <> <<0::32>> <> <<payload::binary>>
@@ -139,8 +139,8 @@ defmodule Mongo.Request do
 
 end
 
-defimpl Bson.Encoder.Protocol, for: Mongo.Request.Cmd do
-  def encode(%Mongo.Request.Cmd{cmd: command, args: command_args}) do
-    {"\x03", [Bson.Encoder.document(command), Bson.Encoder.document(command_args)]}
-  end
-end
+# defimpl Bson.Encoder.Protocol, for: Mongo.Request.Cmd do
+#   def encode(%Mongo.Request.Cmd{cmd: command, args: command_args}) do
+#     {"\x03", [Bson.Encoder.document(command), Bson.Encoder.document(command_args)]}
+#   end
+# end
