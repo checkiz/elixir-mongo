@@ -82,7 +82,7 @@ defmodule Mongo.Server do
   end
 
   @doc """
-  Retreives a repsonce from the MongoDB server (only for passive mode)
+  Retrieves a response from the MongoDB server (only for passive mode)
   """
   def response(mongo) do
     case tcp_recv(mongo) do
@@ -93,7 +93,7 @@ defmodule Mongo.Server do
   end
 
   @doc """
-  Completes a possibly partial repsonce from the MongoDB server
+  Completes a possibly partial response from the MongoDB server
   """
   def response(
     <<messageLength::size(32)-signed-little, _::binary>> = message,
@@ -113,7 +113,7 @@ defmodule Mongo.Server do
     :gen_tcp.send(socket, message)
   end
   @doc false
-  # preprares for a one-time async request
+  # prepares for a one-time async request
   def async(mongo(socket: socket, mode: :passive)) do
     :inet.setopts(socket, active: :once)
   end
@@ -206,7 +206,7 @@ defmodule Mongo.Server do
   @doc """
   Adds options to the mongo server connection
 
-  new_opts must be a keyword with zero or more pairs represeting one of these options:
+  new_opts must be a keyword with zero or more pairs representing one of these options:
 
   * read: `:awaitdata`, `:nocursortimeout`, `:slaveok`, `:tailablecursor`
   * write: concern: `:wc`
