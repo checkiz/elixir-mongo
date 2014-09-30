@@ -20,7 +20,7 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">mongo v0.3.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Find.html">Find</a></div>
+      <div class="breadcrumbs">mongo v0.5.0 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Find.html">Find</a></div>
 
       <h1>
         Mongo.Find
@@ -47,7 +47,7 @@
       
 
       
-        <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+        <a href="https://github.com/checkiz/elixir-mongo/blob/13211a0c0c9bb5fed29dd2faf7a01342b4e97eb4
 /lib/mongo_find.ex#L1" class="view_source">Source</a>
       
 
@@ -55,39 +55,25 @@
         <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
-  <td class="summary_signature"><a href="#addSpecial/3">addSpecial(k, v, f)</a></td>
+  <td class="summary_signature"><a href="#addSpecial/3">addSpecial(find, k, v)</a></td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#batchSize/2">batchSize(n, f)</a></td>
+  <td class="summary_signature"><a href="#exec/1">exec(find)</a></td>
   
-    <td class="summary_synopsis"><p>Specifies the number of documents to return in each batch</p>
+    <td class="summary_synopsis"><p>Executes the query and returns a <code class="inline">%Mongo.Cursor{}</code></p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#exec/1">exec(f)</a></td>
-  
-    <td class="summary_synopsis"><p>Executes the query and returns a <a href="Mongo.Cursor.html"><code class="inline">Mongo.Cursor</code></a></p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#explain!/1">explain!(find)</a></td>
-  
-    <td class="summary_synopsis"><p>See explain/1</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#explain/1">explain(f)</a></td>
+  <td class="summary_signature"><a href="#explain/1">explain(find)</a></td>
   
     <td class="summary_synopsis"><p>Runs the explain operator that provides information on the query plan</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#hint/2">hint(indexName, f)</a></td>
+  <td class="summary_signature"><a href="#hint/2">hint(f, hints)</a></td>
   
     <td class="summary_synopsis"><p>Add hint opperator that forces the query optimizer to use a specific index to fulfill the query</p>
 </td>
@@ -101,37 +87,16 @@
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#opts/2">opts(options, f)</a></td>
+  <td class="summary_signature"><a href="#opts/2">opts(find, options)</a></td>
   
     <td class="summary_synopsis"><p>Sets query options</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#query/1">query(arg1)</a></td>
-  
-    <td class="summary_synopsis"><p>Builds a query message</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#skip/2">skip(n, f)</a></td>
+  <td class="summary_signature"><a href="#skip/2">skip(find, skip)</a></td>
   
     <td class="summary_synopsis"><p>Sets where MongoDB begins returning results</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#stream/1">stream(find)</a></td>
-  
-    <td class="summary_synopsis"><p>Stream documents retreived from a find query</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#toArray/1">toArray(find)</a></td>
-  
-    <td class="summary_synopsis"><p>Returns a list of documents retreived from a find query</p>
 </td>
   
 </tr>
@@ -146,7 +111,7 @@
           <h2>Functions</h2>
           <div class="detail">
   <div class="detail_header" id="addSpecial/3">
-    <span class="signature"><strong>addSpecial(k, v, f)</strong></span>
+    <span class="signature"><strong>addSpecial(find, k, v)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#addSpecial/3" class="detail_link" title="Link to this function">#</a>
@@ -156,31 +121,13 @@
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L117" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <div class="detail_header" id="batchSize/2">
-    <span class="signature"><strong>batchSize(n, f)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#batchSize/2" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-  <div class="docstring"><p>Specifies the number of documents to return in each batch</p>
-<p>Must be run before executing the query</p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L45" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/13211a0c0c9bb5fed29dd2faf7a01342b4e97eb4
+/lib/mongo_find.ex#L74" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="exec/1">
-    <span class="signature"><strong>exec(f)</strong></span>
+    <span class="signature"><strong>exec(find)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#exec/1" class="detail_link" title="Link to this function">#</a>
@@ -188,16 +135,16 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Executes the query and returns a <a href="Mongo.Cursor.html"><code class="inline">Mongo.Cursor</code></a></p>
+  <div class="docstring"><p>Executes the query and returns a <code class="inline">%Mongo.Cursor{}</code></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L75" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/13211a0c0c9bb5fed29dd2faf7a01342b4e97eb4
+/lib/mongo_find.ex#L43" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="explain/1">
-    <span class="signature"><strong>explain(f)</strong></span>
+    <span class="signature"><strong>explain(find)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#explain/1" class="detail_link" title="Link to this function">#</a>
@@ -208,30 +155,13 @@
   <div class="docstring"><p>Runs the explain operator that provides information on the query plan</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L88" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <div class="detail_header" id="explain!/1">
-    <span class="signature"><strong>explain!(find)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#explain!/1" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-  <div class="docstring"><p>See explain/1</p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L96" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/13211a0c0c9bb5fed29dd2faf7a01342b4e97eb4
+/lib/mongo_find.ex#L50" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="hint/2">
-    <span class="signature"><strong>hint(indexName, f)</strong></span>
+    <span class="signature"><strong>hint(f, hints)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#hint/2" class="detail_link" title="Link to this function">#</a>
@@ -239,11 +169,11 @@
     </div>
   </div>
   
-  <div class="docstring"><p>Add hint opperator that forces the query optimizer to use a specific index to fulfill the query </p>
+  <div class="docstring"><p>Add hint opperator that forces the query optimizer to use a specific index to fulfill the query</p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L101" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/13211a0c0c9bb5fed29dd2faf7a01342b4e97eb4
+/lib/mongo_find.ex#L57" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -257,16 +187,16 @@
   </div>
   
   <div class="docstring"><p>Creates a new find operation.</p>
-<p>Not to be used directly, prefer <a href="Mongo.Collection.html#find/3"><code class="inline">Mongo.Collection.find/3</code></a> that returns a <a href="Mongo.Cursor.html"><code class="inline">Mongo.Cursor</code></a></p>
+<p>Not to be used directly, prefer <a href="Mongo.Collection.html#find/3"><code class="inline">Mongo.Collection.find/3</code></a></p>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+    <a href="https://github.com/checkiz/elixir-mongo/blob/13211a0c0c9bb5fed29dd2faf7a01342b4e97eb4
 /lib/mongo_find.ex#L22" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="opts/2">
-    <span class="signature"><strong>opts(options, f)</strong></span>
+    <span class="signature"><strong>opts(find, options)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#opts/2" class="detail_link" title="Link to this function">#</a>
@@ -283,38 +213,13 @@
   tailablecursor: false)</code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L115" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <div class="detail_header" id="query/1">
-    <span class="signature"><strong>query(arg1)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#query/1" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-  <div class="docstring"><p>  Builds a query message</p>
-<ul>
-<li>collection: collection
-</li>
-<li>selector: selection criteria (Map or nil)
-</li>
-<li>projector: fields (Map or nil)
-</li>
-</ul>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L131" class="view_source">Source</a>
+    <a href="https://github.com/checkiz/elixir-mongo/blob/13211a0c0c9bb5fed29dd2faf7a01342b4e97eb4
+/lib/mongo_find.ex#L72" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <div class="detail_header" id="skip/2">
-    <span class="signature"><strong>skip(n, f)</strong></span>
+    <span class="signature"><strong>skip(find, skip)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#skip/2" class="detail_link" title="Link to this function">#</a>
@@ -324,53 +229,14 @@
   
   <div class="docstring"><p>Sets where MongoDB begins returning results</p>
 <p>Must be run before executing the query</p>
-<pre><code>iex&gt; Mongo.connect.db(&quot;test&quot;).collection(&quot;anycoll&quot;).find.skip(1).toArray |&gt; Enum.count
+<pre><code>iex&gt; Mongo.connect.%@m{&quot;test&quot;}.collection(&quot;anycoll&quot;).find.skip(1).toArray |&gt; Enum.count
 5
-iex&gt; Mongo.connect.db(&quot;test&quot;).collection(&quot;anycoll&quot;).find.skip(2).toArray |&gt; Enum.count
+iex&gt; Mongo.connect.%@m{&quot;test&quot;}.collection(&quot;anycoll&quot;).find.skip(2).toArray |&gt; Enum.count
 4</code></pre>
 </div>
   
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
+    <a href="https://github.com/checkiz/elixir-mongo/blob/13211a0c0c9bb5fed29dd2faf7a01342b4e97eb4
 /lib/mongo_find.ex#L38" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <div class="detail_header" id="stream/1">
-    <span class="signature"><strong>stream(find)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#stream/1" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-  <div class="docstring"><p>Stream documents retreived from a find query</p>
-<p>The following 2 statements are equivalent:</p>
-<pre><code>Mongo.connect.db(&quot;test&quot;).collection(&quot;anycoll&quot;).find.stream |&gt; Enum.to_list
-Mongo.connect.db(&quot;test&quot;).collection(&quot;anycoll&quot;).find.toArray</code></pre>
-<p>see <code class="inline">Mongo.Cursor.stream/2</code></p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L57" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <div class="detail_header" id="toArray/1">
-    <span class="signature"><strong>toArray(find)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#toArray/1" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-  <div class="docstring"><p>Returns a list of documents retreived from a find query</p>
-<p>see <code class="inline">Mongo.Cursor.toArray/2</code></p>
-</div>
-  
-    <a href="https://github.com/checkiz/elixir-mongo/blob/0db789daf262b19534da8f670920c31679f09e84
-/lib/mongo_find.ex#L67" class="view_source">Source</a>
   
 </div>
 
