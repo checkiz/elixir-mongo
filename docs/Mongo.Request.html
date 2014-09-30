@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mongo.Request</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <div class="breadcrumbs">mongo v0.5.0 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Request.html">Request</a></div>
+
+      <h1>
+        Mongo.Request
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+        
+      </ul>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Defines, encodes and sends MongoDB operations to the server</p>
+
+        </div>
+      
+
+      
+        <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_request.ex#L1" class="view_source">Source</a>
+      
+
+      
+        <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#cmd/3">cmd(dbname, cmd, cmd_args \\ %{})</a></td>
+  
+    <td class="summary_synopsis"><p>Builds a database command message composed of the command tag and its arguments</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#delete/3">delete(collection, selector, justOne)</a></td>
+  
+    <td class="summary_synopsis"><p>Builds a delete command message</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#get_more/3">get_more(collection, batchsize, cursorid)</a></td>
+  
+    <td class="summary_synopsis"><p>Builds a get_more command message</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#insert/2">insert(collection, docs)</a></td>
+  
+    <td class="summary_synopsis"><p>Builds an insert command message</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#kill_cursor/1">kill_cursor(cursorid)</a></td>
+  
+    <td class="summary_synopsis"><p>Builds a kill_cursor command message</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#query/1">query(find)</a></td>
+  
+    <td class="summary_synopsis"><p>Builds a query message</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#update/5">update(collection, selector, update, upsert, multi)</a></td>
+  
+    <td class="summary_synopsis"><p>Builds an update command message</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <div class="detail_header" id="cmd/3">
+    <span class="signature"><strong>cmd(dbname, cmd, cmd_args \\ %{})</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#cmd/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>  Builds a database command message composed of the command tag and its arguments.</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_request.ex#L40" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="delete/3">
+    <span class="signature"><strong>delete(collection, selector, justOne)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#delete/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>  Builds a delete command message</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_request.ex#L74" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="get_more/3">
+    <span class="signature"><strong>get_more(collection, batchsize, cursorid)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#get_more/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>  Builds a get_more command message</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_request.ex#L93" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="insert/2">
+    <span class="signature"><strong>insert(collection, docs)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#insert/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>  Builds an insert command message</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_request.ex#L50" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="kill_cursor/1">
+    <span class="signature"><strong>kill_cursor(cursorid)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#kill_cursor/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>  Builds a kill_cursor command message</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_request.ex#L84" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="query/1">
+    <span class="signature"><strong>query(find)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#query/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>  Builds a query message</p>
+<ul>
+<li>collection: collection
+</li>
+<li>selector: selection criteria (Map or nil)
+</li>
+<li>projector: fields (Map or nil)
+</li>
+</ul>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_request.ex#L27" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="update/5">
+    <span class="signature"><strong>update(collection, selector, update, upsert, multi)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#update/5" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>  Builds an update command message</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_request.ex#L60" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

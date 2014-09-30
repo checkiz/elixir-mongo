@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mongo.Server</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <div class="breadcrumbs">mongo v0.5.0 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Mongo.html">Mongo</a> &rarr; <a href="Mongo.Server.html">Server</a></div>
+
+      <h1>
+        Mongo.Server
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+        
+      </ul>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Manage the connection to a mongodb server</p>
+
+        </div>
+      
+
+      
+        <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L1" class="view_source">Source</a>
+      
+
+      
+        <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#active?/1">active?(mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns true if connection mode is active</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#assign_id/2">assign_id(docs, client_prefix \\ gen_client_prefix())</a></td>
+  
+    <td class="summary_synopsis"><p>Assigns radom ids to a list of documents when <code class="inline">:_id</code> is missing</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#close/1">close(mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>Closes the connection</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cmd/2">cmd(mongo, cmd)</a></td>
+  
+    <td class="summary_synopsis"><p>Executes an admin command to the server</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cmd_sync/2">cmd_sync(mongo, command)</a></td>
+  
+    <td class="summary_synopsis"><p>Sends a command message requesting imediate response</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect/0">connect()</a></td>
+  
+    <td class="summary_synopsis"><p>connects to local mongodb server by defaults to {“127.0.0.1”, 27017}</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect/1">connect(opts)</a></td>
+  
+    <td class="summary_synopsis"><p>connects to a mongodb server specifying options</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#connect/2">connect(host, port)</a></td>
+  
+    <td class="summary_synopsis"><p>connects to a mongodb server</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#db_opts/1">db_opts(mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>Gets mongo connection default options</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#opts/2">opts(mongo, new_opts)</a></td>
+  
+    <td class="summary_synopsis"><p>Adds options to an existing mongo server connection</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#ping/1">ping(mongo)</a></td>
+  
+    <td class="summary_synopsis"><p>Pings the server</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#response/2">response(mongo, decoder \\ :erlang.make_fun(Mongo.Response, :bson_decode, 1))</a></td>
+  
+    <td class="summary_synopsis"><p>Retreives a repsonce from the MongoDB server (only for passive mode)</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#send/3">send(mongo, payload, reqid \\ gen_reqid())</a></td>
+  
+    <td class="summary_synopsis"><p>Sends a message to MongoDB</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <div class="detail_header" id="active?/1">
+    <span class="signature"><strong>active?(mongo)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#active?/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Returns true if connection mode is active</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L157" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="assign_id/2">
+    <span class="signature"><strong>assign_id(docs, client_prefix \\ gen_client_prefix())</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#assign_id/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Assigns radom ids to a list of documents when <code class="inline">:_id</code> is missing</p>
+<pre><code>iex&gt; [%{a: 1}] |&gt; Mongo.Server.assign_id |&gt; Enum.at(0) |&gt; Map.keys
+[:&quot;_id&quot;, :a]
+
+#a prefix to ids can be set manually like this
+iex&gt; prefix = case [%{a: 1}] |&gt; Mongo.Server.assign_id(256*256-1) |&gt; Enum.at(0) |&gt; Map.get(:&quot;_id&quot;) do
+...&gt;   %Bson.ObjectId{oid: &lt;&lt;prefix::16, _::binary&gt;&gt;} -&gt; prefix
+...&gt;   error -&gt; error
+...&gt; end
+...&gt; prefix
+256*256-1
+
+#by default prefix are set at connection time and remains identical for the entire connection
+iex&gt; mongo = Mongo.connect!
+...&gt; prefix = case [%{a: 1}] |&gt; Mongo.Server.assign_id(mongo) |&gt; Enum.at(0) |&gt; Map.get(:&quot;_id&quot;) do
+...&gt;   %Bson.ObjectId{oid: &lt;&lt;prefix::16, _::binary&gt;&gt;} -&gt; prefix
+...&gt;   error -&gt; error
+...&gt; end
+...&gt; prefix == mongo.id_prefix
+true</code></pre>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L260" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="close/1">
+    <span class="signature"><strong>close(mongo)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#close/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Closes the connection</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L162" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="cmd/2">
+    <span class="signature"><strong>cmd(mongo, cmd)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#cmd/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Executes an admin command to the server</p>
+<p>  iex&gt; mongo = Mongo.connect!  # Returns a exception when connection fails
+  iex&gt; case Mongo.connect do
+  …&gt;    {:ok, mongo } -&gt; :ok
+  …&gt;    error -&gt; error
+  …&gt; end
+  :ok</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L136" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="cmd_sync/2">
+    <span class="signature"><strong>cmd_sync(mongo, command)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#cmd_sync/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Sends a command message requesting imediate response</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L118" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="connect/0">
+    <span class="signature"><strong>connect()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#connect/0" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>connects to local mongodb server by defaults to {“127.0.0.1”, 27017}</p>
+<p>This can be overwritten by the environment variable <code class="inline">:host</code>, ie:</p>
+<pre><code class="erlang">[
+  {mongo,
+    [
+      {host, {&quot;127.0.0.1&quot;, 27017}}
+    ]}
+].</code></pre>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L36" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="connect/1">
+    <span class="signature"><strong>connect(opts)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#connect/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>connects to a mongodb server specifying options</p>
+<p>Opts must be a Map</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L52" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="connect/2">
+    <span class="signature"><strong>connect(host, port)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#connect/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>connects to a mongodb server</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L43" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="db_opts/1">
+    <span class="signature"><strong>db_opts(mongo)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#db_opts/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Gets mongo connection default options</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L230" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="opts/2">
+    <span class="signature"><strong>opts(mongo, new_opts)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#opts/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Adds options to an existing mongo server connection</p>
+<p>new_opts must be a map with zero or more of the following keys:</p>
+<ul>
+<li>read: <code class="inline">:awaitdata</code>, <code class="inline">:nocursortimeout</code>, <code class="inline">:slaveok</code>, <code class="inline">:tailablecursor</code>
+</li>
+<li>write concern: <code class="inline">:wc</code>
+</li>
+<li>socket: <code class="inline">:mode</code>, <code class="inline">:timeout</code>
+</li>
+</ul>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L223" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="ping/1">
+    <span class="signature"><strong>ping(mongo)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#ping/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Pings the server</p>
+<p>  iex&gt; Mongo.connect! |&gt; Mongo.Server.ping
+  :ok</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L147" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="response/2">
+    <span class="signature"><strong>response(mongo, decoder \\ :erlang.make_fun(Mongo.Response, :bson_decode, 1))</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#response/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Retreives a repsonce from the MongoDB server (only for passive mode)</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L82" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="send/3">
+    <span class="signature"><strong>send(mongo, payload, reqid \\ gen_reqid())</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#send/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Sends a message to MongoDB</p>
+</div>
+  
+    <a href="https://github.com/checkiz/elixir-mongo/blob/cb7aaf439a658d8dec61dea28da3bf988e1b7b35
+/lib/mongo_server.ex#L93" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>
