@@ -5,7 +5,7 @@ elixir-mongo
 
 A [MongoDB](http://www.mongodb.org) driver in Elixir.
 
-Document are exchanged using `Maps`.
+API entirely reviewed, see [CHANGELOG.md](https://github.com/checkiz/elixir-mongo/blob/master/CHANGELOG.md)
 
 ### Connecting
 
