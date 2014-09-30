@@ -7,141 +7,74 @@ defmodule Mongo.Cursor do
   """
   use Mongo.Helpers
 
-  Record.defrecordp :cursor, __MODULE__ ,
+  defstruct [
     collection: nil,
-    batchSize: 0,
     response: nil,
-    cursorID: nil,
-    cursorExhausted: nil
+    batchSize: 0,
+    exhausted: nil]
 
-  @doc """
-  Creates a cursor record
-  """
-  def new(collection, initialResponse, batchSize) do
-    cursor(
-      collection: collection,
-      response: initialResponse,
-      cursorID: initialResponse.cursorID,
-      cursorExhausted: initialResponse.exhausted?,
-      batchSize: batchSize)
+  def next_batch(%Mongo.Cursor{exhausted: true}), do: nil
+  def next_batch(cursor) do
+    mongo = cursor.collection.db.mongo
+    case Mongo.Server.send(mongo, Mongo.Request.get_more(cursor.collection, cursor.batchSize, cursor.response.cursorID)) do
+        {:ok, _reqid} ->
+          case Mongo.Server.response(mongo) do
+            {:ok, response} -> %Mongo.Cursor{cursor| response: response, exhausted: response.cursorID == 0}
+            error -> error
+          end
+        error -> error
+    end
   end
 
-  @doc false
-  def batchStream(cursor()=c) do
-    Stream.resource(
-      fn() -> c end,
-      &next_batch!/1,
-      &kill/1)
-  end
-  def batchStream(find) do
-    Stream.resource(
-      fn() ->
-        case find.exec do
-          {:ok, _, c} -> c
-          {:error, reason} -> raise Mongo.Error, reason: reason
+  def exec(collection, query, batchSize \\ 0) do
+    mongo = collection.db.mongo
+    case Mongo.Server.send(mongo, query) do
+      {:ok, _reqid} ->
+        case Mongo.Server.response(mongo) do
+          {:ok, initialResponse} ->
+            %Mongo.Cursor{ collection: collection,
+                           response:   initialResponse,
+                           exhausted:  initialResponse.cursorID == 0,
+                           batchSize:  batchSize}
+          %Mongo.Error{}=error -> error
+          # {:error, msg} -> %Mongo.Error{msg: msg}
         end
-      end,
-      fn(c) ->
-        case next_batch!(c) do
-          nil -> {:halt, c}
-          {resp, c} -> {[resp], c}
-        end
-      end,
-      &kill/1)
-  end
-
-  @doc """
-  Returns response for the next batch of document of a given cursor
-  """
-  def next_batch(cursor(cursorExhausted: true)), do: nil
-  def next_batch(cursor(collection: collection, batchSize: batchSize, cursorID: cursorID)=c) do
-    (mongo = collection.db.mongo)
-      |> Mongo.Request.get_more(collection, batchSize, cursorID).send
-    case mongo.response do
-      {:ok, resp} -> {:ok, {resp, cursor(c, response: resp, cursorExhausted: resp.exhausted?)}}
       error -> error
     end
   end
-  defbang next_batch(c)
 
-  @doc """
-  Creates a stream of documents for the given the cursor
+  defimpl Enumerable, for: Mongo.Cursor do
 
-  `stream`, exectutes the query if not done yet, then, streams documents one by one (retreived from DB by batch).
-  When exhausted, it kills the cursor.
-  """
-  def stream(cursor(response: r)=c) do
-    Stream.resource(
-      fn() ->
-        {r, c}
-      end,
-      &next/1,
-      fn({_, c}) -> c.kill end)
-  end
-  def stream(find) do
-    Stream.resource(
-      fn() ->
-        case find.exec do
-          {:ok, r, c} -> {r, c}
-          {:error, reason} -> raise Mongo.Error, reason: reason
-        end
-      end,
-      &next/1,
-      fn({_, c}) -> c.kill end)
-  end
-
-  @doc """
-  Kills the cursor
-  """
-  def kill(cursor(cursorID: 0)), do: :ok
-  def kill(cursor(cursorID: nil)), do: :ok
-  def kill(cursor(collection: collection, cursorID: cursorID)) do
-    collection.db.kill_cursor(cursorID)
-  end
-
-  # @doc """
-  # Gets next doc, and, when nedded, requests next document batch.
-  # Returns `nil` after last document when cursor is exhausted otherwise returns `{:ok, next_doc, cursor}`
-  # """
-  defp next({r, c}) do
-    case next?({r, c}) do
-      false -> {:halt, {r, c}}
-      {r, c} ->
-        {d, r} = r.next
-        {[d], {r, c}}
-    end
-  end
-  # @doc """
-  # Tests if there is one or more documents to be retreived
-
-  # Return `false` when the cursor is exhausted otherwise returns the cursor,
-  # or a new cusrsor with next document batch when needed.
-  # """
-  defp next?({r, c}) do
-    if r.next? do
-      {r, c}
-    else
-      case c.next_batch! do
-        nil -> false
-        {r, c} -> if r.next?, do: {r, c}, else: false
+    @doc """
+    Reduce documents in the buffer into a value
+    """
+    def reduce(cursor, acc, reducer)
+    def reduce(cursor, {:cont, acc}, reducer) do
+      case reducer.(cursor.response, acc) do
+        {:cont, acc} ->
+          if cursor.exhausted do
+            {:done, acc}
+          else
+            case Mongo.Cursor.next_batch(cursor) do
+              %Mongo.Cursor{exhausted: true} -> {:done, acc}
+              %Mongo.Cursor{}=cursor -> reduce(cursor, {:cont, acc}, reducer)
+              error -> {:halted, %Mongo.Error{error| acc: [cursor | error.acc]}}
+            end
+          end
+        reduced -> reduce(cursor, reduced, reducer)
       end
     end
+    def reduce(_, {:halt, acc}, _reducer),   do: {:halted, acc}
+    def reduce(cursor, {:suspend, acc}, reducer), do: {:suspended, acc, &reduce(cursor, &1, reducer)}
+
+
+    @doc false
+    #Not implemented use `Mongo.Collection.count/1`
+    def count(_cursor), do: {:ok, -1}
+
+    @doc false
+    #Not implemented
+    def member?(_, _cursor), do: {:ok, false}
   end
-
-  @doc """
-  Creates a list of document retreive by a find query
-
-  `toArray`, exectutes the query then accumulate in a list all documents one by one.
-  It calls `Mongo.Cursor/1` then pipes the resulting stream to `Enum.to_list/1`
-  """
-  def toArray(find), do: find.stream |> Enum.to_list
-
-  @doc false
-  def batchArray(find), do: find.batchStream |> Enum.to_list
-
-  @doc """
-  Specifies the number of documents to return in next batch(es)
-  """
-  def batchSize(n, c), do: cursor(c, batchSize: n)
 
 end

@@ -1,22 +1,23 @@
 defmodule Mongo.Server do
+  import Kernel, except: [send: 2]
   @moduledoc """
   Manage the connection to a mongodb server
   """
-  use Mongo.Helpers
-  require Record
-  Record.defrecordp :mongo, __MODULE__ ,
+  defstruct [
     host: nil,
     port: nil,
     mode: false,
     timeout: nil,
     opts: %{},
     id_prefix: nil,
-    socket: nil
+    socket: nil ]
 
   @port    27017
   @mode    :passive
   @host    "127.0.0.1"
   @timeout 6000
+
+  use Mongo.Helpers
 
   @doc """
   connects to local mongodb server by defaults to {"127.0.0.1", 27017}
@@ -49,89 +50,103 @@ defmodule Mongo.Server do
   Opts must be a Map
   """
   def connect(opts) when is_map(opts) do
-    opts    = default_env(opts)
-    host    = Map.get(opts, :host,    @host)
-    port    = Map.get(opts, :port,    @port)
-    timeout = Map.get(opts, :timeout, @timeout)
-    mode    = Map.get(opts, :mode,    @mode)
-    if is_binary(host) do
-      host = String.to_char_list(host)
-    end
-    mongo(host: host, port: port, mode: mode, timeout: timeout, id_prefix: mongo_prefix).tcp_connect
-  end
-  def connect(mongo()=m) do
-    case m.tcp_connect do
-      { :ok, m } ->
-        m
-      error -> error
-    end
+    opts = default_env(opts)
+    host = Map.get(opts, :host,    @host)
+    tcp_connect %Mongo.Server{
+      host: case host do
+              host when is_binary(host) -> String.to_char_list(host)
+              host -> host
+            end,
+      port: Map.get(opts, :port,    @port),
+      mode: Map.get(opts, :mode,    @mode),
+      timeout: Map.get(opts, :timeout,    @timeout),
+      id_prefix: mongo_prefix}
   end
 
   @doc false
-  def tcp_connect(mongo(host: host, port: port, timeout: timeout)=m) do
-    case :gen_tcp.connect(host, port, tcp_options(m), timeout) do
+  def tcp_connect(mongo) do
+    case :gen_tcp.connect(mongo.host, mongo.port, tcp_options(mongo), mongo.timeout) do
       {:ok, socket} ->
-        {:ok, mongo(m, socket: socket)}
+        {:ok, %Mongo.Server{mongo| socket: socket}}
       error -> error
     end
   end
 
-  @doc false
-  defp tcp_recv(mongo(socket: socket, timeout: timeout)) do
-    :gen_tcp.recv(socket, 0, timeout)
+  defp tcp_recv(mongo) do
+    :gen_tcp.recv(mongo.socket, 0, mongo.timeout)
   end
 
   @doc """
-  Retrieves a response from the MongoDB server (only for passive mode)
+  Retreives a repsonce from the MongoDB server (only for passive mode)
   """
-  def response(mongo) do
+  def response(mongo, decoder \\ &(Mongo.Response.bson_decode(&1))) do
     case tcp_recv(mongo) do
-      {:ok, <<messageLength::size(32)-signed-little, _::binary>> = message} ->
-        complete(messageLength, message, mongo) |> Mongo.Response.new
-      error -> error
+      {:ok, <<messageLength::32-signed-little, _::binary>> = message} ->
+        complete(mongo, messageLength, message) |> Mongo.Response.new(decoder)
+      {:error, msg} -> %Mongo.Error{msg: msg}
     end
   end
-
-  @doc """
-  Completes a possibly partial response from the MongoDB server
-  """
-  def response(
-    <<messageLength::size(32)-signed-little, _::binary>> = message,
-    mongo) do
-    complete(messageLength, message, mongo) |> Mongo.Response.new
-  end
-  defbang response(message, mongo)
 
   @doc """
   Sends a message to MongoDB
   """
-  def send(message, mongo(socket: socket, mode: :passive)) do
-     :gen_tcp.send(socket, message)
+  def send(mongo, payload, reqid \\ gen_reqid)
+  def send(%Mongo.Server{socket: socket, mode: :passive}, payload, reqid) do
+     do_send(socket, payload, reqid)
   end
-  def send(message, mongo(socket: socket, mode: :active)) do
+  def send(%Mongo.Server{socket: socket, mode: :active}, payload, reqid) do
     :inet.setopts(socket, active: :once)
-    :gen_tcp.send(socket, message)
+    do_send(socket, payload, reqid)
   end
+  # sends the message to the socket, returns request {:ok, reqid}
+  defp do_send(socket, payload, reqid) do
+    case :gen_tcp.send(socket, payload |> message(reqid)) do
+      :ok -> {:ok, reqid}
+      error -> error
+    end
+  end
+
   @doc false
-  # prepares for a one-time async request
-  def async(mongo(socket: socket, mode: :passive)) do
-    :inet.setopts(socket, active: :once)
+  # preprares for a one-time async request
+  def async(%Mongo.Server{mode: :passive}=mongo) do
+    :inet.setopts(mongo.socket, active: :once)
+  end
+
+  @doc """
+  Sends a command message requesting imediate response
+  """
+  def cmd_sync(mongo, command) do
+    case cmd(mongo, command) do
+      {:ok, _reqid} -> response(mongo)
+      error -> error
+    end
   end
 
   @doc """
   Executes an admin command to the server
+
+    iex> mongo = Mongo.connect!  # Returns a exception when connection fails
+    iex> case Mongo.connect do
+    ...>    {:ok, mongo } -> :ok
+    ...>    error -> error
+    ...> end
+    :ok
+
   """
-  def adminCmd(command, mongo) do
-    mongo.db("admin").cmd(command)
+  def cmd(mongo, cmd) do
+    send(mongo, Mongo.Request.cmd("admin", cmd))
   end
 
   @doc """
   Pings the server
+
+    iex> Mongo.connect! |> Mongo.Server.ping
+    :ok
+
   """
   def ping(mongo) do
-    mongo |> Mongo.Request.adminCmd(mongo, %{ping: true}).send
-    case mongo.response do
-      {:ok, resp} -> resp.success
+    case cmd_sync(mongo, %{ping: true}) do
+      {:ok, resp} -> Mongo.Response.success(resp)
       error -> error
     end
   end
@@ -139,20 +154,13 @@ defmodule Mongo.Server do
   @doc """
   Returns true if connection mode is active
   """
-  def active?(mongo(mode: mode)), do: mode == :active
-
-  @doc """
-  Connects to a specific database
-  """
-  def db(name, mongo) do
-    Mongo.Db.new(mongo, name)
-  end
+  def active?(mongo), do: mongo.mode == :active
 
   @doc """
   Closes the connection
   """
-  def close(mongo(socket: socket)) do
-    :gen_tcp.close(socket)
+  def close(mongo) do
+    :gen_tcp.close(mongo.socket)
   end
 
   defp default_env(opts) do
@@ -164,9 +172,9 @@ defmodule Mongo.Server do
   end
 
   # makes sure response is complete
-  defp complete(expected_length, buffer, _mongo) when byte_size(buffer) == expected_length, do: buffer
-  defp complete(expected_length, buffer, _mongo) when byte_size(buffer) >  expected_length, do: binary_part(buffer, 0, expected_length)
-  defp complete(expected_length, buffer, mongo) do
+  defp complete(_mongo, expected_length, buffer) when byte_size(buffer) == expected_length, do: buffer
+  defp complete(_mongo, expected_length, buffer) when byte_size(buffer) >  expected_length, do: binary_part(buffer, 0, expected_length)
+  defp complete(mongo, expected_length, buffer) do
     case tcp_recv(mongo) do
       {:ok, mess} -> complete(expected_length, buffer <> mess, mongo)
     end
@@ -182,9 +190,9 @@ defmodule Mongo.Server do
     args
   end
   # default server options
-  defp options(mongo(timeout: timeout)) do
+  defp options(mongo) do
     [ active: false,
-      send_timeout: timeout,
+      send_timeout: mongo.timeout,
       send_timeout_close: true ]
   end
 
@@ -197,35 +205,60 @@ defmodule Mongo.Server do
     end
   end
   @doc false
-  def prefix(mongo(id_prefix: prefix)) do
+  def prefix(%Mongo.Server{id_prefix: prefix}) do
     for << <<b::4>> <- <<prefix::16>> >>, into: <<>> do
         <<Integer.to_string(b,16)::binary>>
     end |> String.downcase
   end
 
   @doc """
-  Adds options to the mongo server connection
+  Adds options to an existing mongo server connection
 
-  new_opts must be a keyword with zero or more pairs representing one of these options:
+  new_opts must be a map with zero or more of the following keys:
 
   * read: `:awaitdata`, `:nocursortimeout`, `:slaveok`, `:tailablecursor`
-  * write: concern: `:wc`
+  * write concern: `:wc`
   * socket: `:mode`, `:timeout`
   """
-  def opts(new_opts, mongo(opts: opts)=mongo) do
-    mongo(mongo, opts: Map.merge(opts, new_opts))
+  def opts(mongo, new_opts) do
+    %Mongo.Server{mongo| opts: Map.merge(mongo.opts, new_opts)}
   end
 
   @doc """
-  Gets the mongo connection default options
+  Gets mongo connection default options
   """
-  def db_opts(mongo(opts: opts)) do
-    Map.take(opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :wc, :mode, :timeout])
+  def db_opts(mongo) do
+    Map.take(mongo.opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :wc]) #, :mode, :timeout])
+    |> Map.put(:mode, mongo.mode) |> Map.put(:timeout, mongo.timeout)
   end
 
-  @doc false
   use Bitwise, only_operators: true
-  def assign_id(docs, client_prefix \\ gen_client_prefix) do
+  @doc """
+  Assigns radom ids to a list of documents when `:_id` is missing
+
+      iex> [%{a: 1}] |> Mongo.Server.assign_id |> Enum.at(0) |> Map.keys
+      [:"_id", :a]
+
+      #a prefix to ids can be set manually like this
+      iex> prefix = case [%{a: 1}] |> Mongo.Server.assign_id(256*256-1) |> Enum.at(0) |> Map.get(:"_id") do
+      ...>   %Bson.ObjectId{oid: <<prefix::16, _::binary>>} -> prefix
+      ...>   error -> error
+      ...> end
+      ...> prefix
+      256*256-1
+
+      #by default prefix are set at connection time and remains identical for the entire connection
+      iex> mongo = Mongo.connect!
+      ...> prefix = case [%{a: 1}] |> Mongo.Server.assign_id(mongo) |> Enum.at(0) |> Map.get(:"_id") do
+      ...>   %Bson.ObjectId{oid: <<prefix::16, _::binary>>} -> prefix
+      ...>   error -> error
+      ...> end
+      ...> prefix == mongo.id_prefix
+      true
+
+  """
+  def assign_id(docs, client_prefix \\ gen_client_prefix)
+  def assign_id(docs, client_prefix) do
     client_prefix = check_client_prefix(client_prefix)
     Enum.map_reduce(
       docs,
@@ -235,7 +268,7 @@ defmodule Mongo.Server do
   end
 
   # returns a 2 bites prefix integer
-  defp check_client_prefix(mongo(id_prefix: prefix)) when is_integer(prefix), do: prefix
+  defp check_client_prefix(%Mongo.Server{id_prefix: prefix}) when is_integer(prefix), do: prefix
   defp check_client_prefix(prefix) when is_integer(prefix), do: prefix
   defp check_client_prefix(_), do: gen_client_prefix
   # generates a 2 bites prefix integer
@@ -250,5 +283,16 @@ defmodule Mongo.Server do
   defp to_oid({client_prefix, trans_prefix, suffix}), do: <<client_prefix::16, trans_prefix::48, suffix::32>>
   # Selects next ID
   defp next_id({client_prefix, trans_prefix, suffix}), do: {client_prefix, trans_prefix, suffix+1}
+
+  # add request ID to a payload message
+  defp message(payload, reqid)
+  defp message(payload, reqid) do
+    <<(byte_size(payload) + 12)::size(32)-little>> <> reqid <> <<0::32>> <> <<payload::binary>>
+  end
+  # generates a request Id when not provided (makes sure it is a positive integer)
+  defp gen_reqid() do
+    <<tail::24, _::1, head::7>> = :crypto.rand_bytes(4)
+    <<tail::24, 0::1, head::7>>
+  end
 
 end

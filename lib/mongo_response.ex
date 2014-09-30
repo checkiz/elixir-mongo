@@ -2,15 +2,59 @@ defmodule Mongo.Response do
   @moduledoc """
   Receives, decode and parse MongoDB response from the server
   """
-  use Mongo.Helpers
-  require Record
-  Record.defrecordp :response, __MODULE__ ,
+  defstruct [
     cursorID: nil,
     startingFrom: nil,
-    nbDoc: nil,
-    docBuffer: nil,
-    requestID: nil
+    nbdoc: nil,
+    buffer: nil,
+    requestID: nil,
+    decoder: nil]
+
   @msg         <<1, 0, 0, 0>>    #    1  Opcode OP_REPLY : Reply to a client request
+
+  defimpl Enumerable, for: Mongo.Response do
+
+    @doc """
+    Reduce documents in the buffer into a value
+    """
+    def reduce(resp, acc, reducer)
+    def reduce(%Mongo.Response{buffer: buffer, nbdoc: nbdoc, decoder: decoder}, acc, reducer), do: do_reduce(buffer, nbdoc, decoder, acc, reducer)
+
+    defp do_reduce(_, _, _, {:halt, acc}, _fun),   do: {:halted, acc}
+    defp do_reduce(buffer, nbdoc, decoder, {:suspend, acc}, reducer), do: {:suspended, acc, &do_reduce(buffer, nbdoc, decoder, &1, reducer)}
+    defp do_reduce(_, 0, _, {:cont, acc}, _reducer),   do: {:done, acc}
+    defp do_reduce(buffer, nbdoc, decoder, {:cont, acc}, reducer) do
+      case decoder.(buffer) do
+        {:cont, doc, rest} -> do_reduce(rest, nbdoc-1, decoder, reducer.(doc, acc), reducer)
+        other -> other
+      end
+    end
+
+    @doc """
+    Retreives number of documents in the buffer
+    """
+    def count(%Mongo.Response{nbdoc: nbdoc}), do: {:ok, nbdoc}
+
+    @doc """
+    Checks whether a document is part of the buffer
+    """
+    def member?(resp, doc)
+    def member?(%Mongo.Response{buffer: buffer}, doc), do: is_member(buffer, doc)
+
+    defp is_member(buffer, doc), do: is_member(buffer, doc, byte_size(doc))
+    # size are identical, check content
+    defp is_member(buffer, _doc, docsize) when byte_size(buffer) < docsize, do: false
+    defp is_member(<<docsize::32-little-signed, _::binary>>=buffer, doc, docsize) do
+      case :erlang.split_binary(buffer, docsize) do
+        {^doc, _} -> {:ok, true}
+        {_, tail} -> is_member(tail, doc)
+      end
+    end
+    # size different, skip to next doc
+    defp is_member(<<size::32-little-signed, _::binary>>=buffer, doc, docsize) do
+      is_member(:erlang.split_binary(buffer, size)|>elem(1), doc, docsize)
+    end
+  end
 
   @doc """
   Parses a response message
@@ -18,129 +62,93 @@ defmodule Mongo.Response do
   If the message is partial, this method makes shure the response is complete by fetching additional messages
   """
   def new(
-    <<_::32,                                            # total message size, including this
-      _::32,                                            # identifier for this message
-      requestID::size(32)-signed-little,              # requestID from the original request
-      @msg::binary,                                     # Opcode OP_REPLY
-      _::6, queryFailure::1, cursorNotFound::1, _::24,  # bit vector representing response flags
-      cursorID::size(64)-signed-little,               # cursor id if client needs to do get more's
-      startingFrom::size(32)-signed-little,           # where in the cursor this reply is starting
-      numberReturned::size(32)-signed-little,         # number of documents in the reply
-      docBuffer::bitstring>>) do                        # buffer of Bson documents
+    <<_::32,                                           # total message size, including this
+      _::32,                                           # identifier for this message
+      requestID::size(32)-signed-little,               # requestID from the original request
+      @msg::binary,                                    # Opcode OP_REPLY
+      _::6, queryFailure::1, cursorNotFound::1, _::24, # bit vector representing response flags
+      cursorID::size(64)-signed-little,                # cursor id if client needs to do get more's
+      startingFrom::size(32)-signed-little,            # where in the cursor this reply is starting
+      numberReturned::size(32)-signed-little,          # number of documents in the reply
+      buffer::bitstring>>,                             # buffer of Bson documents
+      decoder \\ &(Mongo.Response.bson_decode(&1))) do
     cond do
       cursorNotFound>0 ->
-        {:error, "Cursor not found"}
+        %Mongo.Error{msg: :"cursor not found"}
       queryFailure>0 ->
         if numberReturned>0 do
-          {:error, Map.take(Bson.decode(docBuffer), [:'$err', :err, :errmsg, :code, :connectionId])}
+          %Mongo.Error{
+            msg: :"query failure",
+            acc: %Mongo.Response{buffer: buffer, nbdoc: numberReturned, decoder: decoder}|>Enum.to_list}
         else
-          {:error, "Query error"}
+          %Mongo.Error{msg: :"query failure"}
         end
-      true -> {:ok, response( cursorID: cursorID,
-                  startingFrom: startingFrom,
-                  nbDoc: numberReturned,
-                  docBuffer: docBuffer,
-                  requestID: requestID )}
+      true -> {:ok, %Mongo.Response{
+                cursorID: cursorID,
+                startingFrom: startingFrom,
+                nbdoc: numberReturned,
+                buffer: buffer,
+                requestID: requestID,
+                decoder: decoder }}
     end
   end
-  defbang new(message)
 
   @doc """
-  Returns `true` if there are more documents to fetch regardless whether the cursor is exhausted or not
-  """
-  def next?(response(nbDoc: 0)), do: false
-  def next?(_),                  do: true
+  Decodes a command response
 
-  @doc """
-  Gets next doc within the current batch return `nil` after last doc of the bacth
-
-  When this function returns `nil`, it does not mean the cursor is exhausted, see `Mongo.Response.hasNext/1`
+  Returns `{:ok, doc}` or transfers the error message
   """
-  def next(response(nbDoc: nbDoc, docBuffer: docBuffer)=r) when nbDoc>0 do
-    # get document part of documents from this offset
-    case Bson.Decoder.document(docBuffer) do
-      {doc, rest} ->
-        {doc, response(r, nbDoc: nbDoc-1, docBuffer: rest)}
+  def cmd(%Mongo.Response{nbdoc: 1, buffer: buffer}) do
+    case buffer |> Bson.decode do
+      nil -> %Mongo.Error{msg: :"no document received"}
+      %{ok: ok}=doc when ok>0 -> {:ok, doc}
+      errdoc -> %Mongo.Error{msg: :"cmd error", acc: errdoc}
     end
   end
-  def next(_, response(nbDoc: 0)),    do: nil
 
   @doc """
-  Returns the cursor ID
+  Decodes a count respsonse
+
+  Returns `{:ok, n}` or transfers the error message
   """
-  def cursorID(response(cursorID: cursorID)), do: cursorID
-
-  @doc """
-  Returns `true` if the cursor is exhausted
-  """
-  def exhausted?(response(cursorID: 0)), do: true
-  def exhausted?(_), do: false
-
-  @doc """
-  Returns `true` if there are more documents to fetch from this batch or if the cursor is not exhausted
-  """
-  def hasNext(r), do: r.next? or not r.exhausted
-
-  @doc """
-  Parse a command response
-
-  Returns `{:ok, doc}` or `{:error, reason}`
-  """
-  def cmd(response(nbDoc: 1)=r) do
-    case r.next do
-        nil -> {:error, "No document received"}
-        {doc, _} ->
-          if doc[:ok] > 0 do
-            {:ok, doc}
-          else
-            {:error, Map.take(doc, [:err, :errmsg, :code, :connectionId])}
-          end
-      end
-  end
-
-  @doc """
-  Parse a count respsonse
-
-  Returns `{:ok, n}` or `{:error, reason}`
-  """
-  def count(r) do
-    case r.cmd do
+  def count(response) do
+    case cmd(response) do
       {:ok, doc} -> {:ok, doc[:n]}
       error -> error
     end
   end
 
   @doc """
-  Parse a success respsonse
+  Decodes a success respsonse
 
-  Returns `:ok` or `{:error, reason}`
+  Returns `:ok` or transfers the error message
   """
-  def success(r) do
-    case r.cmd do
+  def success(response) do
+    case cmd(response) do
       {:ok, _} -> :ok
       error -> error
     end
   end
 
   @doc """
-  Parse a distinct respsonse
+  Decodes a distinct respsonse
 
-  Returns `{:ok, values}` or `{:error, reason}`
+  Returns `{:ok, values}` or transfers the error message
   """
-  def distinct(r) do
-    case r.cmd do
+  def distinct(response) do
+    case cmd(response) do
       {:ok, doc} -> {:ok, doc[:values]}
       error -> error
     end
   end
 
   @doc """
-  Parse a map-reduce respsonse
+  Decodes a map-reduce respsonse
 
-  Returns `{:ok, results}` (inline) or `:ok` or `{:error, reason}`
+  Returns `{:ok, results}` (inline) or `:ok` or transfers the error message
   """
-  def mr(r) do
-    case r.cmd do
+  def mr(response) do
+    case cmd(response) do
       {:ok, doc} ->
         case doc[:results] do
           nil -> :ok
@@ -151,52 +159,70 @@ defmodule Mongo.Response do
   end
 
   @doc """
-  Parse a group respsonse
+  Decodes a group respsonse
 
-  Returns `{:ok, retval}` or `{:error, reason}`
+  Returns `{:ok, retval}` or transfers the error message
   """
-  def group(r) do
-    case r.cmd do
+  def group(response) do
+    case cmd(response) do
       {:ok, doc} -> {:ok, doc[:retval]}
       error -> error
     end
   end
 
   @doc """
-  Parse a aggregate respsonse
+  Decodes an aggregate respsonse
 
-  Returns `{:ok, result}` or `{:error, reason}`
+  Returns `{:ok, result}` or transfers the error message
   """
-  def aggregate(r) do
-    case r.cmd do
+  def aggregate(response) do
+    case cmd(response) do
       {:ok, doc} -> doc[:result]
       error -> error
     end
   end
   @doc """
-  Parse a getnonce respsonse
+  Decodes a getnonce respsonse
 
-  Returns `{:ok, nonce}` or `{:error, reason}`
+  Returns `{:ok, nonce}` or transfers the error message
   """
-  def getnonce(r) do
-    case r.cmd do
+  def getnonce(response) do
+    case cmd(response) do
       {:ok, doc} -> doc[:nonce]
       error -> error
     end
   end
   @doc """
-  Parse a error respsonse
+  Decodes an error respsonse
 
-  Returns `{:ok, nonce}` or `{:error, reason}`
+  Returns `{:ok, nonce}` or transfers the error message
   """
-  def error(r) do
-    case r.cmd do
+  def error(response) do
+    case cmd(response) do
       {:ok, doc} ->
         case doc[:err] do
           nil -> :ok
-          _ -> {:error, Map.take(doc, [:err, :errmsg, :code, :connectionId])}
+          _ -> {:error, doc}
         end
       error -> error
     end
+  end
+
+  @doc """
+  Helper fuction to decode the first document of a bson buffer
+  """
+  def bson_decode(buffer, opts \\ %Bson.Decoder{}) do
+    case Bson.Decoder.document(buffer, opts) do
+      %Bson.Decoder.Error{}=error -> {:halt, %Mongo.Error{msg: :bson, acc: [error]}}
+      {doc, rest} -> {:cont, doc, rest}
+    end
+  end
+
+  @doc """
+  Helper fuction to split buffer into documents in binary format
+  """
+  def bson_no_decoding(<<size::32-little-signed, _rest>>=buffer) do
+    {doc, rest} = :erlang.split_binary(buffer, size)
+    {:cont, doc, rest}
   end
 end

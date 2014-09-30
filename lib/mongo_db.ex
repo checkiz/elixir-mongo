@@ -2,49 +2,47 @@ defmodule Mongo.Db do
   @moduledoc """
  Module holding operations that can be performed on MongoDB databases
   """
-  require Record
-  Record.defrecordp :db, __MODULE__ ,
-    dbname: nil,
+  defstruct [
+    name: nil,
     mongo: nil,
     auth: nil,
-    opts: %{}
+    opts: %{} ]
+
   use Mongo.Helpers
 
-  @doc """
-  Gets mongo server hosting the database
-  """
-  def mongo(db(mongo: mongo)), do: mongo
-  @doc """
-  Gets dbname
-  """
-  def name(db(dbname: dbname)), do: dbname
+  alias Mongo.Server
 
   @doc """
-  Creates a db record
+  Creates `%Mongo.Db{}` with default options
   """
-  def new(mongo, dbname), do: db(mongo: mongo, dbname: dbname, opts: mongo.db_opts)
+  def new(mongo, name), do: %Mongo.Db{mongo: mongo, name: name, opts: Server.db_opts(mongo)}
 
   @doc """
   Authenticates a user to a database
 
-  Expects a DB record, a user and a password returns `{:ok, db}` or `{:error, reason}`
+  Expects a DB struct, a user and a password returns `{:ok, db}` or `%Mongo.Error{}`
   """
-  def auth(username, password, db) do
-    db(db, auth: {username, hash(username <> ":mongo:" <> password)}).auth
+  def auth(db, username, password) do
+    %Mongo.Db{db| auth: {username, hash(username <> ":mongo:" <> password)}} |> auth
   end
   defbang auth(username, password, db)
 
-  def auth?(db(auth: nil)), do: false
+  @doc """
+  Check authentication
+
+  returns true if authentication was performed and succesful
+  """
+  def auth?(db)
+  def auth?(%Mongo.Db{auth: nil}), do: false
   def auth?(_), do: true
 
   @doc false
   # Authenticates a user to a database (or do it again after failure)
-  def auth(db(auth: nil)=db), do: {:ok, db}
-  def auth(db(mongo: mongo, auth: {username, hash_password})=db) do
+  def auth(%Mongo.Db{auth: nil}=db), do: {:ok, db}
+  def auth(%Mongo.Db{auth: {username, hash_password}}=db) do
     nonce = getnonce(db)
-    digest = hash nonce <> username <> hash_password
-    mongo |> Mongo.Request.cmd(db, %{authenticate: 1}, %{nonce: nonce, user: username, key: digest}).send
-    case mongo.response do
+    case Mongo.Request.cmd(db, %{authenticate: 1}, %{nonce: nonce, user: username, key: hash(nonce <> username <> hash_password)})
+      |> Server.call do
       {:ok, resp} ->
         case resp.success do
           :ok ->{:ok, db}
@@ -53,6 +51,32 @@ defmodule Mongo.Db do
       error -> error
     end
   end
+
+  @doc """
+  Returns a collection struct
+  """
+  defdelegate collection(db, name), to: Mongo.Collection, as: :new
+
+  @doc """
+  Executes a db command requesting imediate response
+  """
+  def cmd_sync(db, command, cmd_args \\ %{}) do
+    case cmd(db, command, cmd_args) do
+      {:ok, _reqid} -> Server.response(db.mongo)
+      error -> error
+    end
+  end
+
+  @doc """
+  Executes a db command
+
+  Before using this check `Mongo.Collection`, `Mongo.Db` or `Mongo.Server`
+  for commands already implemented by these modules
+  """
+  def cmd(db, cmd, cmd_args \\ %{}) do
+    Server.send(db.mongo, Mongo.Request.cmd(db.name, cmd, cmd_args))
+  end
+  defbang cmd(db, command)
 
   # creates a md5 hash in hex with loawercase
   defp hash(data) do
@@ -67,26 +91,19 @@ defmodule Mongo.Db do
   end
 
   # get `nonce` token from server
-  defp getnonce(db(mongo: mongo)=db) do
-    mongo |> Mongo.Request.cmd(db, %{getnonce: 1}).send
-    case mongo.response do
-      {:ok, resp} -> resp.getnonce
+  defp getnonce(db) do
+    case cmd_sync(db, %{getnonce: true}) do
+      {:ok, resp} -> resp |> Mongo.Response.getnonce
       error -> error
     end
   end
 
   @doc """
-  Returns a collection of the database
-  """
-  def collection(collname, db), do: Mongo.Collection.new(db, collname)
-
-  @doc """
   Returns the error status of the preceding operation.
   """
-  def getLastError(db(mongo: mongo)=db) do
-    mongo |> Mongo.Request.cmd(db, %{getlasterror: true}).send
-    case mongo.response do
-      {:ok, resp} -> resp.error
+  def getLastError(db) do
+    case cmd_sync(db, %{getlasterror: true}) do
+      {:ok, resp} -> resp |> Mongo.Response.error
       error -> error
     end
   end
@@ -95,10 +112,9 @@ defmodule Mongo.Db do
   @doc """
   Returns the previous error status of the preceding operation(s).
   """
-  def getPrevError(db(mongo: mongo)=db) do
-    mongo |> Mongo.Request.cmd(db, %{getPrevError: 1}).send
-    case mongo.response do
-      {:ok, resp} -> resp.error
+  def getPrevError(db) do
+    case cmd_sync(db, %{getPrevError: true}) do
+      {:ok, resp} -> resp |> Mongo.Response.error
       error -> error
     end
   end
@@ -108,7 +124,7 @@ defmodule Mongo.Db do
   Resets error
   """
   def resetError(db) do
-    case db.cmd(%{resetError: 1}) do
+    case cmd(db, %{resetError: true}) do
       {:ok, _} -> :ok
       error -> error
     end
@@ -116,45 +132,30 @@ defmodule Mongo.Db do
   defbang resetError(db)
 
   @doc """
-  Runs a database command
-
-  Before using this check `Mongo.Collection`, `Mongo.Db` or `Mongo.Server`
-  for commands already implemented by these modules
-  """
-  def cmd(command, db(mongo: mongo)=db) do
-    mongo |> Mongo.Request.cmd(db, command).send
-    case mongo.response do
-      {:ok, resp} -> resp.cmd
-      error -> error
-    end
-  end
-  defbang cmd(command, db)
-
-  @doc """
   Kill a cursor of the db
   """
-  def kill_cursor(cursorID, db(mongo: mongo)) do
-    mongo |> Mongo.Request.kill_cursor(cursorID).send
+  def kill_cursor(db, cursorID) do
+    Mongo.Request.kill_cursor(cursorID) |> Server.send(db.mongo)
   end
 
   @doc """
   Adds options to the database overwriting mongo server connection options
 
-  new_opts must be a keyword with zero or more pairs represeting one of these options:
-  
+  new_opts must be a map with zero or more of the following keys:
+
   * read: `:awaitdata`, `:nocursortimeout`, `:slaveok`, `:tailablecursor`
-  * write: concern: `:wc`
+  * write concern: `:wc`
   * socket: `:mode`, `:timeout`
   """
-  def opts(new_opts, db(opts: opts)=db) do
-    db(db, opts: Map.merge(opts, new_opts))
+  def opts(db, new_opts) do
+    %Mongo.Db{db| opts: Map.merge(db.opts, new_opts)}
   end
 
   @doc """
   Gets collection default options
   """
-  def coll_opts(db(opts: opts)) do
-    Map.take(opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :wc])
+  def coll_opts(db) do
+    Map.take(db.opts, [:awaitdata, :nocursortimeout, :slaveok, :tailablecursor, :wc])
   end
 
 end

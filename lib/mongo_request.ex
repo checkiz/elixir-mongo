@@ -1,12 +1,12 @@
 defmodule Mongo.Request do
-  require Record
   @moduledoc """
   Defines, encodes and sends MongoDB operations to the server
   """
 
-  Record.defrecordp :request, __MODULE__ ,
+  defstruct [
     requestID: nil,
-    payload: nil
+    payload: nil]
+
 
   @update      <<0xd1, 0x07, 0, 0>> # 2001  update document
   @insert      <<0xd2, 0x07, 0, 0>> # 2002  insert new document
@@ -19,35 +19,36 @@ defmodule Mongo.Request do
 
   @doc """
     Builds a query message
+
+    * collection: collection
+    * selector: selection criteria (Map or nil)
+    * projector: fields (Map or nil)
   """
-  def query(f) do
-    request payload: Mongo.Find.query(f)
+  def query(find) do
+    selector = if find.mods == %{}, do: find.selector, else: Map.put(find.mods, :'$query', find.selector)
+    @query <> (Enum.reduce(find.opts, @query_opts, &queryopt_red/2)) <> <<0::24>> <>
+      find.collection.db.name <> "." <>  find.collection.name <> <<0::8>> <>
+      <<find.skip::32-little-signed>> <>
+      <<find.batchSize::32-little-signed>> <>
+      Bson.encode(selector) <>
+      Bson.encode(find.projector)
   end
 
   @doc """
-    Builds a database command message composed of command (map of 2) and its arguments.
+    Builds a database command message composed of the command tag and its arguments.
   """
-  def cmd(db, command, command_args \\ %{}) do
-    request payload:
-      @query <> @query_opts <> <<0::24>> <> # [slaveok: true]
-      db.name <> ".$cmd" <>
-      <<0::40, 255, 255, 255, 255>> <> # skip(0), batchSize(-1)
-      document(command, command_args)
-  end
-
-  @doc """
-    Builds an admin command message
-  """
-  def adminCmd(mongo, command, command_args \\ %{}) do
-    cmd(mongo.db("admin"), command, command_args)
+  def cmd(dbname, cmd, cmd_args \\ %{}) do
+    @query <> @query_opts <> <<0::24>> <> # [slaveok: true]
+    dbname <> ".$cmd" <>
+    <<0::40, 255, 255, 255, 255>> <> # skip(0), batchSize(-1)
+    document(cmd, cmd_args)
   end
 
   @doc """
     Builds an insert command message
   """
   def insert(collection, docs) do
-    request payload:
-      docs |> Enum.reduce(
+    docs |> Enum.reduce(
       @insert <> <<0::32>> <>
       collection.db.name <> "." <>  collection.name <> <<0::8>>,
       fn(doc, acc) -> acc <> Bson.encode(doc) end)
@@ -57,7 +58,6 @@ defmodule Mongo.Request do
     Builds an update command message
   """
   def update(collection, selector, update, upsert, multi) do
-    request payload:
       @update <> <<0::32>> <>
       collection.db.name <> "." <>  collection.name <> <<0::8>> <>
       <<0::6, (bit(multi))::1, (bit(upsert))::1, 0::24>> <>
@@ -72,7 +72,6 @@ defmodule Mongo.Request do
     Builds a delete command message
   """
   def delete(collection, selector, justOne) do
-    request payload:
       @delete <> <<0::32>> <>
       collection.db.name <> "." <>  collection.name <> <<0::8>> <>
       <<0::7, (bit(justOne))::1, 0::24>> <>
@@ -83,7 +82,6 @@ defmodule Mongo.Request do
     Builds a kill_cursor command message
   """
   def kill_cursor(cursorid) do
-    request payload:
       @kill_cursor <> <<0::32>> <>
       <<1::32-little-signed>> <>
       <<cursorid::64-little-signed>>
@@ -93,54 +91,26 @@ defmodule Mongo.Request do
     Builds a get_more command message
   """
   def get_more(collection, batchsize, cursorid) do
-    request payload:
       @get_more <> <<0::32>> <>
       collection.db.name <> "." <>  collection.name <> <<0::8>> <>
       <<batchsize::32-little-signed>> <>
       <<cursorid::64-little-signed>>
   end
 
-  @doc """
-  Sends request to mongodb
-  """
-  def send(mongo, async \\ false, request(payload: payload, requestID: requestID)) do
-    requestID = if requestID==nil, do: gen_reqid, else: requestID
-    if async, do: mongo.async
-    case message(payload, requestID) |> mongo.send do
-      :ok -> requestID
-      error -> error
-    end
-  end
-
-  @doc """
-  Sets the request ID
-
-  By default, request ID is generated, but it can be set using this function.
-  This is usefull when the connection to MongoDB is active (by default, it is passive)
-  """
-  def id(requestID, r), do: request(r, requestID: requestID)
-
-  defmodule Cmd do
-    defstruct cmd: nil, args: nil
-  end
-
   # transform a document into bson
   defp document(command), do: Bson.encode(command)
   defp document(command, command_args), do: Bson.Encoder.document(Enum.to_list(command) ++ Enum.to_list(command_args))
 
-  defp message(payload, reqid) do
-    <<(byte_size(payload) + 12)::size(32)-little>> <> reqid <> <<0::32>> <> <<payload::binary>>
-  end
-  # generates a request Id when not provided (makes sure it is a positive integer)
-  defp gen_reqid() do
-    <<tail::24, _::1, head::7>> = :crypto.rand_bytes(4)
-    <<tail::24, 0::1, head::7>>
-  end
+  use Bitwise
+  # Operates one option
+  defp queryopt_red({opt, true},  bits), do: bits ||| queryopt(opt)
+  defp queryopt_red({opt, false}, bits), do: bits &&& ~~~queryopt(opt)
+  defp queryopt_red(_, bits),            do: bits
+  # Identifies the bit that is switched by an option when it is set to `true`
+  defp queryopt(:awaitdata),       do: 0b00100000
+  defp queryopt(:nocursortimeout), do: 0b00010000
+  defp queryopt(:slaveok),         do: 0b00000100
+  defp queryopt(:tailablecursor),  do: 0b00000010
+  defp queryopt(_),                do: 0b00000000
 
 end
-
-# defimpl Bson.Encoder.Protocol, for: Mongo.Request.Cmd do
-#   def encode(%Mongo.Request.Cmd{cmd: command, args: command_args}) do
-#     {"\x03", [Bson.Encoder.document(command), Bson.Encoder.document(command_args)]}
-#   end
-# end
