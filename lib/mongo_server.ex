@@ -176,7 +176,7 @@ defmodule Mongo.Server do
   defp complete(_mongo, expected_length, buffer) when byte_size(buffer) >  expected_length, do: binary_part(buffer, 0, expected_length)
   defp complete(mongo, expected_length, buffer) do
     case tcp_recv(mongo) do
-      {:ok, mess} -> complete(expected_length, buffer <> mess, mongo)
+      {:ok, mess} -> complete(mongo, expected_length, buffer <> mess)
     end
   end
 
