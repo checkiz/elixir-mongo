@@ -88,7 +88,7 @@ defmodule Mongo.Collection do
       Request.insert(collection, docs))
     case collection.opts[:wc] do
       nil -> {:ok, docs}
-      :safe -> case collection.db.getLastError do
+      :safe -> case Mongo.Db.getLastError(collection.db) do
         :ok -> {:ok, docs}
         error -> error
       end
