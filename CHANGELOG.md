@@ -1,3 +1,6 @@
+# v0.5.1
+* fix small bug for big batch
+* use of bson v0.4.3
 # v0.5.0
 * complete rework of the API
   * drop the Mongodb-like notation in favor of a more Elixir syntax
