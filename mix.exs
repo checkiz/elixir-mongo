@@ -49,7 +49,7 @@ defmodule Mongo.Mixfile do
       licenses: ["MIT"],
       links: %{
         "GitHub" => "https://github.com/checkiz/elixir-mongo",
-        "Documentation" => "https://checkiz.github.io/elixir-mongo"
+        "Documentation" => "http://hexdocs.pm/mongo"
       } ]
   end
 
