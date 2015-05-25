@@ -75,7 +75,7 @@ defmodule Mongo.Find do
     %__MODULE__{find| mods: Map.put(find.mods, k, v)}
   end
 
-  defimpl Enumerable, for: Mongo.Find do
+  defimpl Enumerable do
 
     @doc """
     Executes the query and reduce retrieved documents into a value
@@ -112,6 +112,6 @@ defmodule Mongo.Find do
     @doc """
     Not implemented
     """
-    def member?(_, _), do: :not_implemented
+    def member?(_, _), do: {:error, __MODULE__}
   end
 end
