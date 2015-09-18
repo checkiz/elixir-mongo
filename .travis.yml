@@ -9,5 +9,6 @@ otp_release:
   - 17.4
 before_script:
   - sleep 15
+  - mix local.hex --force
   - mix deps.get --only test
 script: "MIX_ENV=test mix do deps.get, test"
