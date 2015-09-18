@@ -2,16 +2,11 @@ language: erlang
 services:
   - mongodb
 notifications:
-  email:
+  recipients:
     - jerp@checkiz.com
 otp_release:
-  - 17.1
-before_install:
-  - wget http://s3.hex.pm/builds/elixir/v1.0.0.zip
-  - unzip -d elixir v1.0.0.zip
+  - 17.4
 before_script:
   - sleep 15
-  - export PATH=`pwd`/elixir/bin:$PATH
-  - mix local.hex --force
-  - mix deps.get
+  - mix deps.get --only test
 script: "MIX_ENV=test mix do deps.get, test"
