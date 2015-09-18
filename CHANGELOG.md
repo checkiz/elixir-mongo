@@ -1,3 +1,7 @@
+# v0.5.2
+* fix `erlang:now()` depracated, replace with `erlang:system_time(micro_seconds)`
+# issue 19 and 28: retreive documents of last batch when not full
+* use of bson v0.4.4
 # v0.5.1
 * fix small bug for big batch
 * use of bson v0.4.3

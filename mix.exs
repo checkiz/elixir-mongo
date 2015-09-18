@@ -24,7 +24,7 @@ defmodule Mongo.Mixfile do
   # Returns the list of dependencies for prod
   defp deps(:prod) do
     [
-      bson: "~> 0.4.3"
+      bson: "~> 0.4.4"
     ]
   end
 
