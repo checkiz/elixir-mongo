@@ -1,4 +1,5 @@
 language: erlang
+elixir: 1.0.4
 services:
   - mongodb
 notifications:
@@ -8,7 +9,6 @@ sudo: false
 otp_release:
   - 18.0
 before_script:
-  - sleep 15
-  - mix local.hex --force
   - mix deps.get --only test
+  - sleep 15
 script: "MIX_ENV=test mix do deps.get, test"
