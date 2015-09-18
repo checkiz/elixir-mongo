@@ -9,7 +9,7 @@ sudo: false
 otp_release:
   - 17.4
 before_script:
-  - mix deps.get --only test
   - mix local.hex --force
+  - mix deps.get --only test
   - sleep 15
 script: "MIX_ENV=test mix do deps.get, test"
