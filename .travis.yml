@@ -4,6 +4,7 @@ services:
 notifications:
   recipients:
     - jerp@checkiz.com
+sudo: false
 otp_release:
   - 17.4
 before_script:
