@@ -7,7 +7,7 @@ notifications:
     - jerp@checkiz.com
 sudo: false
 otp_release:
-  - 18.0
+  - 17.4
 before_script:
   - mix deps.get --only test
   - sleep 15
