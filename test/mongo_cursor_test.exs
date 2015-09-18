@@ -36,4 +36,19 @@ defmodule Mongo.Cursor.Test do
     assert "BtreeCursor tst_value" == ctx[:anycoll] |> Mongo.Collection.find |> Mongo.Find.hint(%{value: true}) |> Mongo.Find.explain |> Map.get(:cursor)
   end
 
+  test "Correct count is returned if more than 100 items are queried with no batch size specified or batchSize zero", ctx do
+    anycoll = ctx[:anycoll]
+
+    Mongo.Collection.drop anycoll
+
+    items = 1..110 |> Enum.map fn r -> %{a: r, value: r} end
+
+    Mongo.Collection.insert(items, anycoll)
+
+    assert ctx[:anycoll] |> Mongo.Collection.find |> Enum.to_list |> Enum.count == 110
+    assert ctx[:anycoll] |> Mongo.Collection.find |> Map.put(:batchSize, 109) |> Enum.to_list |> Enum.count == 110
+    assert ctx[:anycoll] |> Mongo.Collection.find |> Map.put(:batchSize, 0) |> Enum.to_list |> Enum.count == 110
+
+  end
+
 end
