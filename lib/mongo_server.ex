@@ -125,13 +125,6 @@ defmodule Mongo.Server do
   @doc """
   Executes an admin command to the server
 
-    iex> mongo = Mongo.connect!  # Returns a exception when connection fails
-    iex> case Mongo.connect do
-    ...>    {:ok, mongo } -> :ok
-    ...>    error -> error
-    ...> end
-    :ok
-
   """
   def cmd(mongo, cmd) do
     send(mongo, Mongo.Request.cmd("admin", cmd))
@@ -275,8 +268,7 @@ defmodule Mongo.Server do
   defp gen_client_prefix, do: :crypto.rand_uniform(0, 65535)
   # returns a 6 bites prefix integer
   defp gen_trans_prefix do
-    {gs, s, ms} = :erlang.now
-    (gs * 1000000000000 + s * 1000000 + ms) &&& 281474976710655
+    :erlang.system_time(:micro_seconds) &&& 281474976710655
   end
 
   # from a 3 integer tuple to ObjectID
