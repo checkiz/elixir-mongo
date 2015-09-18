@@ -1,8 +1,6 @@
 elixir-mongo
 ============
 [![Build Status](https://travis-ci.org/checkiz/elixir-mongo.png?branch=master)](https://travis-ci.org/checkiz/elixir-mongo)
-[![Hex Version](https://img.shields.io/hexpm/v/mongo.svg)](https://hex.pm/packages/mongo)
-[![Hex Downloads](https://img.shields.io/hexpm/dt/bson.svg)](https://hex.pm/packages/mongo)
 
 A [MongoDB](http://www.mongodb.org) driver in Elixir.
 
