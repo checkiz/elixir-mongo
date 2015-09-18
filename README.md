@@ -1,6 +1,9 @@
 elixir-mongo
 ============
+<!--
+cannot make travis work with this version... TODO
 [![Build Status](https://travis-ci.org/checkiz/elixir-mongo.png?branch=master)](https://travis-ci.org/checkiz/elixir-mongo)
+-->
 
 A [MongoDB](http://www.mongodb.org) driver in Elixir.
 
