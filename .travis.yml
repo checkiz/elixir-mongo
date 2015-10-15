@@ -1,15 +1,13 @@
-language: erlang
-elixir: 1.0.4
+language: elixir
 services:
   - mongodb
 notifications:
-  recipients:
+  email:
     - jerp@checkiz.com
-sudo: false
+elixir:
+  - 1.0.2
+  - 1.1.1
 otp_release:
-  - 18.0
-before_script:
-  - sleep 15
-  - mix local.hex --force
-  - mix deps.get --only test
-script: "MIX_ENV=test mix do deps.get, test"
+  - 17.4
+  - 18.1
+sudo: false
