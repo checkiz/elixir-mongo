@@ -1,3 +1,6 @@
+# v0.5.4
+* erlang v18 and elixir 1.1
+* :erlang.now/0 is depracated
 # v0.5.3
 * fix travis
 * fix getLastError
