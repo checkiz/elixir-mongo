@@ -102,7 +102,7 @@ defmodule Mongo.Response do
     case buffer |> Bson.decode do
       nil -> %Mongo.Error{msg: :"no document received"}
       %{ok: ok}=doc when ok>0 -> {:ok, doc}
-      errdoc -> %Mongo.Error{msg: :"cmd error", acc: errdoc}
+      errdoc -> %Mongo.Error{msg: "cmd error - " <> inspect(errdoc)}
     end
   end
 
