@@ -267,8 +267,16 @@ defmodule Mongo.Server do
   # generates a 2 bites prefix integer
   defp gen_client_prefix, do: :crypto.rand_uniform(0, 65535)
   # returns a 6 bites prefix integer
-  defp gen_trans_prefix do
-    :erlang.system_time(:micro_seconds) &&& 281474976710655
+  # :erlang.system_time/1
+  Kernel.if Keyword.get(:erlang.module_info, :exports) |> Enum.any?(fn({:system_time, 1}) -> true; (_) -> false end) do
+    defp gen_trans_prefix do
+      :erlang.system_time(:micro_seconds) &&& 281474976710655
+    end
+  else
+    defp gen_trans_prefix do
+      {gs, s, ms} = :erlang.now
+      (gs * 1000000000000 + s * 1000000 + ms) &&& 281474976710655
+    end
   end
 
   # from a 3 integer tuple to ObjectID
