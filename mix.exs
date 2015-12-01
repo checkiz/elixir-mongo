@@ -45,7 +45,7 @@ defmodule Mongo.Mixfile do
   end
 
   defp package do
-    [ contributors: ["jerp"],
+    [ maintainers: ["jerp"],
       licenses: ["MIT"],
       links: %{
         "GitHub" => "https://github.com/checkiz/elixir-mongo",
