@@ -5,7 +5,7 @@ defmodule Mongo.Server.Test do
 
   test "ping" do
     assert :ok == Mongo.connect! |> Mongo.Server.ping
-    case Mongo.connect %{port: 80, timeout: 1} do
+    case Mongo.connect %{port: 27017, timeout: 0} do
       {:ok, localhost} ->
         assert %Mongo.Error{msg: :timeout} == localhost |> Mongo.Server.ping
       _ ->

@@ -88,7 +88,7 @@ defmodule Mongo.Collection do
       Request.insert(collection, docs))
     case collection.opts[:wc] do
       nil -> {:ok, docs}
-      :safe -> case Mongo.Db.getLastError(collection.db) do
+      :safe -> case collection.db |> Mongo.Db.getLastError do
         :ok -> {:ok, docs}
         error -> error
       end
@@ -111,7 +111,7 @@ defmodule Mongo.Collection do
       Request.update(collection, query, update, upsert, multi))
     case collection.opts[:wc] do
       nil -> :ok
-      :safe -> collection.db.getLastError
+      :safe -> collection.db |> Mongo.Db.getLastError
     end
   end
 
@@ -130,7 +130,7 @@ defmodule Mongo.Collection do
      Request.delete(collection, query, justOne))
     case collection.opts[:wc] do
       nil -> :ok
-      :safe -> collection.db.getLastError
+      :safe -> collection.db |> Mongo.Db.getLastError
     end
   end
 
@@ -247,7 +247,7 @@ defmodule Mongo.Collection do
   @doc """
   Calculates aggregate values for the data in the collection (see db.collection.aggregate)
 
-      iex> collection = Mongo.connect! |> Mongo.db("test") |> Mongo.Db.collection("anycoll")
+      iex> collection = Mongo.Helpers.test_collection("anycoll")
       ...> collection |> Mongo.Collection.aggregate([
       ...>    %{'$skip': 1},
       ...>    %{'$limit': 5},
@@ -293,9 +293,37 @@ defmodule Mongo.Collection do
   @doc """
   Creates an index for the collection
   """
-  def createIndex(collection, name, key, unique \\ false) do
+  def createIndex(collection, name, key, unique \\ false, options \\ %{}) do
     system_indexes = new(collection.db, "system.indexes")
-    %{name: name, ns: collection.db.name <> "." <> collection.name, key: key, unique: unique} |> insert_one(system_indexes)
+    %{name: name, ns: collection.db.name <> "." <> collection.name, key: key, unique: unique}
+    |> Map.merge(options)
+    |> insert_one(system_indexes)
+  end
+
+  @doc """
+  Gets a list of All Indexes
+  """
+  def getIndexes(collection) do
+    new(collection.db, "system.indexes")
+    |> find(%{ns: collection.db.name <> "." <> collection.name})
+    |> Enum.to_list
+  end
+
+  @doc """
+  Remove a Specific Index
+  col = Mongo.connect! |> Mongo.db("AF_VortexShort_2358") |> Mongo.Db.collection("test.test")
+  col |> Mongo.Collection.dropIndex(%{time: 1})
+  """
+  def dropIndex(collection, key) do
+    Server.send(collection.db.mongo,
+                Request.cmd(collection.db.name, %{deleteIndexes: collection.name}, %{index: key}))
+  end
+
+  @doc """
+  Remove All Indexes
+  """
+  def dropIndexes(collection) do
+    dropIndex(collection, "*")
   end
 
 end

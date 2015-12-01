@@ -3,7 +3,7 @@ elixir: 1.0.4
 services:
   - mongodb
 notifications:
-  recipients:
+recipients:
     - jerp@checkiz.com
 sudo: false
 otp_release:
@@ -11,5 +11,5 @@ otp_release:
 before_script:
   - sleep 15
   - mix local.hex --force
-  - mix deps.get --only test
-script: "MIX_ENV=test mix do deps.get, test"
+  - mix deps.get
+script: "MIX_ENV=test mix test"
