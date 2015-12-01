@@ -43,7 +43,7 @@ defmodule Mongo.Cursor do
     end
   end
 
-  defimpl Enumerable, for: Mongo.Cursor do
+  defimpl Enumerable do
 
     @doc """
     Reduce documents in the buffer into a value
@@ -74,11 +74,11 @@ defmodule Mongo.Cursor do
 
     @doc false
     #Not implemented use `Mongo.Collection.count/1`
-    def count(_cursor), do: {:ok, -1}
+    def count(_cursor), do: {:error, __MODULE__}
 
     @doc false
     #Not implemented
-    def member?(_, _cursor), do: {:ok, false}
+    def member?(_, _cursor), do: {:error, __MODULE__}
   end
 
 end
