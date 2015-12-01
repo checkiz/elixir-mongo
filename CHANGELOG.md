@@ -1,3 +1,7 @@
+# v0.5.3
+* fix travis
+* fix getLastError
+* fix unsupported Enumerable protocol functions according to Elixir documentation
 # v0.5.2
 * fix `erlang:now()` depracated, replace with `erlang:system_time(micro_seconds)`
 # issue 19 and 28: retreive documents of last batch when not full
